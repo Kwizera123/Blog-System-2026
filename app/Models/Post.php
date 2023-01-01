@@ -83,6 +83,11 @@ class Post extends Model
          
         return $slug;
     } 
-     
+
+    // Tag
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }     
 
 }

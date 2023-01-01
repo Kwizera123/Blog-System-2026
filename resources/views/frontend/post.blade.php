@@ -23,7 +23,23 @@
           |
           Category: <strong>{{ $post->category->name }}</strong>
           |
-          {{ $post->created_at->format('M d, Y') }}
+          @if($post->tags->count())
+
+            <div class="mt-2">
+
+              <strong>Tags:</strong>
+
+              @foreach ($post->tags as $tag)
+
+                <span class="badge bg-primary">{{ $tag->name }}</span>
+
+              @endforeach
+
+            </div>
+
+          @endif
+        |
+        {{ $post->created_at->format('M d, Y') }}
         </p>
         <hr>
         <div>

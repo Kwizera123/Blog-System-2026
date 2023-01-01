@@ -24,11 +24,46 @@
           @endforeach
         </select>
 
+
+
         <div class="mb-3">
+          <label for="" class="form-label">
+            Tags
+          </label>
+
+          <div class="row">
+            @foreach ($tags as $tag)
+
+              <div class="col-md-3">
+
+                <div class="form-check">
+
+
+                  <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ $post->tags->contains($tag->id) ? 'checked' : '' }}>
+
+                  <label class="form-check-label">
+                    {{ $tag->name }}
+                  </label>
+
+                </div>
+              </div>
+
+            @endforeach
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class=" mb-3">
           <label for="" class="form-label">Content</label>
           <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                  {{ old('content', $post->content) }}
-                                                                                                                                                                                                                                  </textarea>
+                                                                                                                                                                                                                                                                                                      {{ old('content', $post->content) }}
+                                                                                                                                                                                                                                                                                                      </textarea>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Featured Image</label>

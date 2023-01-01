@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TagController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -88,6 +89,9 @@ Route::middleware(['auth','admin'])
 
                 Route::patch('/admin/posts/{post}/unpublish', [PostController::class, 'unpublish'])
                         ->name('admin.posts.unpublish');
+
+                //Tag
+                Route::resource('tags', TagController::class);
 
 
         });

@@ -7,7 +7,7 @@ use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\Tag;
 use App\Models\Category;
 
 
@@ -17,64 +17,64 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $categories = Category::orderBy('name')->get();
+   public function index(Request $request)
+{
+    $categories = Category::orderBy('name')->get();
 
+    $posts = Post::with([
+            'user',
+            'category',
+            'tags'
+        ])
+        ->where('status', 'published')
 
+        // Search
+        ->when($request->filled('search'), function ($query) use ($request) {
 
-        $posts = Post::with(['user', 'category'])
+            $search = $request->search;
 
-        ->when($request->filled('search'), function ($query) use ($request){
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%")
+                    ->orWhereHas('category', function ($category) use ($search) {
+                        $category->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('user', function ($user) use ($search) {
+                        $user->where('name', 'like', "%{$search}%");
+                    });
+            });
 
-        //$query->where('title', 'like', '%' . $request->search . '%');
-
-        $search = $request->search;
-
-        $query->where(function ($q) use ($search){
-
-            $q->where('title', 'like', "%{$search}%")
-                ->orWhere('content', 'like', "%{$search}%")
-                ->orWhereHas('category', function ($category) use ($search) {
-                    $category->where('name', 'like', "%{$search}%");
-                })
-                ->orWhereHas('user', function ($user) use ($search) {
-                    $user->where('name', 'like', "%{$search}%");
-                });
-        });
-        
-        
         })
 
-        ->when($request->sort === 'oldest', function($query) {
+        // Category Filter
+        ->when($request->filled('category'), function ($query) use ($request) {
+            $query->where('category_id', $request->category);
+        })
+
+        // Status Filter
+        ->when($request->filled('status'), function ($query) use ($request) {
+            $query->where('status', $request->status);
+        })
+
+        // Sorting
+        ->when($request->sort === 'oldest', function ($query) {
             $query->oldest();
         })
-        ->when($request->sort === 'title_asc', function($query){
-            $query->orderBy('title','asc');
+        ->when($request->sort === 'title_asc', function ($query) {
+            $query->orderBy('title');
         })
-          ->when($request->sort === 'title_desc', function($query){
-            $query->orderBy('title','desc');
+        ->when($request->sort === 'title_desc', function ($query) {
+            $query->orderByDesc('title');
         })
-
-          ->when(!$request->filled('sort'), function($query){
+        ->when(!$request->filled('sort'), function ($query) {
             $query->latest();
         })
 
-          ->when($request->filled('category'), function ($query) use ($request){
-            $query->where('category_id', $request->category);
-        })
-          ->when($request->filled('status'), function ($query) use ($request) {
-            $query->where('status', $request->status);
-          })
-
-    
-
-        ->latest()
         ->paginate(5)
         ->withQueryString();
 
-        return view('backend.posts.index', compact('posts','categories'));
-    }
+    return view('backend.posts.index', compact('posts', 'categories'));
+}
     public function myPosts()
 
     {
@@ -93,8 +93,11 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::orderBy('name')->get();
-        return view('backend.posts.create', compact('categories'));
-        //
+        $tags = Tag::orderBy('name')->get();
+
+
+        return view('backend.posts.create', compact('categories','tags'));
+        //End Method
     }
 
     /**
@@ -111,6 +114,9 @@ class PostController extends Controller
             'dimensions:min_width=300,min_height=200',
             'video_url' => 'nullable|url|max:255',
             'status' => 'required|in:draft,published',
+
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
             
         ]);
 
@@ -129,7 +135,7 @@ class PostController extends Controller
         // }
 
         // Save the Date
-        Post::create([
+        $post = Post::create([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'content' => $validated['content'],
@@ -141,6 +147,11 @@ class PostController extends Controller
             'user_id' => auth()->id(),
             
         ]);
+
+            if($request->filled('tags')) {
+                $post->tags()->attach($request->tags);
+            }
+
         // Redirect with success message
         return redirect()
         ->route('posts.index')
@@ -172,7 +183,13 @@ class PostController extends Controller
 
         $categories = Category::orderBy('name')->get();
 
-        return view('backend.posts.edit', compact('post','categories'));
+        $tags = Tag::orderBy('name')->get();
+
+        return view('backend.posts.edit', compact(
+            'post',
+            'categories',
+            'tags'
+            ));
         //
     }
 
@@ -217,6 +234,10 @@ class PostController extends Controller
         'status' => $validated['status'],
         'slug' => Post::generateSlug($validated['title']),
     ]);
+
+     if($request->filled('tags')) {
+                $post->tags()->sync($request->tags ?? []);
+            }
 
     return redirect()
         ->route('posts.index')

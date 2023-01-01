@@ -12,6 +12,7 @@
       <div class="mb-3">
         <label for="" class="form-label">Category</label>
 
+
         <select name="category_id" class="form-select">
           @foreach ($categories as $category)
             <option value="{{ $category->id }}">
@@ -21,10 +22,40 @@
         </select>
 
         <div class="mb-3">
+          <label for="" class="form-label">
+            Tags
+          </label>
+
+          <div class="row">
+            @foreach ($tags as $tag)
+
+              <div class="col-md-3">
+
+                <div class="form-check">
+
+
+                  <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                    id="tag{{ $tag->id }}">
+
+                  <label class="form-check-label" for="tag{{ $tag->id }}">
+                    {{ $tag->name }}
+                  </label>
+
+                </div>
+              </div>
+
+            @endforeach
+          </div>
+        </div>
+
+
+
+
+        <div class="mb-3">
           <label for="" class="form-label">Content</label>
           <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                                                                                                         {{ old('content') }}
-                                                                                                                                                                                                                                                                                                                                                                                                                     </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     {{ old('content') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </textarea>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Featured Image</label>
