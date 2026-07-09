@@ -2,7 +2,7 @@
 @section('content')
   <div class="container mt-4">
     <h2>Create New Post</h2>
-    <form action="{{ route('posts.store') }}" method="POST">
+    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="mb-3">
         <label for="" class="form-label">Title</label>
@@ -23,8 +23,12 @@
         <div class="mb-3">
           <label for="" class="form-label">Content</label>
           <textarea name="content" rows="6" class="form-control" id="">
-               {{ old('content') }}
-            </textarea>
+                   {{ old('content') }}
+               </textarea>
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Featured Image</label>
+          <input type="file" name="image" class="form-control">
         </div>
         <button class="btn btn-primary">Publish Post</button>
         <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>

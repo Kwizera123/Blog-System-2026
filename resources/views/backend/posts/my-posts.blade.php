@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-  <h1>My Posts</h1>
+  <h1>My Posts Dashboard</h1>
   @if($posts->isEmpty())
     <p>You haven't created any post yet.</p>
   @else

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
+
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -51,12 +54,21 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        //Upload Image
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request
+                ->file('image')
+                ->store('posts', 'public');
+        }
 
         // Save the Date
         Post::create([
             'title' => $validated['title'],
             'content' => $validated['content'],
+            'image' => $validated['image'] ?? null,
             'category_id' => $validated['category_id'],
             'user_id' => auth()->id(),
         ]);
@@ -81,6 +93,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         $categories = Category::orderBy('name')->get();
 
         return view('backend.posts.edit', compact('post','categories'));
@@ -90,18 +104,42 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user, Post $post): bool
+    public function update(Request $request, Post $post)
     {
-        return $user->id === $post->user_id;
+       $this->authorize('update', $post);
+
+    $validated = $request->validate([
+        'title' => 'required|max:255',
+        'content' => 'required',
+        'category_id' => 'required|exists:categories,id',
+    ]);
+
+    $post->update($validated);
+
+    return redirect()
+        ->route('posts.index')
+        ->with('success', 'Post updated successfully!');
+
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user, Post $post): bool
+    public function destroy(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+     
+    $this->authorize('delete', $post);
+
+    $post->delete();
+
+    return redirect()
+        ->route('posts.index')
+        ->with('success', 'Post deleted successfully!');
         //
+
+
     }
+
+    
 }

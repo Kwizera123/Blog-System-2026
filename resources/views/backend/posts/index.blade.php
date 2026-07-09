@@ -9,6 +9,8 @@
           <tr>
             <th>Title</th>
             <th>Category</th>
+            <th>Content</th>
+            <th>Image</th>
             <th>Author</th>
             <th>Actions</th>
           </tr>
@@ -18,6 +20,12 @@
             <tr>
               <td>{{ $post->title }}</td>
               <td>{{ $post->category->name }}</td>
+              <td>{{ Str::limit($post->content, 25) }}</td>
+              <td>
+                @if($post->image)
+                  <img src="{{ asset('storage/' . $post->image) }}" width="50" height="50" style="object-fit: cover;">
+                @else No Image @endif
+              </td>
               <td>{{ $post->user->name }}</td>
               <td>
                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>

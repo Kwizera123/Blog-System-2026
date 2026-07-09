@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    @include('layouts.navbar')
+    @include('layouts.navigation')
     <div class="container mt-3">
         @if(session('success'))
             <div class="alert alert-success mt-3">
