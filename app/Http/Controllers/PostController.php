@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
@@ -112,7 +113,20 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'required|exists:categories,id',
+        'image' => 'nullable|image|max:2048',
     ]);
+
+    if($request->hasfile('image')) {
+        //Delete old Image
+        if($post->image){
+            Storage::disk('public')->delete($post->image);
+        }
+
+        //Upload new Image
+        $validated['image'] = $request
+                ->file('image')
+                ->store('posts', 'public');
+    }
 
     $post->update($validated);
 
