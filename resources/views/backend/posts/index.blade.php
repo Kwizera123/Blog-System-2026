@@ -1,10 +1,25 @@
 @extends('layouts.app')
 @section('content')
   <div class="container mt-4">
-    <h2 class="">All Posts</h2>
+
+
+
+    <h2 class="h2 text-success">All Posts</h2><br>
+
     <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">+Create post</a>
+    <form action="{{ route('posts.index') }}" method="GET" class="mb-3">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" name="search" class="form-control" placeholder="Search posts... "
+            value="{{ request('search') }}">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success">Search</button>
+        </div>
+      </div>
+    </form>
     @if($posts->count() > 0)
-      <table class="table bordered">
+      <table class="table table-striped bordered">
         <thead>
           <tr>
             <th>Title</th>

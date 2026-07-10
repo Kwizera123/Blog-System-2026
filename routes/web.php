@@ -5,14 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::middleware('auth')->group(function(){
-    Route::resource('posts', PostController::class);
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/post/{post}', [HomeController::class, 'show'])->name('post.show');
+ Route::resource('posts', PostController::class);
+  Route::get('/home', [HomeController::class, 'index'])->name('home');
+ Route::get('/post/{post}', [HomeController::class, 'show'])->name('post.show');
 });
 
 Route::middleware('auth')->group(function() {

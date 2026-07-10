@@ -15,9 +15,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::with(['user', 'category'])
+
+        ->when($request->filled('search'), function ($query) use ($request){
+
+        $query->where('title', 'like', '%' . $request->search . '%');
+        })
         ->latest()
         ->get();
 
@@ -144,6 +149,10 @@ class PostController extends Controller
     {
      
     $this->authorize('delete', $post);
+
+    if($post->image) {
+        Storage::disk('public')->delete($post->image);
+    }
 
     $post->delete();
 
