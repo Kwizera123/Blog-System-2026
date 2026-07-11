@@ -20,11 +20,26 @@ class PostController extends Controller
         $posts = Post::with(['user', 'category'])
 
         ->when($request->filled('search'), function ($query) use ($request){
-
         $query->where('title', 'like', '%' . $request->search . '%');
         })
+
+        ->when($request->sort === 'oldest', function($query) {
+            $query->oldest();
+        })
+        ->when($request->sort === 'title_asc', function($query){
+            $query->orderBy('title','asc');
+        })
+          ->when($request->sort === 'title_desc', function($query){
+            $query->orderBy('title','desc');
+        })
+
+          ->when(!$request->filled('sort'), function($query){
+            $query->latest();
+        })
+
         ->latest()
-        ->get();
+        ->paginate(5)
+        ->withQueryString();
 
         return view('backend.posts.index', compact('posts'));
     }

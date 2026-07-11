@@ -16,7 +16,21 @@
         <div class="col-md-2">
           <button class="btn btn-success">Search</button>
         </div>
+      </div><br>
+
+      <div class="col-md-3">
+        <select name="sort" class="form-select form-control" onchange="this.form.submit()">
+          <option value="">Newest First</option>
+
+          <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
+
+          <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title (A-Z)</option>
+
+          <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title (Z-A)</option>
+        </select>
+
       </div>
+
     </form>
     @if($posts->count() > 0)
       <table class="table table-striped bordered">
@@ -56,9 +70,13 @@
             </tr>
           @endforeach
         </tbody>
+
       </table>
     @else
       <p>No Post found.</p>
     @endif
+    <div class="mt-3">
+      {{ $posts->links() }}
+    </div>
   </div>
-@endsection
+<br>@endsection
