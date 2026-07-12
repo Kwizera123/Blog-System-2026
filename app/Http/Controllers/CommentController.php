@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Policies\CommentPolicy;
+use App\Models\User;
 
 class CommentController extends Controller
 {
+     use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -28,6 +32,18 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'comment' => 'required|min:3',
+            'post_id' => 'required|exists:posts,id',
+        ]);
+
+        Comment::create([
+            'comment' => $validated['comment'],
+            'post_id' => $validated['post_id'],
+            'user_id' => auth()->id(),
+        ]);
+
+        return back()->with('success', 'Comment added successfully!');
         //
     }
 
@@ -44,6 +60,9 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
+         $this->authorize('update', $comment);
+
+        return view('frontend.comments.edit', compact('comment'));
         //
     }
 
@@ -52,6 +71,17 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        $this->authorize('update',$comment);
+
+        $validated = $request->validate([
+            'comment' => 'required|min:3',
+        ]);
+
+        $comment->update($validated);
+
+        return redirect()
+                ->back()
+                ->with('success', 'Comment updated successfully!');
         //
     }
 
@@ -60,6 +90,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        $this->authorize('delete', $comment);
+
+        $comment->delete();
+
+        return redirect()
+        ->back()
+        ->with('success', 'Comment delete successfully!');
         //
     }
 }

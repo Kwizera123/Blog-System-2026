@@ -1,8 +1,11 @@
 @extends('layouts.frontend')
 
 @section('content')
-  <div class="container mt-4">
 
+  <div class="container mt-4">
+    <labe class="form-label text text-primary">
+      <strong>Your Post:</strong>
+    </labe>
     <div class="card">
 
       <div class="card-body">
@@ -19,6 +22,62 @@
         @endif
       </div>
     </div>
+    {{-- Comment--}}
+
+    @auth
+      <form action="{{ route('comments.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="post_id" value="{{ $post->id }}">
+        <div class="mb-3">
+          <labe class="form-label">Leave a Comment:</labe>
+          <textarea name="comment" class="form-control" id="" rows="3" required></textarea>
+        </div>
+        <button class="btn btn-primary">Send Comment</button>
+      </form>
+    @endauth
+
+    <h3 class="mt-3">
+      Comments({{ $post->comments->count() }})
+    </h3>
+
+    @forelse ($post->comments as $comment)
+
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h6>
+            {{ $comment->user->name }}
+          </h6>
+          <small class="text-muted">
+            {{ $comment->created_at->diffForHumans() }}
+          </small>
+          <p class="mt-1">
+            {{ $comment->comment }}
+          </p>
+          {{--Edit andDelete Buttons--}}
+          {{-- @if(auth()->check() && auth()->id() == $comment->user_id) --}}
+          @can('update', $comment)
+            <a href="{{ route('comments.edit', $comment) }}" class="btn btn-sm btn-warning">Edit</a>
+          @endcan
+          @can('delete', $comment)
+            <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display: inline;">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-sm btn-danger">
+                Delete
+              </button>
+            </form>
+          @endcan
+        </div>
+
+      </div>
+    @empty
+      <p>Not Comment yet,</p>
+    @endforelse
+    {{--
+    @endforeach --}}
+
+
     <a href="/home" class="btn btn-secondary mt-3">
       ← Back
     </a>

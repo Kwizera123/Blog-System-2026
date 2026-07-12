@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
@@ -16,6 +17,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function(){
  Route::resource('posts', PostController::class);
   Route::get('/home', [HomeController::class, 'index'])->name('home');
+  Route::get('/read-post', [HomeController::class, 'index'])->name('post');
  Route::get('/post/{post}', [HomeController::class, 'show'])->name('post.show');
 });
 
@@ -25,6 +27,9 @@ Route::middleware('auth')->group(function() {
     //
 });
 
+// Comment Route
+Route::resource('comments', CommentController::class)
+    ->middleware('auth');
 
 
 Route::get('/dashboard', function () {
