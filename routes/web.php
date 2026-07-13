@@ -27,6 +27,19 @@ Route::middleware('auth')->group(function() {
     //
 });
 
+Route::get('/admin/dashboard', function (){
+    return 'Welcome Admin!';
+});
+
+// Admin Dashboard
+Route::middleware(['auth','admin'])
+        ->prefix('admin')
+        ->group(function() {
+            Route::get('/dashboard', function() {
+                return view('admin.dashboard');
+            })->name('admin.dashboard');
+        });
+
 // Comment Route
 Route::resource('comments', CommentController::class)
     ->middleware('auth');

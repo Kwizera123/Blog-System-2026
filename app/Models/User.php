@@ -31,6 +31,7 @@ class User extends Authenticatable
         ];
     }
 
+
     public function posts()
     {
         return $this->hasMany(Post::class);
@@ -41,6 +42,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+
+    public function isAdmin(): bool
+     {
+        return $this->role === 'admin';
+     }
+
+    public function isEditor(): bool
+     {
+        return $this->role === 'editor';
+     }
+
+     public function isAuthor(): bool
+     {
+        return $this->role === 'author';
+     }
 
 
 }
