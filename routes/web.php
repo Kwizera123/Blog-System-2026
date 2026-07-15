@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Admin\DashboardController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -35,10 +36,11 @@ Route::get('/admin/dashboard', function (){
 Route::middleware(['auth','admin'])
         ->prefix('admin')
         ->group(function() {
-            Route::get('/dashboard', function() {
-                return view('admin.dashboard');
-            })->name('admin.dashboard');
+          
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
         });
+
 
 // Comment Route
 Route::resource('comments', CommentController::class)
