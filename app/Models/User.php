@@ -13,7 +13,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Comment;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name','role', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {

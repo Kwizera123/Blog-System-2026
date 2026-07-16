@@ -16,9 +16,18 @@
           <tr>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
-            <td>{{ ucfirst($user->role) }}</td>
             <td>
-              <a href="{{ route('admin.users.show', $user) }}" class="btn btn-primary">View</a>
+              @if($user->role === 'admin')
+                <span class="badge bg-success">Admin</span>
+              @else
+                <span class="badge bg-secondary">Author</span>
+              @endif
+            </td>
+            <td>
+              <a href="{{ route('admin.users.show', $user) }}" class="btn btn-sm btn-primary">View</a>
+              <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-sm btn-warning">
+                Edit
+              </a>
             </td>
           </tr>
         @empty

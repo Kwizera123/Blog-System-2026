@@ -12,6 +12,6 @@
         <p><strong>Total Comments:</strong>{{ $user->comments()->count() }}</p>
       </div>
     </div>
-    <a href="{{ route('admin.users.index', $user) }}" class="btn btn-secondary mt-2">Back</a>
+    <a href="{{ route('admin.users.index', $user) }}" class="btn btn-sm btn-secondary mt-2">Back</a>
   </div>
 @endsection

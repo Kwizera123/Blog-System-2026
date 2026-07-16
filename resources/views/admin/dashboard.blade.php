@@ -95,7 +95,13 @@
           <tr>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
-            <td>{{ ucfirst($user->role) }}</td>
+            <td>
+              @if($user->role === 'admin')
+                <span class="badge bg-success">Admin</span>
+              @else
+                <span class="badge bg-secondary">Author</span>
+              @endif
+            </td>
             <td>{{ $user->created_at->diffForHumans() }}</td>
           </tr>
         @empty
