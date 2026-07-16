@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -39,6 +40,11 @@ Route::middleware(['auth','admin'])
           
         Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
+        Route::get('/users', [UserController::class, 'index'])
+                ->name('admin.users.index');
+
+        Route::get('/users/{user}', [UserController::class, 'show'])
+                ->name('admin.users.show');
         });
 
 
