@@ -51,6 +51,9 @@ Route::middleware(['auth','admin'])
 
         Route::put('/users/{user}', [UserController::class, 'update'])
                 ->name('admin.users.update');
+
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+                ->name('admin.users.destroy');
         });
 
 

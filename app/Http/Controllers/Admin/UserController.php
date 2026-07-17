@@ -10,11 +10,19 @@ use App\Models\Comment;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->paginate(10);
+        $search = $request->search;
 
-        return view('admin.users.index',compact('users'));
+        $users = User::when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+        })
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+        return view('admin.users.index',compact('users','search'));
     }
     //
 
@@ -51,6 +59,21 @@ class UserController extends Controller
         return redirect()
                 ->route('admin.users.index')
                 ->with('success', 'User updated successfully!');
+    }
+    // End of Method
+    public function destroy(User $user)
+    {
+        // Prevent admin from deleting themeselves
+        if($user->id === auth()->id()) {
+
+            return back()
+                ->with('error', 'You cannot delete you own account.');
+        } 
+        $user->delete();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'User Deleted successfully');
     }
 }
 
