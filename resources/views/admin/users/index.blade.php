@@ -2,6 +2,7 @@
 @section('content')
   <div class="container">
     <h1>Users</h1>
+
     <div class="table-responsive mt-4">
 
       <form action="{{ route('admin.users.index') }}" method="GET" class="mb-3">
@@ -61,6 +62,7 @@
         </tbody>
       </table>
     </div>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
     {{ $users->links() }}
   </div>
 @endsection

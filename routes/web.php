@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\CategoryController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -38,22 +40,37 @@ Route::middleware(['auth','admin'])
         ->prefix('admin')
         ->group(function() {
           
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
-        Route::get('/users', [UserController::class, 'index'])
-                ->name('admin.users.index');
+                Route::get('/dashboard', [DashboardController::class, 'index'])
+                ->name('admin.dashboard');
 
-        Route::get('/users/{user}', [UserController::class, 'show'])
-                ->name('admin.users.show');
+                Route::get('/users', [UserController::class, 'index'])
+                        ->name('admin.users.index');
 
-        Route::get('/users/{user}/edit', [UserController::class, 'edit'])
-                ->name('admin.users.edit');
+                Route::get('/users/{user}', [UserController::class, 'show'])
+                        ->name('admin.users.show');
 
-        Route::put('/users/{user}', [UserController::class, 'update'])
-                ->name('admin.users.update');
+                Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+                        ->name('admin.users.edit');
 
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])
-                ->name('admin.users.destroy');
+                Route::put('/users/{user}', [UserController::class, 'update'])
+                        ->name('admin.users.update');
+
+                Route::delete('/users/{user}', [UserController::class, 'destroy'])
+                        ->name('admin.users.destroy');
+
+                // Categories Routes
+                 Route::get('/categories', [CategoryController::class, 'index'])
+                        ->name('admin.categories.index'); 
+                
+                Route::get('/categories/create', [CategoryController::class, 'create'])
+                        ->name('admin.categories.create');
+                        
+                Route::post('/categories', [CommentController::class, 'store'])
+                        ->name('admin.categories.store');
+
+
+
+
         });
 
 

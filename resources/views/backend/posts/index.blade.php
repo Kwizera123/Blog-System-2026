@@ -75,6 +75,7 @@
     @else
       <p>No Post found.</p>
     @endif
+<a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
     <div class="mt-3">
       {{ $posts->links() }}
     </div>

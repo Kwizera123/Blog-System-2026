@@ -17,6 +17,7 @@
           <div class=" card-body">
             <h5>👥 Total User: </h5>
             <h2>{{ $totalUsers }}</h2>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn- text-white">View</a>
           </div>
         </div>
       </div>
@@ -26,6 +27,7 @@
           <div class="card-body">
             <h5>📝 Total Posts: </h5>
             <h2>{{ $totalPosts }}</h2>
+            <a href="{{ route('posts.index') }}" class="btn btn-sm btn- text-white">View</a>
 
           </div>
         </div>
@@ -41,10 +43,11 @@
       </div>
 
       <div class="col-md-3">
-        <div class="card text-center shadow-sm text-bg-warning">
+        <div class="card text-center text-bg-warning shadow-sm">
           <div class="card-body">
             <h5>🗂️ Total Categorie: </h5>
             <h2>{{ $totalCategories }}</h2>
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn- text-white">View</a>
           </div>
         </div>
       </div>
