@@ -68,8 +68,14 @@ Route::middleware(['auth','admin'])
                 Route::post('/categories', [CategoryController::class, 'store'])
                         ->name('admin.categories.store');
 
+                Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])
+                        ->name('admin.categories.edit');
 
-
+                Route::put('/categories/{category}', [CategoryController::class, 'update'])
+                        ->name('admin.categories.update');
+                
+                Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
+                        ->name('admin.categories.destroy');
 
         });
 

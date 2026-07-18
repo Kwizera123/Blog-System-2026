@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -22,6 +23,18 @@
         @if(session('success'))
             <div class="alert alert-success mt-3">
                 {{ session('success') }}
+            </div>
+        @endif
+        <!-- Error -->
+        @if(session('error'))
+            <div class="alert alert-danger mt-3">
+                {{ session('error') }}
+            </div>
+        @endif
+        <!-- Uodate -->
+        @if(session('info'))
+            <div class="alert alert-info mt-3">
+                {{ session('info') }}
             </div>
         @endif
         <!-- Page Content -->

@@ -10,6 +10,7 @@
         <input type="text" name="name" class="form-control mt-2" placeholder="Category Name" value="{{ old('name') }}">
       </div>
       <button type="submit" class="btn btn-sm btn-primary">Create Category</button>
+      <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn-danger">Cancel</a>
     </form>
 
   </div>

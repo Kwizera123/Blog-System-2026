@@ -38,7 +38,7 @@ class DashboardController extends Controller
             'totalPosts',
             'totalComments',
             'totalCategories',
-            'recentPosts',
+        'recentPosts',
             'latestUsers',
             'recentComments'
         ));

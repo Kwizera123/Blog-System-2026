@@ -38,6 +38,7 @@
           <div class="card-body">
             <h5>💬 Total Comments: </h5>
             <h2>{{ $totalComments }}</h2>
+            <a href="#" class="btn btn-sm btn- text-white">View</a>
           </div>
         </div>
       </div>
@@ -54,7 +55,7 @@
 
     </div>
     <hr class="my-5">
-    <h3>Recent Post</h3>
+    <h3><span class="badge text-bg-primary mb-2">Recent Post</span></h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -83,7 +84,7 @@
     </table>
 
     <hr class="my-5">
-    <h3>Latest Users</h3>
+    <h3><span class="badge text-bg-success mb-4">Latest Users</span></h3>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -115,7 +116,7 @@
       </tbody>
     </table>
     <hr class="my-5">
-    <h3>Recent comments</h3>
+    <h3><span class="badge text-bg-danger mb-2">Recent comments</span></h3>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -134,7 +135,7 @@
             <td>{{ $comment->created_at->diffForHumans() }}</td>
           </tr>
         @empty
-          <tr colspan="4" class="text-center text-muted">
+          <tr colspan="4" class="text-center text-muted mb-4">
             <td>No Comments Found</td>
           </tr>
         @endforelse

@@ -11,12 +11,26 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->paginate(10);
+        $search = $request->search;   
+
+        $categories = Category::when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}");
+        })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        $totalPosts = Post::count();
+
+        // $recentPosts = Post::with(['category','post'])
+        //     ->latest()
+        //     ->take(5)
+        //     ->get();
 
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories','totalPosts','search'));
     }
     //
 
@@ -36,6 +50,39 @@ class CategoryController extends Controller
         return redirect()
             ->route('admin.categories.index')
             ->with('success', 'Category Created successfully.');
+    }
+    // End Method
+
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
+    // End Method
+    public function update(Request $request, Category $category)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+        ]);
+        $category->update($validated);
+
+        return redirect()
+                ->route('admin.categories.index')
+                ->with('info', 'Category updated successfully.');
+    }
+    // End Method
+    public function destroy(Category $category)
+    {
+        if ($category->posts()->count() > 0 ) {
+            return back()->with(
+                'error',
+                'Cannot delete a category that contains posts.'
+            );
+        }
+        $category->delete();
+
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('success', 'Category deleted successfully.');
     }
 }
 
