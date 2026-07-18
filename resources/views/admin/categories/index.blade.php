@@ -6,6 +6,7 @@
         Category Page
       </h1>
       <table class="table table-striped align-middle">
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-sm btn-primary mt-3">Create Category</a>
         <thead>
           <tr>
             <th>#</th>

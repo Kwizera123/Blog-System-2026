@@ -65,7 +65,7 @@ Route::middleware(['auth','admin'])
                 Route::get('/categories/create', [CategoryController::class, 'create'])
                         ->name('admin.categories.create');
                         
-                Route::post('/categories', [CommentController::class, 'store'])
+                Route::post('/categories', [CategoryController::class, 'store'])
                         ->name('admin.categories.store');
 
 

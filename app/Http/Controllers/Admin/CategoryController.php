@@ -30,6 +30,12 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
         ]);
+
+        Category::create($validated);
+
+        return redirect()
+            ->route('admin.categories.index')
+            ->with('success', 'Category Created successfully.');
     }
 }
 
