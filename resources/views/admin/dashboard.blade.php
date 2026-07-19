@@ -15,9 +15,9 @@
       <div class="col-md-3">
         <div class="card text-center shadow-sm text-bg-success">
           <div class=" card-body">
-            <h5>👥 Total User: </h5>
+            <h5>👥 <strong>Total User:</strong></h5>
             <h2>{{ $totalUsers }}</h2>
-            <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn- text-white">View</a>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
           </div>
         </div>
       </div>
@@ -25,9 +25,9 @@
       <div class="col-md-3">
         <div class="card text-center shadow-sm text-bg-primary">
           <div class="card-body">
-            <h5>📝 Total Posts: </h5>
+            <h5>📝 <strong>Total Posts:</strong></h5>
             <h2>{{ $totalPosts }}</h2>
-            <a href="{{ route('posts.index') }}" class="btn btn-sm btn- text-white">View</a>
+            <a href="{{ route('posts.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
 
           </div>
         </div>
@@ -36,9 +36,9 @@
       <div class="col-md-3">
         <div class="card text-center text-bg-danger shadow-sm">
           <div class="card-body">
-            <h5>💬 Total Comments: </h5>
+            <h5>💬 <strong>Total Comments:</strong> </h5>
             <h2>{{ $totalComments }}</h2>
-            <a href="#" class="btn btn-sm btn- text-white">View</a>
+            <a href="#" class="btn btn-sm btn- text-white"><strong>View</strong></a>
           </div>
         </div>
       </div>
@@ -46,14 +46,18 @@
       <div class="col-md-3">
         <div class="card text-center text-bg-warning shadow-sm">
           <div class="card-body">
-            <h5>🗂️ Total Categorie: </h5>
+            <h5>🗂️ <strong>Total Categorie:</strong></h5>
             <h2>{{ $totalCategories }}</h2>
-            <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn- text-white">View</a>
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
           </div>
         </div>
       </div>
 
     </div>
+
+
+
+
     <hr class="my-5">
     <h3><span class="badge text-bg-primary mb-2">Recent Post</span></h3>
     <table class="table table-striped">

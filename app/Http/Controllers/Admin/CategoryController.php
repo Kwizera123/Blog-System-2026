@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Category;
 
 
+
 class CategoryController extends Controller
 {
     public function index(Request $request)
@@ -18,19 +19,35 @@ class CategoryController extends Controller
         $categories = Category::when($search, function ($query, $search) {
             $query->where('name', 'like', "%{$search}");
         })
-            ->latest()
+             ->latest()
             ->paginate(10)
             ->withQueryString();
 
-        $totalPosts = Post::count();
-
-        // $recentPosts = Post::with(['category','post'])
-        //     ->latest()
-        //     ->take(5)
-        //     ->get();
+            
+                   
 
 
-        return view('admin.categories.index', compact('categories','totalPosts','search'));
+        $totalCategories = Category::count();
+        $totalPosts = \App\Models\Post::count();
+
+        $categories = Category::withCount('posts')
+           ->latest()
+            ->paginate(10);
+
+        $largestCategory = Category::withCount('posts')
+            ->orderByDesc('posts_count')
+            ->first();
+
+
+
+        return view('admin.categories.index', compact(
+            'categories',
+            'totalPosts',
+            'search',
+            'totalCategories',
+            'totalPosts',
+            'largestCategory'
+            ));
     }
     //
 
