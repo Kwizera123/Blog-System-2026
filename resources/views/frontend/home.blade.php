@@ -13,8 +13,10 @@
           <div class="row g-0">
             <div class="col-md-4">
               @if ($post->image)
-                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid rounded-start" alt="{{ $post->title }}"
-                  width="100" height="300">
+                <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail mt-1 img-fluid rounded-start"
+                  alt="{{ $post->title }}" width="120" height="">
+                @else
+                <span class="text-muted">No Image</span>
               @endif
 
             </div>

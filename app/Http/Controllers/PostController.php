@@ -75,15 +75,21 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'dimensions:min_width=300,min_height=200',
         ]);
 
-        //Upload Image
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request
-                ->file('image')
-                ->store('posts', 'public');
+        $imagePath = null;
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('posts','public');
         }
+
+        //Upload Image()This works wery well
+        // if ($request->hasFile('image')) {
+        //     $validated['image'] = $request
+        //         ->file('image')
+        //         ->store('posts', 'public');
+        // }
 
         // Save the Date
         Post::create([
@@ -91,7 +97,9 @@ class PostController extends Controller
             'content' => $validated['content'],
             'image' => $validated['image'] ?? null,
             'category_id' => $validated['category_id'],
+            'image' => $imagePath,
             'user_id' => auth()->id(),
+            
         ]);
         // Redirect with success message
         return redirect()
@@ -138,8 +146,11 @@ class PostController extends Controller
         'title' => 'required|max:255',
         'content' => 'required',
         'category_id' => 'required|exists:categories,id',
-        'image' => 'nullable|image|max:2048',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        'dimensions:min_width=300,min_height=200',
     ]);
+
+    $imagePath = $post->image;
 
     if($request->hasfile('image')) {
         //Delete old Image
@@ -147,13 +158,20 @@ class PostController extends Controller
             Storage::disk('public')->delete($post->image);
         }
 
-        //Upload new Image
-        $validated['image'] = $request
-                ->file('image')
-                ->store('posts', 'public');
+        //Upload new Image (Works well too)
+        // $validated['image'] = $request
+        //         ->file('image')
+        //         ->store('posts', 'public');
     }
 
-    $post->update($validated);
+    $imagePath = $request->file('image')->store('posts','public');
+
+    $post->update([
+        'title' => $validated['title'],
+        'content' =>$validated['content'],
+        'category_id' => $validated['category_id'],
+        'image' => $imagePath,
+    ]);
 
     return redirect()
         ->route('posts.index')

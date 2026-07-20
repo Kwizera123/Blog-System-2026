@@ -52,8 +52,9 @@
               <td>{{ Str::limit($post->content, 25) }}</td>
               <td>
                 @if($post->image)
-                  <img src="{{ asset('storage/' . $post->image) }}" width="50" height="50" style="object-fit: cover;">
-                @else No Image @endif
+                  <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail" width="50" height="50"
+                    style="object-fit: cover;" alt="{{ $post->title }}">
+                @else <span class="text-muted">No Image</span> @endif
               </td>
               <td>{{ $post->user->name }}</td>
               <td>
@@ -75,7 +76,7 @@
     @else
       <p>No Post found.</p>
     @endif
-<a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
     <div class="mt-3">
       {{ $posts->links() }}
     </div>
