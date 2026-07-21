@@ -27,13 +27,23 @@
         <div class="mb-3">
           <label for="" class="form-label">Content</label>
           <textarea name="content" rows="6" class="form-control" id="">
-                                        {{ old('content', $post->content) }}
-                                        </textarea>
+                                                  {{ old('content', $post->content) }}
+                                                  </textarea>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Featured Image</label>
           <input type="file" name="image" class="form-control">
         </div>
+
+        <div class="mb-3">
+          <label for="" class="control-label"><span class="text text-danger">YouTube</span> Video URL</label>
+          <input type="url" name="video_url" class="form-control" value="{{ old('video_url', $post->video_url) }}"
+            placeholder="https://www.youtube.com/watch?=...">
+          <small class="text-muted">
+            Optional. Paste a YouTube video link.
+          </small>
+        </div>
+
         <button class="btn btn-success">Update Post</button>
         <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
     </form>

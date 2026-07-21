@@ -80,6 +80,7 @@ Route::middleware(['auth','admin'])
         });
 
 
+
 // Comment Route
 Route::resource('comments', CommentController::class)
     ->middleware('auth');

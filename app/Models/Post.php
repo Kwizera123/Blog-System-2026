@@ -14,6 +14,7 @@ class Post extends Model
         'title',
         'content',
         'image',
+        'video_url',
         'category_id',
         'user_id',
     ];

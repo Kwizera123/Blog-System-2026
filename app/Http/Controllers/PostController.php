@@ -77,6 +77,7 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'dimensions:min_width=300,min_height=200',
+            'video_url' => 'nullable|url|max:255',
         ]);
 
         $imagePath = null;
@@ -98,6 +99,7 @@ class PostController extends Controller
             'image' => $validated['image'] ?? null,
             'category_id' => $validated['category_id'],
             'image' => $imagePath,
+            'video_url' => 'nullable|url|max:255',
             'user_id' => auth()->id(),
             
         ]);
@@ -148,6 +150,7 @@ class PostController extends Controller
         'category_id' => 'required|exists:categories,id',
         'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'dimensions:min_width=300,min_height=200',
+        'video_url' => 'nullable|url|max:255',
     ]);
 
     $imagePath = $post->image;
@@ -162,15 +165,17 @@ class PostController extends Controller
         // $validated['image'] = $request
         //         ->file('image')
         //         ->store('posts', 'public');
+        $imagePath = $request->file('image')->store('posts','public');
     }
 
-    $imagePath = $request->file('image')->store('posts','public');
+    
 
     $post->update([
         'title' => $validated['title'],
         'content' =>$validated['content'],
         'category_id' => $validated['category_id'],
         'image' => $imagePath,
+        'video_url' => $validated['video_url'],
     ]);
 
     return redirect()

@@ -20,6 +20,37 @@
         @if($post->image)
           <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="{{ $post->title }}" width="200">
         @endif
+
+
+
+        @if($post->video_url)
+          <div class="me">
+            @php
+              $embedUrl = $post->video_url;
+
+              if (str_contains($embedUrl, 'watch?v=')) {
+                $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
+              }
+
+              if (str_contains($embedUrl, 'youtu.be/')) {
+                $embedUrl = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $embedUrl);
+              }
+            @endphp
+
+            <div class="ratio ratio-16x9 mb-2">
+
+              <iframe class="object-fit-cover border rounded" src="{{ $embedUrl }}" title="{{ $post->title }}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+              </iframe>
+            </div>
+
+          </div>
+        @else
+          <div class="text-mutes">
+            No Video found
+          </div>
+        @endif
       </div>
     </div>
     {{-- Comment--}}
