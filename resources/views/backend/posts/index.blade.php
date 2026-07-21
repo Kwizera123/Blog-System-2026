@@ -41,6 +41,7 @@
             <th>Content</th>
             <th>Image</th>
             <th>Video</th>
+            <th>Status</th>
             <th>Author</th>
             <th>Actions</th>
           </tr>
@@ -58,32 +59,38 @@
                 @else <span class="text-muted">No Image</span> @endif
               </td>
               <td>
-          @if($post->video_url)
-              @php 
-            $embedUrl = $post->video_url;
+                @if($post->video_url)
+                  @php
+                    $embedUrl = $post->video_url;
 
-            if (str_contains($embedUrl, 'watch?v=')) {
-              $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
-            }
+                    if (str_contains($embedUrl, 'watch?v=')) {
+                      $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
+                    }
 
-            if (str_contains($embedUrl, 'youtu.be/')) {
-              $embedUrl = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $embedUrl);
-            }
-          @endphp
+                    if (str_contains($embedUrl, 'youtu.be/')) {
+                      $embedUrl = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $embedUrl);
+                    }
+                  @endphp
 
-          <div class="ratio ratio-21x9">
+                  <div class="ratio ratio-21x9">
 
-            <iframe class="img-thumbnail" src="{{ $embedUrl }}" title="{{ $post->title }}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-            </iframe>
-                    
-            @else
-          <div class="text-mutes">
-            No Video found
-          </div>
-        @endif
+                    <iframe class="img-thumbnail" src="{{ $embedUrl }}" title="{{ $post->title }}"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+
+                @else
+                    <div class="text-mutes">
+                      No Video
+                    </div>
+                  @endif
+                  {{-- @if($post->embed_video_url)
+
+                  <iframe src="{{ $post->embed_video_url }}"></iframe>
+
+                  @endif --}}
               </td>
+              <td>{{ $post->status }}</td>
               <td>{{ $post->user->name }}</td>
               <td>
                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>

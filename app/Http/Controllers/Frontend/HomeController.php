@@ -11,8 +11,9 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::with(['user', 'category'])
+        ->where('status','published')
         ->latest()
-        ->get();
+         ->get();
         return view('frontend.home', compact('posts'));
     }
     //

@@ -77,6 +77,12 @@ Route::middleware(['auth','admin'])
                 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])
                         ->name('admin.categories.destroy');
 
+                Route::patch('/admin/posts/{post}/publish', [PostController::class, 'publish'])
+                        ->name('admin.posts.publish');
+
+                Route::patch('/admin/posts/{post}/unpublish', [PostController::class, 'unpublish'])
+                        ->name('admin.posts.unpublish');
+
         });
 
 

@@ -15,8 +15,10 @@ class Post extends Model
         'content',
         'image',
         'video_url',
+        'status',
         'category_id',
         'user_id',
+        
     ];
     public function user()
     {
@@ -32,6 +34,25 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    // End Method
+    public function getEmbedVideoUrlAttribute()
+{
+    if (!$this->video_url) {
+        return null;
+    }
+
+    $url = $this->video_url;
+
+    if (str_contains($url, 'watch?v=')) {
+        $url = str_replace('watch?v=', 'embed/', $url);
+    }
+
+    if (str_contains($url, 'youtu.be/')) {
+        $url = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $url);
+    }
+
+    return $url;
+}
 
 
 

@@ -26,17 +26,27 @@
                 <p class="card-text"><small class="text-body-secondary">Category: {{ $post->category->name }}</small></p>
                 <p class="card-text">{{ Str::limit($post->content, 120) }}</p>
 
+                {{-- New Way--}}
+                @if($post->embed_video_url)
+
+                  <iframe src="{{ $post->embed_video_url }}"></iframe>
+
+                @endif
+
+                {{-- @if ($post->video_url) --}}
+
+
                 {{-- Video Url--}}
-                @php
-                  $embedUrl = $post->video_url;
+                {{-- @php
+                $embedUrl = $post->video_url;
 
-                  if (str_contains($embedUrl, 'watch?v=')) {
-                    $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
-                  }
+                if (str_contains($embedUrl, 'watch?v=')) {
+                $embedUrl = str_replace('watch?v=', 'embed/', $embedUrl);
+                }
 
-                  if (str_contains($embedUrl, 'youtu.be/')) {
-                    $embedUrl = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $embedUrl);
-                  }
+                if (str_contains($embedUrl, 'youtu.be/')) {
+                $embedUrl = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $embedUrl);
+                }
                 @endphp
 
                 <div class="ratio ratio-16x9 mb-4" width="400">
@@ -47,6 +57,7 @@
                   </iframe>
 
                 </div>
+                @endif --}}
                 {{-- End Video--}}
 
                 <p class="card-text"><small class="text-body-secondary"> By: {{ $post->user->name }}</small></p>

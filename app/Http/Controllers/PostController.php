@@ -78,6 +78,7 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'dimensions:min_width=300,min_height=200',
             'video_url' => 'nullable|url|max:255',
+            'status' => 'required|in:draft,published',
         ]);
 
         $imagePath = null;
@@ -100,6 +101,7 @@ class PostController extends Controller
             'category_id' => $validated['category_id'],
             'image' => $imagePath,
             'video_url' => 'nullable|url|max:255',
+            'status' => $validated['status'],
             'user_id' => auth()->id(),
             
         ]);
@@ -151,6 +153,7 @@ class PostController extends Controller
         'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'dimensions:min_width=300,min_height=200',
         'video_url' => 'nullable|url|max:255',
+        'status' => 'required|in:draft,published',
     ]);
 
     $imagePath = $post->image;
@@ -176,6 +179,7 @@ class PostController extends Controller
         'category_id' => $validated['category_id'],
         'image' => $imagePath,
         'video_url' => $validated['video_url'],
+        'status' => $validated['status'],
     ]);
 
     return redirect()
@@ -202,10 +206,30 @@ class PostController extends Controller
     return redirect()
         ->route('posts.index')
         ->with('success', 'Post deleted successfully!');
-        //
-
-
+        //End Method
     }
+
+    public function publish(Post $post)
+    {
+        $post->update([
+            'status' => 'published'
+        ]);
+
+        return back()
+            ->with('success','Post published successfully.');
+    }
+     //End Method
+
+         public function unpublish(Post $post)
+    {
+        $post->update([
+            'status' => 'draft'
+        ]);
+
+        return back()
+            ->with('success','Post moved back to draft.');
+    }
+     //End Method
 
     
 }

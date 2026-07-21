@@ -23,8 +23,8 @@
         <div class="mb-3">
           <label for="" class="form-label">Content</label>
           <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                     {{ old('content') }}
-                                                                                                                                                                                                                                                                                                                                 </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                         {{ old('content') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                     </textarea>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Featured Image</label>
@@ -38,6 +38,14 @@
           <small class="text-muted">
             Optional. Paste a YouTube video link.
           </small>
+        </div>
+
+        <div class="mb-3">
+          <label for="" class="form-label">Status</label>
+          <select name="status" id="" class="form-control">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
         </div>
 
         <button class="btn btn-primary">Publish Post</button>

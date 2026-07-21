@@ -64,6 +64,7 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Status</th>
           <th>Author</th>
           <th>Created</th>
           <th>More...</th>
@@ -73,6 +74,7 @@
         @forelse ($recentPosts as $post)
           <tr>
             <td>{{ $post->title }}</td>
+            <td>{{ $post->status }}</td>
             <td>{{ $post->user->name }}</td>
             <td>{{ $post->created_at->diffForHumans() }}</td>
             <td>
