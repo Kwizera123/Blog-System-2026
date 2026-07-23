@@ -81,8 +81,10 @@ class PostController extends Controller
             'dimensions:min_width=300,min_height=200',
             'video_url' => 'nullable|url|max:255',
             'status' => 'required|in:draft,published',
+            
         ]);
-        $validated['slug'] = Str::slug($validated['title']);
+
+        $validated['slug'] = Post::generateSlug($validated['title']);
 
         $imagePath = null;
         if($request->hasFile('image')) {
@@ -99,11 +101,12 @@ class PostController extends Controller
         // Save the Date
         Post::create([
             'title' => $validated['title'],
+            'slug' => $validated['slug'],
             'content' => $validated['content'],
             'image' => $validated['image'] ?? null,
             'category_id' => $validated['category_id'],
             'image' => $imagePath,
-            'video_url' => 'nullable|url|max:255',
+            'video_url' => $validated['video_url'],
             'status' => $validated['status'],
             'user_id' => auth()->id(),
             
@@ -174,8 +177,6 @@ class PostController extends Controller
         $imagePath = $request->file('image')->store('posts','public');
     }
 
-    
-
     $post->update([
         'title' => $validated['title'],
         'content' =>$validated['content'],
@@ -183,6 +184,7 @@ class PostController extends Controller
         'image' => $imagePath,
         'video_url' => $validated['video_url'],
         'status' => $validated['status'],
+        'slug' => Post::generateSlug($validated['title']),
     ]);
 
     return redirect()
@@ -195,7 +197,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user, Post $post)
+    public function destroy(Post $post)
     {
      
     $this->authorize('delete', $post);

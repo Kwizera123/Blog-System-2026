@@ -49,6 +49,7 @@
         <tbody>
           @foreach ($posts as $post)
             <tr>
+              {{-- {{ dd($post->slug) }} --}}
               <td>{{ $post->title }}</td>
               <td>{{ $post->category->name }}</td>
               <td>{{ Str::limit($post->content, 25) }}</td>
@@ -93,7 +94,7 @@
               <td>{{ $post->status }}</td>
               <td>{{ $post->user->name }}</td>
               <td>
-                <a href="{{ route('posts.edit', $post->slug) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
                 <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
                   @csrf
                   @method('DELETE')

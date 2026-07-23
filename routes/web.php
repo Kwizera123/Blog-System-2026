@@ -24,10 +24,12 @@ Route::middleware('auth')->group(function(){
   Route::get('/read-post', [HomeController::class, 'index'])->name('post');
  Route::get('/post/{post}', [HomeController::class, 'show'])
         ->name('post.show');
+
 });
 
 Route::middleware('auth')->group(function() {
     Route::resource('posts', PostController::class);
+
     Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
     //
 });

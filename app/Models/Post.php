@@ -3,10 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Category;
-use App\Models\Comment;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -49,16 +46,43 @@ class Post extends Model
     }
 
     if (str_contains($url, 'youtu.be/')) {
-        $url = str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $url);
+        $url = str_replace('https://youtu.be/',
+         'https://www.youtube.com/embed/',
+          $url
+          );
     }
 
     return $url;
 }
-    
+        /**
+     * Use slug instead of ID in URLs
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+        /**
+     * Generate unique slug
+     */
+
+
+    public static function generateSlug($title)
+    {
+        $slug = Str::slug($title);
+
+        $count = 1;
+
+       while (self::where('slug', $slug)->exists()) {
+
+            $slug = Str::slug($title) . '-' . $count;
+
+            $count++;
+
+        }
+         
+        return $slug;
+    } 
+     
 
 }
