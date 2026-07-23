@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Category;
+
 
 class PostController extends Controller
 {
@@ -80,6 +82,7 @@ class PostController extends Controller
             'video_url' => 'nullable|url|max:255',
             'status' => 'required|in:draft,published',
         ]);
+        $validated['slug'] = Str::slug($validated['title']);
 
         $imagePath = null;
         if($request->hasFile('image')) {
@@ -122,8 +125,8 @@ class PostController extends Controller
             'comments.user'
         ]);
         return view('backend.posts.show', compact('post'));
-        //
-        //
+        
+        //End Method
     }
 
     /**

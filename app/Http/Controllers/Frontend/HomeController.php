@@ -10,8 +10,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['user', 'category'])
+        $posts = Post::with(['user', 'category','comments'])
         ->where('status','published')
+        ->whereNotNull('slug')
         ->latest()
          ->get();
         return view('frontend.home', compact('posts'));
@@ -22,4 +23,5 @@ class HomeController extends Controller
     {
         return view('frontend.post', compact('post'));
     }
+
 }

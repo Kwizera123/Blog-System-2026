@@ -93,7 +93,7 @@
               <td>{{ $post->status }}</td>
               <td>{{ $post->user->name }}</td>
               <td>
-                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('posts.edit', $post->slug) }}" class="btn btn-sm btn-warning">Edit</a>
                 <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
                   @csrf
                   @method('DELETE')

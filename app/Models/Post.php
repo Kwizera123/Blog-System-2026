@@ -12,6 +12,7 @@ class Post extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
         'content',
         'image',
         'video_url',
@@ -53,7 +54,11 @@ class Post extends Model
 
     return $url;
 }
-
+    
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
 
 }

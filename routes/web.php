@@ -22,7 +22,8 @@ Route::middleware('auth')->group(function(){
  Route::resource('posts', PostController::class);
   Route::get('/home', [HomeController::class, 'index'])->name('home');
   Route::get('/read-post', [HomeController::class, 'index'])->name('post');
- Route::get('/post/{post}', [HomeController::class, 'show'])->name('post.show');
+ Route::get('/post/{post}', [HomeController::class, 'show'])
+        ->name('post.show');
 });
 
 Route::middleware('auth')->group(function() {
@@ -83,9 +84,8 @@ Route::middleware(['auth','admin'])
                 Route::patch('/admin/posts/{post}/unpublish', [PostController::class, 'unpublish'])
                         ->name('admin.posts.unpublish');
 
+
         });
-
-
 
 // Comment Route
 Route::resource('comments', CommentController::class)
