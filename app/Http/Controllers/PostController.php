@@ -122,11 +122,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
-    {
-                $post->load([
-            'comments.user'
-        ]);
+    public function show($slug)
+        {
+            $post = Post::where('slug',$slug)
+                ->with(['user','category','comments'])
+                ->firstOrFail();
+  
         return view('backend.posts.show', compact('post'));
         
         //End Method

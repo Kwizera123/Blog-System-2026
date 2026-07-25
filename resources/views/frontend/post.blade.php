@@ -4,22 +4,32 @@
 
   <div class="container mt-4">
     <labe class="form-label text text-primary">
-      <strong>Your Post:</strong>
+      <strong>Your Post | Reading</strong>
     </labe>
-    <div class="card">
+
+    <div class="card bg-light border-0">
+      @if($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" class="card-img" alt="{{ $post->title }}">
+      @endif
+    </div>
+
+    <div class="card border-0">
 
       <div class="card-body">
-        <h2>{{ $post->title }}</h2>
+        <h1 class="card-title">{{ $post->title }}</h1>
+
         <p class="text-muted">
-          By: {{ $post->user->name }} | Category: {{ $post->category->name }}
+          Written By: <strong> {{ $post->user->name }}</strong>
+          |
+          Category: <strong>{{ $post->category->name }}</strong>
+          |
+          {{ $post->created_at->format('M d, Y') }}
         </p>
         <hr>
-        <p>
-          {{ $post->content }}
-        </p>
-        @if($post->image)
-          <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="{{ $post->title }}" width="200">
-        @endif
+        <div>
+          {!! $post->content !!}
+        </div>
+
 
 
 
@@ -52,11 +62,14 @@
         </div>
         @endif --}}
 
-                   @if($post->embed_video_url)
-
-                  <iframe src="{{ $post->embed_video_url }}"></iframe>
-
-                @endif
+        @if($post->embed_video_url)
+          <hr>
+          <h3>Video Tutorial</h3>
+          <div class="ratio ratio-16x9">
+            <iframe src="{{ $post->embed_video_url}}" allowfullscreen>
+            </iframe>
+          </div>
+        @endif
       </div>
     </div>
     {{-- Comment--}}
@@ -69,8 +82,13 @@
           <labe class="form-label">Leave a Comment:</labe>
           <textarea name="comment" class="form-control" id="" rows="3" required></textarea>
         </div>
-        <button class="btn btn-primary">Send Comment</button>
+        <button class="btn btn-primary btn-sm">Send Comment</button>
+
+        <a href="{{ route('home') }}" class="btn btn-secondary btn-sm">
+          ← Back to Posts
+        </a>
       </form>
+
     @endauth
 
     <h3 class="mt-3">
@@ -80,7 +98,7 @@
     @forelse ($post->comments as $comment)
 
 
-      <div class="card mb-3">
+      <div class="card mb-3 border-bottom ">
         <div class="card-body">
           <h6>
             {{ $comment->user->name }}
@@ -115,7 +133,7 @@
     @endforeach --}}
 
 
-    <a href="/home" class="btn btn-secondary mt-3">
+    <a href="{{ route('home') }}" class="btn btn-secondary btn-sm mt-3">
       ← Back
     </a>
   </div>

@@ -95,6 +95,7 @@
               <td>{{ $post->user->name }}</td>
               <td>
                 <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success">View</a>
                 <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
                   @csrf
                   @method('DELETE')

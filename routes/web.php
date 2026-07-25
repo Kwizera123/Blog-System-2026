@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function(){
 Route::middleware('auth')->group(function() {
     Route::resource('posts', PostController::class);
 
+    Route::get('/posts/{$slug}', [PostController::class, 'show'])
+                ->name('posts.show');
+
     Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
     //
 });
