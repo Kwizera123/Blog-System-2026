@@ -53,6 +53,26 @@
         </div>
       </div>
 
+      <div class="col-md-3 mt-2">
+        <div class="card text-center bg-success-subtle shadow-sm">
+          <div class="card-body">
+            <h5>🗂️ <strong>Total Post Published:</strong></h5>
+            <h2 class="badge text-bg-success">{{ $publishPosts }}</h2>
+            <a href="#" class="btn btn-sm btn- text-white"><strong></strong></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mt-2">
+        <div class="card text-center bg-danger-subtle shadow-sm">
+          <div class="card-body">
+            <h5>🗂️ <strong>Total Draft Posts:</strong></h5>
+            <h2 class="badge text-bg-danger"><strong>{{ $draftPosts }}</strong></h2>
+            {{-- <a href="#" class="btn btn-sm btn- text-white"><strong></strong></a> --}}
+          </div>
+        </div>
+      </div>
+
     </div>
 
 

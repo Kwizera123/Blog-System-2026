@@ -7,10 +7,11 @@
       @csrf
       @method('PUT')
       <textarea name="comment" id="" rows=" 3" class="form-control">
-                                                                                                                                                                      {{ old('comment', $comment->comment) }}
-                                                                                                                                                                              </textarea>
+                                                                                                                                                                                                                                                              {{ old('comment', $comment->comment) }}
+                                                                                                                                                                                                                                                                      </textarea>
       <br>
       <button class="btn btn-success">Update Comment</button>
+      <a href="{{ route('home') }}" class="btn text-bg-info">Back to post</a>
     </form>
   </div>
 
