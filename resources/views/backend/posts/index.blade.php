@@ -18,18 +18,53 @@
         </div>
       </div><br>
 
-      <div class="col-md-3">
-        <select name="sort" class="form-select form-control" onchange="this.form.submit()">
-          <option value="">Newest First</option>
+      <div class="row">
 
-          <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
+        <div class="col-md-3">
+          <select name="sort" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
+            <option value="">Newest First</option>
 
-          <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title (A-Z)</option>
+            <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest First</option>
 
-          <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title (Z-A)</option>
-        </select>
+            <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title (A-Z)</option>
+
+            <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title (Z-A)</option>
+          </select>
+
+        </div>
+
+        <div class="col-md-3">
+          <select name="category" class="form-select" aria-label="Default select example" onchange="this.form.submit()"
+            id="">
+            <option value="">All Categories</option>
+
+            @foreach($categories as $category)
+              <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <select name="status" class="form-select" aria-label="Default select example" onchange="this.form.submit()"
+            id="">
+
+            <option value="">All Statuses</option>
+
+            <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+              Published
+            </option>
+
+            <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>
+              Draft
+            </option>
+
+          </select>
+        </div>
 
       </div>
+
 
     </form>
     @if($posts->count() > 0)
@@ -52,7 +87,7 @@
               {{-- {{ dd($post->slug) }} --}}
               <td>{{ $post->title }}</td>
               <td>{{ $post->category->name }}</td>
-              <td>{{ Str::limit($post->content, 25) }}</td>
+              <td>{{ Str::limit($post->content, 5) }}</td>
               <td>
                 @if($post->image)
                   <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail" width="50" height="50"

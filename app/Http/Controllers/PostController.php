@@ -19,10 +19,31 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $categories = Category::orderBy('name')->get();
+
+
+
         $posts = Post::with(['user', 'category'])
 
         ->when($request->filled('search'), function ($query) use ($request){
-        $query->where('title', 'like', '%' . $request->search . '%');
+
+        //$query->where('title', 'like', '%' . $request->search . '%');
+
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search){
+
+            $q->where('title', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%")
+                ->orWhereHas('category', function ($category) use ($search) {
+                    $category->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('user', function ($user) use ($search) {
+                    $user->where('name', 'like', "%{$search}%");
+                });
+        });
+        
+        
         })
 
         ->when($request->sort === 'oldest', function($query) {
@@ -39,11 +60,20 @@ class PostController extends Controller
             $query->latest();
         })
 
+          ->when($request->filled('category'), function ($query) use ($request){
+            $query->where('category_id', $request->category);
+        })
+          ->when($request->filled('status'), function ($query) use ($request) {
+            $query->where('status', $request->status);
+          })
+
+    
+
         ->latest()
         ->paginate(5)
         ->withQueryString();
 
-        return view('backend.posts.index', compact('posts'));
+        return view('backend.posts.index', compact('posts','categories'));
     }
     public function myPosts()
 
