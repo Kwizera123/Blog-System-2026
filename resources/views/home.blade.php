@@ -26,28 +26,31 @@
 
   <!-- Main Content Area -->
   <main class="content-area">
-    <h2 class="section-title">Latest Articles</h2>
+    <h2 class="section-title">Latest Articles New</h2>
 
     <div class="posts-grid">
-      <!-- Post 1 -->
-      <article class="post-card">
-        <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80"
-            alt="Code on screen">
-          <span class="post-category">Web Development</span>
-        </div>
-        <div class="post-content">
-          <div class="post-meta">July 9, 2026</div>
-          <h3 class="post-title"><a href="#">Building Scalable Applications with Modern Architecture</a></h3>
-          <p class="post-excerpt">Discover the essential patterns and practices required to design clean,
-            maintainable
-            codebases that handle growth seamlessly.</p>
-          <a href="#" class="read-more">Read Article &rarr;</a>
-        </div>
-      </article>
 
+      @foreach ($posts as $post)
+        <!-- Post 1 -->
+        <article class="post-card">
+
+          <div class="post-image">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80"
+              alt="Code on screen">
+            <span class="post-category">{{ $post->category->name }}</span>
+          </div>
+
+          <div class="post-content">
+            <div class="post-meta">{{ $post->created_at->diffForHumans() }}</div>
+            <h3 class="post-title"><a href="#">{{ $post->title }}</a></h3>
+            <p class="post-excerpt">{{ Str::limit($post->content, 120) }}</p>
+            <a href="{{ route('post.show', $post->slug) }}" class="read-more">Read Article &rarr;</a>
+          </div>
+        </article>
+
+      @endforeach
       <!-- Post 2 -->
-      <article class="post-card">
+      {{-- <article class="post-card">
         <div class="post-image">
           <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80"
             alt="Laptop on desk">
@@ -60,10 +63,10 @@
             explicit binding methods effectively.</p>
           <a href="#" class="read-more">Read Article &rarr;</a>
         </div>
-      </article>
+      </article> --}}
 
       <!-- Post 3 -->
-      <article class="post-card">
+      {{-- <article class="post-card">
         <div class="post-image">
           <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80"
             alt="Design sketches">
@@ -76,7 +79,9 @@
             visual hierarchies for developer comfort.</p>
           <a href="#" class="read-more">Read Article &rarr;</a>
         </div>
-      </article>
+      </article> --}}
+
+
     </div>
   </main>
 

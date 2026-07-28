@@ -15,7 +15,8 @@ class HomeController extends Controller
         ->whereNotNull('slug')
         ->latest()
          ->get();
-        return view('frontend.home', compact('posts'));
+        //return view('frontend.home', compact('posts'));
+         return view('home', compact('posts'));
     }
     //
 

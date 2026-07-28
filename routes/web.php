@@ -19,12 +19,17 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/', [HomeController::class, 'index'])
+->name('home');
+
 Route::middleware('auth')->group(function(){
  Route::resource('posts', PostController::class);
   Route::get('/home', [HomeController::class, 'index'])->name('home');
   Route::get('/read-post', [HomeController::class, 'index'])->name('post');
  Route::get('/post/{post}', [HomeController::class, 'show'])
         ->name('post.show');
+
+
 
 });
 
