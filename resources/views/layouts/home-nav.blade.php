@@ -20,10 +20,14 @@
         </ul>
 
         <!-- Integrated Search Field Input -->
-        <div class="search-box">
-          <input type="text" placeholder="Search tutorials...">
-          <button type="submit" class="search-btn">🔍</button>
-        </div>
+
+        <form action="{{ route('home') }}" method="GET">
+          <div class="search-box">
+            <input type="text" name="search" placeholder="Search posts..." value="{{ request('search') }}">
+            <button type="submit" class="search-btn"> 🔍</button>
+          </div>
+        </form>
+
         @auth
           <a href="{{ url('/dashboard') }}" class="author-widget">
             Dashboard

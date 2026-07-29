@@ -8,10 +8,15 @@
     <div class="widget">
       <h3>Categories</h3>
       <ul class="category-list">
-        <li><a href="#">Web Development <span>(12)</span></a></li>
+
+        @foreach ($posts as $item)
+          <li><a href="#">{{ $item->category->name }} <span>(12)</span></a></li>
+        @endforeach
+
+        {{-- <li><a href="#">Web Development <span>(12)</span></a></li>
         <li><a href="#">PHP & Laravel <span>(8)</span></a></li>
         <li><a href="#">CSS & Tailwind <span>(5)</span></a></li>
-        <li><a href="#">JavaScript <span>(9)</span></a></li>
+        <li><a href="#">JavaScript <span>(9)</span></a></li> --}}
       </ul>
     </div>
     <div class="widget">
@@ -26,7 +31,7 @@
 
   <!-- Main Content Area -->
   <main class="content-area">
-    <h2 class="section-title">Latest Articles New</h2>
+    <h2 class="section-title">Latest Articles</h2>
 
     <div class="posts-grid">
 
@@ -35,52 +40,24 @@
         <article class="post-card">
 
           <div class="post-image">
-            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80"
-              alt="Code on screen">
-            <span class="post-category">{{ $post->category->name }}</span>
+            @if ($post->image)
+              <img src="{{ asset('storage/' . $post->image) }}" alt="Code on screen">
+              <span class="post-category">{{ $post->category->name }}</span>
+            @else
+              <span class="text-muted">No Image</span>
+            @endif
           </div>
 
           <div class="post-content">
             <div class="post-meta">{{ $post->created_at->diffForHumans() }}</div>
             <h3 class="post-title"><a href="#">{{ $post->title }}</a></h3>
             <p class="post-excerpt">{{ Str::limit($post->content, 120) }}</p>
+            <div class="post-meta">By: <strong>{{ $post->user->name }}</strong></div>
             <a href="{{ route('post.show', $post->slug) }}" class="read-more">Read Article &rarr;</a>
           </div>
         </article>
 
       @endforeach
-      <!-- Post 2 -->
-      {{-- <article class="post-card">
-        <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80"
-            alt="Laptop on desk">
-          <span class="post-category">PHP & Laravel</span>
-        </div>
-        <div class="post-content">
-          <div class="post-meta">July 6, 2026</div>
-          <h3 class="post-title"><a href="#">Mastering Route Model Binding in Custom Dashboards</a></h3>
-          <p class="post-excerpt">Simplify your controller logic and optimize database queries using implicit and
-            explicit binding methods effectively.</p>
-          <a href="#" class="read-more">Read Article &rarr;</a>
-        </div>
-      </article> --}}
-
-      <!-- Post 3 -->
-      {{-- <article class="post-card">
-        <div class="post-image">
-          <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80"
-            alt="Design sketches">
-          <span class="post-category">CSS & Tailwind</span>
-        </div>
-        <div class="post-content">
-          <div class="post-meta">June 28, 2026</div>
-          <h3 class="post-title"><a href="#">Crafting Eye-Strain Free Dynamic Layouts</a></h3>
-          <p class="post-excerpt">A deep dive into styling interfaces with low blue light configurations and warm
-            visual hierarchies for developer comfort.</p>
-          <a href="#" class="read-more">Read Article &rarr;</a>
-        </div>
-      </article> --}}
-
 
     </div>
   </main>

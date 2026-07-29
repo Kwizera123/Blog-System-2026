@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/', [HomeController::class, 'index'])
 ->name('home');
+//Route::get('/', [CategoryController::class, 'index'])
+//->name('home');
 
 Route::middleware('auth')->group(function(){
  Route::resource('posts', PostController::class);

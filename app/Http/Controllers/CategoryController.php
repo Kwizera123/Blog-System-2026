@@ -13,6 +13,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        // $categories = Category::with(['category'])->get();
+
+        // return with('home', compact('categories'));
     }
 
     /**
