@@ -17,7 +17,8 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index(Request $request)
+
+public function index(Request $request)
 {
     $categories = Category::orderBy('name')->get();
 
@@ -26,7 +27,6 @@ class PostController extends Controller
             'category',
             'tags'
         ])
-        ->where('status', 'published')
 
         // Search
         ->when($request->filled('search'), function ($query) use ($request) {
@@ -75,6 +75,8 @@ class PostController extends Controller
 
     return view('backend.posts.index', compact('posts', 'categories'));
 }
+
+
     public function myPosts()
 
     {

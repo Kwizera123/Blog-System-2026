@@ -44,7 +44,8 @@
               <img src="{{ asset('storage/' . $post->image) }}" alt="Code on screen">
               <span class="post-category">{{ $post->category->name }}</span>
             @else
-              <span class="text-muted">No Image</span>
+              <img src="{{ asset('storage/no_image.png') }}" class="img-thumbnail" width="20" height="20"
+                style="object-fit: cover;" alt="{{ $post->title }}">
             @endif
           </div>
 

@@ -13,8 +13,9 @@ class TagController extends Controller
      */
     public function index()
     {
-       $tags = Tag::latest()->paginate(10);
-       return view('backend.tags.index', compact('tags'));
+       $tags = Tag::orderBy('name')->paginate(10);
+
+       return view('admin.tags.index', compact('tags'));
         //
 
     }
@@ -25,6 +26,7 @@ class TagController extends Controller
     public function create()
     {
         //
+        return view('admin.tags.create');
     }
 
     /**
@@ -32,38 +34,63 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:tags,name',
+        ]);
+
+        Tag::create($validated);
+
+        return redirect()
+            ->route('admin.tags.index')
+            ->with('success', 'Tag created successfully!');
+        //End Method
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Tag $tag)
     {
+        return view('admin.tags.show', compact('tag'));
         //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tag $tag)
     {
+        return view('admin.tags.edit', compact('tag'));
         //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tag $tag)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:tags,name,' . $tag->id,
+        ]);
+
+        $tag->update($validated);
+
+        return redirect()
+            ->route('admin.tags.index')
+            ->with('success', 'Tag updated successfully!');
         //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tag $tag)
     {
+        $tag->delete();
+
+        return redirect()
+        ->route('admin.tags.index')
+        ->with('success', 'Tag Delete successfully!');
         //
     }
 }

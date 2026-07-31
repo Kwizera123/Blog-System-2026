@@ -77,6 +77,7 @@
             <th>Image</th>
             <th>Video</th>
             <th>Status</th>
+
             <th>Author</th>
             <th>Actions</th>
           </tr>
@@ -92,7 +93,11 @@
                 @if($post->image)
                   <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail" width="50" height="50"
                     style="object-fit: cover;" alt="{{ $post->title }}">
-                @else <span class="text-muted">No Image</span> @endif
+                @else
+                  <img src="{{ asset('storage/no_image.png') }}" class="img-thumbnail" width="50" height="50"
+                    style="object-fit: cover;" alt="{{ $post->title }}">
+
+                @endif
               </td>
               <td>
                 @if($post->video_url)
@@ -127,6 +132,7 @@
                   @endif --}}
               </td>
               <td>{{ $post->status }}</td>
+
               <td>{{ $post->user->name }}</td>
               <td>
                 <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>

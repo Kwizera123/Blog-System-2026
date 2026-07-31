@@ -98,8 +98,10 @@ Route::middleware(['auth','admin'])
                         ->name('admin.posts.unpublish');
 
                 //Tag
-                Route::resource('tags', TagController::class);
+                Route::resource('tags', TagController::class)
+                        ->names('admin.tags');
 
+               
 
         });
 
