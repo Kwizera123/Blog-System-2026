@@ -31,7 +31,7 @@
 
               @foreach ($post->tags as $tag)
 
-                <span class="badge bg-primary">{{ $tag->name }}</span>
+                <span class="badge bg-info">{{ $tag->name }}</span>
 
               @endforeach
 
