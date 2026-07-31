@@ -183,6 +183,8 @@ public function index(Request $request)
     {
         $this->authorize('update', $post);
 
+        $post->load('tags');
+
         $categories = Category::orderBy('name')->get();
 
         $tags = Tag::orderBy('name')->get();
@@ -210,6 +212,9 @@ public function index(Request $request)
         'dimensions:min_width=300,min_height=200',
         'video_url' => 'nullable|url|max:255',
         'status' => 'required|in:draft,published',
+
+        'tags' => 'nullable|array',
+        'tags.*' => 'exists:tags,id',
     ]);
 
     $imagePath = $post->image;
@@ -220,10 +225,6 @@ public function index(Request $request)
             Storage::disk('public')->delete($post->image);
         }
 
-        //Upload new Image (Works well too)
-        // $validated['image'] = $request
-        //         ->file('image')
-        //         ->store('posts', 'public');
         $imagePath = $request->file('image')->store('posts','public');
     }
 
@@ -236,10 +237,9 @@ public function index(Request $request)
         'status' => $validated['status'],
         'slug' => Post::generateSlug($validated['title']),
     ]);
-
-     if($request->filled('tags')) {
-                $post->tags()->sync($request->tags ?? []);
-            }
+// Synchronize the selected tags.
+// If no tags are selected, remove all existing tag relationships.
+    $post->tags()->sync($request->input('tags', []));
 
     return redirect()
         ->route('posts.index')

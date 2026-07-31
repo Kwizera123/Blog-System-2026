@@ -34,20 +34,23 @@
           <div class="row">
             @foreach ($tags as $tag)
 
-              <div class="col-md-3">
+                    <div class="col-md-3">
 
-                <div class="form-check">
+                      <div class="form-check">
 
 
-                  <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}"
-                    id="tag{{ $tag->id }}" {{ in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray()))}}>
+                        <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                          id="tag{{ $tag->id }}" {{ in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray())) ?
+              'checked' : ''}}>
 
-                  <label class="form-check-label">
-                    {{ $tag->name }}
-                  </label>
 
-                </div>
-              </div>
+
+                        <label class="form-check-label">
+                          {{ $tag->name }}
+                        </label>
+
+                      </div>
+                    </div>
 
             @endforeach
           </div>
@@ -104,8 +107,8 @@
       <div class=" mb-3">
         <label for="" class="form-label">Content</label>
         <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                                                                                {{ old('content', $post->content) }}
-                                                                                                                                                                                                                                                                                                                                                                                                </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                  {{ old('content', $post->content) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                  </textarea>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Featured Image</label>
@@ -128,15 +131,15 @@
         </select>
       </div>
 
-      <button class="btn btn-success">Update Post</button>
-      <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
+      <button class="btn btn-success btn-sm">Update Post</button>
+      <a href="{{ route('posts.index') }}" class="btn btn-sm btn-secondary">Back</a>
 
     </form>
     @if ($post->status == 'draft')
       <form action="{{ route('admin.posts.publish', $post) }}" method="POST" class="d-inline">
         @csrf
         @method('PATCH')
-        <button class="btn btn-success btn-sm">Publish</button>
+        <button class="btn btn-success btn-sm mt-1">Publish</button>
       </form>
     @else
       <form action="{{ route('admin.posts.unpublish', $post) }}" method="POST" class="d-inline">
