@@ -54,6 +54,16 @@
       </div>
 
       <div class="col-md-3 mt-2">
+        <div class="card text-center text-bg-info shadow-sm">
+          <div class="card-body">
+            <h5><strong>Total Tags:</strong></h5>
+            <h2>??</h2>
+            <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mt-2">
         <div class="card text-center bg-success-subtle shadow-sm">
           <div class="card-body">
             <h5>🗂️ <strong>Total Post Published:</strong></h5>

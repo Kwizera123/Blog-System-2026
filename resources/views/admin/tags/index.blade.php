@@ -7,7 +7,7 @@
       <h2 class="text-success">
         All Tags
       </h2>
-      <a href="{{ route('admin.tags.create') }}" class="btn btn-prima">+ Create Tag</a>
+      <a href="{{ route('admin.tags.create') }}" class="btn btn-sm btn-primary">+ Create Tag</a>
     </div>
 
     @if(session('success'))
@@ -32,7 +32,7 @@
               <td>{{ $tag->id }}</td>
               <td>{{ $tag->name }}</td>
               <td>
-                <a href="{{ route('admin.tags.edit', $tag) }}" class="btn btn-sm btnwarning">Edit</a>
+                <a href="{{ route('admin.tags.edit', $tag) }}" class="btn btn-sm btn-warning">Edit</a>
                 <form action="{{ route('admin.tags.destroy', $tag) }}" method="POST" class="d-inline">
                   @csrf
                   @method('DELETE')

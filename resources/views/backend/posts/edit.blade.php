@@ -34,20 +34,20 @@
           <div class="row">
             @foreach ($tags as $tag)
 
-                    <div class="col-md-3">
+              <div class="col-md-3">
 
-                      <div class="form-check">
+                <div class="form-check">
 
 
-                        <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" {{
-              $post->tags->contains($tag->id) ? 'checked' : '' }}>
+                  <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                    id="tag{{ $tag->id }}" {{ in_array($tag->id, old('tags', $post->tags->pluck('id')->toArray()))}}>
 
-                        <label class="form-check-label">
-                          {{ $tag->name }}
-                        </label>
+                  <label class="form-check-label">
+                    {{ $tag->name }}
+                  </label>
 
-                      </div>
-                    </div>
+                </div>
+              </div>
 
             @endforeach
           </div>
@@ -66,7 +66,7 @@
         </select>
       </div> --}}
 
-      <div class="mb-3">
+      {{-- <div class="mb-3">
         <label class="form-label">
           Tags
         </label>
@@ -74,38 +74,38 @@
         <div class="row">
           @forelse ($tags as $tag)
 
-            <div class="col-md-3">
+          <div class="col-md-3">
 
-              <div class="form-check">
+            <div class="form-check">
 
-                <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag{{ $tag->id }}"
-                  {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+              <input class="form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag{{ $tag->id }}"
+                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
 
-                <label class="form-check-label" for="tag{{ $tag->id }}">
-                  {{ $tag->name }}
-                </label>
-
-              </div>
+              <label class="form-check-label" for="tag{{ $tag->id }}">
+                {{ $tag->name }}
+              </label>
 
             </div>
 
+          </div>
+
           @empty
 
-            <p class="text-muted">
-              No tags available.
-            </p>
+          <p class="text-muted">
+            No tags available.
+          </p>
 
           @endforelse
         </div>
-      </div>
+      </div> --}}
 
 
 
       <div class=" mb-3">
         <label for="" class="form-label">Content</label>
         <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                              {{ old('content', $post->content) }}
-                                                                                                                                                                                                                                                                                                                              </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                {{ old('content', $post->content) }}
+                                                                                                                                                                                                                                                                                                                                                                                                </textarea>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Featured Image</label>

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -38,7 +39,10 @@ class TagController extends Controller
             'name' => 'required|string|max:255|unique:tags,name',
         ]);
 
-        Tag::create($validated);
+        Tag::create([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+        ]);
 
         return redirect()
             ->route('admin.tags.index')
@@ -73,7 +77,10 @@ class TagController extends Controller
             'name' => 'required|string|max:255|unique:tags,name,' . $tag->id,
         ]);
 
-        $tag->update($validated);
+        $tag->update([
+            'name' => $validated['name'],
+            'slug' => Str::slug($validated['name']),
+        ]);
 
         return redirect()
             ->route('admin.tags.index')
@@ -86,6 +93,8 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
+        $tag->posts()->detach();
+
         $tag->delete();
 
         return redirect()
