@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Tag;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
         $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
 
         $posts = Post::with([
             'user',
@@ -60,11 +62,20 @@ class HomeController extends Controller
         ->when($request->filled('category'), function ($query) use ($request){
             $query->where('category_id', $request->category);
         })
+        //Tag filter
+        ->when($request->filled('tag'), function ($query) use ($request){
+            $query->whereHas('tags', function ($tag) use ($request){
+                $tag->where('tags.id', $request->tag);
+            });
+        })
+        
+        // Sorting
         ->latest()
+        //pagination
         ->paginate(5)
         ->withQueryString();
 
-        return view('home', compact('posts','categories'));
+        return view('home', compact('posts','categories', 'tags'));
     }
     //
 

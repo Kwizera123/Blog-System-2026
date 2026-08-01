@@ -21,25 +21,45 @@
         <button type="submit" class="btn btn-sm bg-slate-400 mt-2 hover:bg-blue-400">Search</button>
       </form>
 
-      {{-- <h3>Categories</h3>
+      <br>
       <ul class="category-list">
 
         @foreach ($categories as $category)
-        <li><a href="#">{{ $category->name }} <span></span></a></li>
+          <li>
+            <a href="{{ route('home', ['category' => $category->id]) }}">
+              {{ $category->name }}
+            </a>
+          </li>
         @endforeach
 
 
-        {{--
-      </ul> --}}
+
+      </ul>
 
     </div>
 
     <div class="widget">
       <h3>Popular Tags</h3>
-      <div class="tag-cloud">
-        <a href="#">Backend</a>
-        <a href="#">Frontend</a>
-        <a href="#">MVC</a>
+      <form action="{{ route('home') }}" method="GET">
+        <select name="tag" id="tag" class="search-box text-white mt-2" style="width: 100%">
+
+          <option value="">All Tags</option>
+          @foreach ($tags as $tag)
+            <option value="{{ $tag->id }}" {{ request('tag') == $tag->id ? 'selected' : '' }}>
+              {{ $tag->name }}
+            </option>
+          @endforeach
+
+        </select>
+
+        <button type="submit" class="btn btn-sm bg-slate-400 mt-2 hover:bg-blue-400">Search</button>
+
+      </form>
+
+      <div class="tag-cloud mt-3">
+        @foreach ($tags as $tag)
+          <a href="{{ route('home', ['tag' => $tag->id]) }}" class="tag">{{ $tag->name }}</a>
+        @endforeach
       </div>
     </div>
   </aside>
@@ -66,7 +86,7 @@
         <!-- Post 1 -->
         <article class="post-card">
 
-          <div class="post-image" style="width: auto; height: 200px; overflow: hidden;">
+          <div class="post-image">
             @if ($post->image)
               <img src="{{ asset('storage/' . $post->image) }}" alt="Code on screen">
               <span class="post-category">{{ $post->category->name }}</span>

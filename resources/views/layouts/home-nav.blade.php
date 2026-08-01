@@ -1,7 +1,7 @@
 @if (Route::has('login'))
   <nav class="navbar">
     <div class="nav-container">
-      <a href="#" class="nav-logo">Learn<span>ToCode</span></a>
+      <a href="{{ route('home') }}" class="nav-logo">Learn<span>ToCode</span></a>
 
       <!-- Hidden checkbox trick to handle mobile menu without forcing JavaScript -->
       <input type="checkbox" id="menu-toggle" class="menu-toggle">
@@ -13,7 +13,7 @@
 
       <div class="nav-menu">
         <ul class="nav-links">
-          <li><a href="#" class="active">Home</a></li>
+          <li><a href="/" class="active">Home</a></li>
           <li><a href="#">Articles</a></li>
           <li><a href="#">Tutorials</a></li>
           <li><a href="#">About</a></li>
