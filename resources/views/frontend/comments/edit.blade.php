@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('layouts.home')
 
 @section('content')
   <div class="container">
@@ -6,12 +6,12 @@
     <form action="{{ route('comments.update', $comment) }}" method="POST">
       @csrf
       @method('PUT')
-      <textarea name="comment" id="" rows=" 3" class="form-control">
-                                                                                                                                                                                                                                                              {{ old('comment', $comment->comment) }}
-                                                                                                                                                                                                                                                                      </textarea>
+      <textarea name="comment" id="" rows=" 3" class="form-control mt-3">
+                                                                                                                                                                                                                                                                                                    {{ old('comment', $comment->comment) }}
+                                                                                                                                                                                                                                                                                                            </textarea>
       <br>
       <button class="btn btn-success">Update Comment</button>
-      <a href="{{ route('home') }}" class="btn text-bg-info">Back to post</a>
+      <a href="{{ route('post.show', $comment->post->slug) }}" class=" btn text-bg-secondary">Back to post</a>
     </form>
   </div>
 

@@ -6,7 +6,8 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Policies\CommentPolicy;
-use App\Models\User;
+use App\Models\Tag;
+use App\Models\Category;
 
 class CommentController extends Controller
 {
@@ -33,13 +34,14 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'comment' => 'required|min:3',
+            
             'post_id' => 'required|exists:posts,id',
+            'comment' => 'required|string|min:3|max:1000',
         ]);
 
         Comment::create([
-            'comment' => $validated['comment'],
             'post_id' => $validated['post_id'],
+            'comment' => $validated['comment'],
             'user_id' => auth()->id(),
         ]);
 
@@ -62,7 +64,10 @@ class CommentController extends Controller
     {
          $this->authorize('update', $comment);
 
-        return view('frontend.comments.edit', compact('comment'));
+         $categories = Category::orderBy('name')->get();
+         $tags = Tag::orderBy('name')->get();
+
+        return view('frontend.comments.edit', compact('comment', 'categories', 'tags'));
         //
     }
 
@@ -74,13 +79,15 @@ class CommentController extends Controller
         $this->authorize('update',$comment);
 
         $validated = $request->validate([
-            'comment' => 'required|min:3',
+            'comment' => 'required|min:3|max:1000',
         ]);
 
-        $comment->update($validated);
+        $comment->update([
+            'comment' => $validated['comment'],
+        ]);
 
         return redirect()
-                ->back()
+                ->route('post.show', $comment->post->slug)
                 ->with('success', 'Comment updated successfully!');
         //
     }
@@ -92,10 +99,12 @@ class CommentController extends Controller
     {
         $this->authorize('delete', $comment);
 
-        $comment->delete();
+       $post =  $comment->post;
+
+       $comment->delete();
 
         return redirect()
-        ->back()
+        ->route('post.show', $post->slug)
         ->with('success', 'Comment delete successfully!');
         //
     }

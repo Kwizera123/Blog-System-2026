@@ -11,9 +11,9 @@ use App\Models\Category;
 class Comment extends Model
 {
     protected $fillable = [
-        'comment',
-        'post_id',
+       'post_id', 
         'user_id',
+        'comment',
     ];
     public function post()
     {

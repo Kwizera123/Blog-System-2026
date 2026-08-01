@@ -41,7 +41,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/posts/{$slug}', [PostController::class, 'show'])
                 ->name('posts.show');
 
-    Route::get('/my-posts', [PostController::class, 'myPosts'])->name('posts.my');
+    Route::get('/my-posts', [PostController::class, 'myPosts'])
+                ->name('posts.my');
     //
 });
 
@@ -108,6 +109,7 @@ Route::middleware(['auth','admin'])
 // Comment Route
 Route::resource('comments', CommentController::class)
     ->middleware('auth');
+
 
 
 Route::get('/dashboard', function () {

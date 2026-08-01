@@ -106,13 +106,27 @@
                 {{ $comment->user->name }}
               </strong>
               <small class="text-muted">
-                {{ $comment->created_at->format('M d, Y') }}
+                {{ $comment->created_at->diffForHumans() }}
               </small>
             </div>
             <p class="mt-2 mb-0">
               {{ $comment->comment }}
             </p>
           </div>
+
+          @can('update', $comment)
+            <div class="justify-content-between mb-2 ml-3">
+              <a href="{{ route('comments.edit', $comment) }}" class="btn btn-sm btn-warning">Edit</a>
+
+              <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this comment?')">
+                  Delete
+                </button>
+              </form>
+            </div>
+          @endcan
         </div>
 
       @empty
@@ -132,6 +146,16 @@
       </div>
     @endif
 
+    @if($errors->any())
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     <div class="card mt-3 mb-4">
       <div class="card-body">
         <h4 class="mb-3">
@@ -146,8 +170,8 @@
               <label for="comment" class="form-label">Your Comment</label>
               <textarea name="comment" id="comment" cols="30" rows="4" class="form-control"
                 placeholder="Write your comment here...">
-                                                                                                                  {{ old('comment') }}
-                                                                                                                </textarea>
+                                                                                                                                 {{ old('comment') }}
+                                                                                                                      </textarea>
             </div>
             <button type="submit" class="btn btn-sm btn-primary">
               Send Comment
@@ -161,61 +185,45 @@
       </div>
     </div>
 
-    @auth
-      <form action="{{ route('comments.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="post_id" value="{{ $post->id }}">
-        <div class="mb-3">
-          <labe class="form-label">Leave a Comment:</labe>
-          <textarea name="comment" class="form-control" id="" rows="3" required></textarea>
-        </div>
-        <button class="btn btn-primary btn-sm">Send Comment</button>
 
-        <a href="{{ route('home') }}" class="btn btn-secondary btn-sm">
-          ← Back to Posts
-        </a>
-      </form>
 
-    @endauth
-
-    <h3 class="mt-3">
+    {{-- <h3 class="mt-3">
       Comments({{ $post->comments->count() }})
-    </h3>
-
+    </h3> --}}
+    {{--
     @forelse ($post->comments as $comment)
 
 
-      <div class="card mb-3 border-bottom ">
-        <div class="card-body">
-          <h6>
-            {{ $comment->user->name }}
-          </h6>
-          <small class="text-muted">
-            {{ $comment->created_at->diffForHumans() }}
-          </small>
-          <p class="mt-1">
-            {{ $comment->comment }}
-          </p>
-          {{--Edit andDelete Buttons--}}
-          {{-- @if(auth()->check() && auth()->id() == $comment->user_id) --}}
-          @can('update', $comment)
-            <a href="{{ route('comments.edit', $comment) }}" class="btn btn-sm btn-warning">Edit</a>
-          @endcan
-          @can('delete', $comment)
-            <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display: inline;">
-              @csrf
-              @method('DELETE')
-              <button class="btn btn-sm btn-danger">
-                Delete
-              </button>
-            </form>
-          @endcan
-        </div>
+    <div class="card mb-3 border-bottom ">
+      <div class="card-body">
+        <h6>
+          {{ $comment->user->name }}
+        </h6>
+        <small class="text-muted">
+          {{ $comment->created_at->diffForHumans() }}
+        </small>
 
+        {{--Edit andDelete Buttons--}}
+        {{-- @if(auth()->check() && auth()->id() == $comment->user_id) --}}
+        {{-- @can('update', $comment)
+        <a href="{{ route('comments.edit', $comment) }}" class="btn btn-sm btn-warning">Edit</a>
+        @endcan --}}
+        {{-- @can('delete', $comment)
+        <form action="{{ route('comments.destroy', $comment) }}" method="POST" style="display: inline;">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-sm btn-danger">
+            Delete
+          </button>
+        </form>
+        @endcan --}}
+        {{--
       </div>
-    @empty
-      <p>Not Comment yet,</p>
-    @endforelse
+
+    </div> --}}
+    {{-- @empty
+    <p>Not Comment yet,</p>
+    @endforelse --}}
     {{--
     @endforeach --}}
 
