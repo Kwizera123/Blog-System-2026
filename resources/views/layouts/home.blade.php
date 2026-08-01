@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Learn To Code</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,26 +23,26 @@
   <!-- Responsive Navigation Bar -->
   @include('layouts.home-nav')
 
-  <div class="container main-layout">
-    @if(session('success'))
-      <div class="alert alert-success mt-3">
-        {{ session('success') }}
-      </div>
-    @endif
-    <!-- Error -->
-    @if(session('error'))
-      <div class="alert alert-danger mt-3">
-        {{ session('error') }}
-      </div>
-    @endif
-    <!-- Uodate -->
-    @if(session('info'))
-      <div class="alert alert-info mt-3">
-        {{ session('info') }}
-      </div>
-    @endif
 
+
+  <div class="container main-layout">
+
+    {{-- --}}
+    <!-- Error -->
+    {{-- @if(session('error'))
+    <div class="alert alert-danger mt-3">
+      {{ session('error') }}
+    </div>
+    @endif --}}
+    <!-- Uodate -->
+    {{-- @if(session('info'))
+    <div class="alert alert-info mt-3">
+      {{ session('info') }}
+    </div>
+    @endif --}}
+    @include('layouts.home_left_sidebar')
     @yield('content')
+    @include('layouts.home_right_sidebar')
     <!-- Main Layout Container -->
   </div>
 

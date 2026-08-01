@@ -81,7 +81,16 @@ class HomeController extends Controller
 
     public function show(Post $post)
     {
-        return view('frontend.post', compact('post'));
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+
+        $post->load([
+            'user',
+            'category',
+            'tags',
+            'comments.user',
+        ]);
+        return view('frontend.post', compact('post', 'categories','tags'));
     }
 
 }

@@ -24,11 +24,17 @@
         {{ session('success') }}
       </div>
     @endif
-    <!-- Page Content -->
-    @yield('content')
-  </div>
-  @include('layouts.footer')
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container mt-3">
+      @if(session('error'))
+        <div class="alert alert-danger mt-3">
+          {{ session('error') }}
+        </div>
+      @endif
+      <!-- Page Content -->
+      @yield('content')
+    </div>
+    @include('layouts.footer')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
