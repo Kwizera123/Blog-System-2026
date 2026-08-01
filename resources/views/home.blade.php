@@ -62,12 +62,56 @@
         @endforeach
       </div>
     </div>
+
+
   </aside>
 
   <!-- Main Content Area -->
   <main class="content-area">
     <h2 class="section-title">Latest Articles</h2>
+    {{-- Start Active filter summary--}}
+    @if(
+        request()->filled('search') ||
+        request()->filled('category') ||
+        request()->filled('tag')
+      )
+      <div class="alert alert-info d-flex justify-content-between align-items-center">
+        <div>
+          <strong>
+            Showing {{ $posts->total() }}
+            {{ Str::plural('post', $posts->total()) }}
+          </strong>
 
+          @if (request()->filled('search'))
+            <span class="ms-2">
+              Search: <strong>{{ request('search') }}</strong>
+            </span>
+          @endif
+
+          @if (request()->filled('category'))
+            <span class="ms-2">
+              Category: <strong>
+                {{ $categories->find(request('category'))?->name }}
+              </strong>
+            </span>
+          @endif
+
+          @if (request()->filled('tag'))
+            <span class="ms-2">
+              Tag: <strong>
+                {{ $tags->find(request('tag'))?->name }}
+              </strong>
+            </span>
+          @endif
+
+        </div>
+        <div>
+          <a href="{{ route('home') }}" class="btn btn-sm btn-outline-secondary hover:bg-blue-400">Clear Filters</a>
+        </div>
+      </div>
+    @endif
+
+    {{-- End of filter summary--}}
     @if(request('search'))
 
       <article class="post-card post-content">
