@@ -7,18 +7,33 @@
   <aside class="sidebar sidebar-left">
     <div class="widget">
       <h3>Categories</h3>
+      <form action="{{ route('home') }}" method="GET">
+
+        <select name="category" id="category" class="search-box text-white mt-2" style="width: 100%">
+          <option value="">All Categories</option>
+          @foreach ($categories as $category)
+            <option value=" {{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+              {{ $category->name }}
+            </option>
+          @endforeach
+        </select>
+
+        <button type="submit" class="btn btn-sm bg-slate-400 mt-2 hover:bg-blue-400">Search</button>
+      </form>
+
+      {{-- <h3>Categories</h3>
       <ul class="category-list">
 
-        @foreach ($posts as $item)
-          <li><a href="#">{{ $item->category->name }} <span>(12)</span></a></li>
+        @foreach ($categories as $category)
+        <li><a href="#">{{ $category->name }} <span></span></a></li>
         @endforeach
 
-        {{-- <li><a href="#">Web Development <span>(12)</span></a></li>
-        <li><a href="#">PHP & Laravel <span>(8)</span></a></li>
-        <li><a href="#">CSS & Tailwind <span>(5)</span></a></li>
-        <li><a href="#">JavaScript <span>(9)</span></a></li> --}}
-      </ul>
+
+        {{--
+      </ul> --}}
+
     </div>
+
     <div class="widget">
       <h3>Popular Tags</h3>
       <div class="tag-cloud">
@@ -51,7 +66,7 @@
         <!-- Post 1 -->
         <article class="post-card">
 
-          <div class="post-image">
+          <div class="post-image" style="width: auto; height: 200px; overflow: hidden;">
             @if ($post->image)
               <img src="{{ asset('storage/' . $post->image) }}" alt="Code on screen">
               <span class="post-category">{{ $post->category->name }}</span>

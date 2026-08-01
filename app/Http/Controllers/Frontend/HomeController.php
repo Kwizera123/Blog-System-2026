@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        $categories = Category::orderBy('name')->get();
+
         $posts = Post::with([
             'user',
             'category',
@@ -53,11 +56,15 @@ class HomeController extends Controller
         });
 
         })
+        //Category filter
+        ->when($request->filled('category'), function ($query) use ($request){
+            $query->where('category_id', $request->category);
+        })
         ->latest()
-        ->paginate(6)
+        ->paginate(5)
         ->withQueryString();
 
-        return view('home', compact('posts'));
+        return view('home', compact('posts','categories'));
     }
     //
 
