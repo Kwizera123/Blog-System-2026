@@ -15,6 +15,7 @@
     @endif
 
     @if ($comments->count())
+
       <div class="table-responsive">
         <table class="table table-striped table-bordered">
           <thead>
@@ -24,6 +25,7 @@
               <th>Author</th>
               <th>Post</th>
               <th>Date</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +45,19 @@
                 </td>
                 <td>
                   {{ $comment->created_at->diffforHumans() }}
+                </td>
+                <td>
+                  <a href="{{ route('post.show', $comment->post) }}" class="btn btn-sm btn-primary">
+                    View Post
+                  </a>
+                  <form action="{{ route('admin.comments.destroy', $comment) }}" class="d-inline" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger"
+                      onclick="return confirm('Are you sure you want to delete this comment?')">
+                      Delete
+                    </button>
+                  </form>
                 </td>
               </tr>
 

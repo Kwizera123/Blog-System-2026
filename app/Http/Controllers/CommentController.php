@@ -9,6 +9,7 @@ use App\Policies\CommentPolicy;
 use App\Models\Tag;
 use App\Models\Category;
 
+
 class CommentController extends Controller
 {
      use AuthorizesRequests;
@@ -116,5 +117,15 @@ class CommentController extends Controller
         ->route('post.show', $post->slug)
         ->with('success', 'Comment delete successfully!');
         //
+    }
+
+    public function adminDestroy(Comment $comment)
+    {
+
+        $comment->delete();
+
+        return redirect()
+            ->route('admin.comments.index')
+            ->with('success', 'Comment deleted successfully!');
     }
 }

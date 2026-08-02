@@ -63,6 +63,9 @@ Route::middleware(['auth','admin'])
                 Route::get('/admin/comments', [CommentController::class, 'adminIndex'])
                         ->name('admin.comments.index');
 
+                Route::delete('/admin/comments/{comment}', [CommentController::class, 'adminDestroy'])
+                        ->name('admin.comments.destroy');
+
                 
 
                 Route::get('/users', [UserController::class, 'index'])
