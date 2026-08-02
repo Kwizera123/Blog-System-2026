@@ -20,30 +20,25 @@ class CommentController extends Controller
     {
         $comments = Comment::with([
             'user',
-            'post'
-             
+            'post',
              ])
              // Search comment
              ->when($request->filled('search'), function ($query) use ($request) {
+
                     $search = $request->search;
 
                     $query->where(function ($q) use ($search) {
-                        $q->where(
-                            'comment',
-                            'like',
-                            "%{$search}%"
-                        )
 
-                        ->orWhereHas(
-                            'user',
-                            function ($user) use ($search) {
+                        $q->where('comment','like', "%{$search}%"
+                        )
+                        ->orWhereHas('user',function ($user) use ($search) {
                                 $user->where(
                                     'name',
                                     'like',
                                     "%{$search}%"
                                 );
-                            }
-                        )
+                            })
+
                         ->orWhereHas(
                             'post',
                             function($post) use ($search) {
@@ -52,16 +47,39 @@ class CommentController extends Controller
                                     'like',
                                     "%{$search}%"
                                 );
-                            }
-                        );
                     });
+     
+                            });
+                        
+                    })
+                // Status Filter
+                ->when($request->filled('status'), function ($query) use ($request) {
+                    $query->where('status', $request->status);
              })
 
              ->latest()
              ->paginate(10)
              ->withQueryString();
 
-             return view('backend.comments.index', compact('comments'));
+             //Comment status counts
+             $totalComments = Comment::count();
+
+             $pendingComments = Comment::where('status', 'pending')->count();
+
+             $approvedComments = Comment::where('status', 'approved')->count();
+
+            $hiddenComments = Comment::where('status', 'hidden')->count();
+
+
+
+             return view('backend.comments.index', compact(
+                'comments',
+                'totalComments',
+                'pendingComments',
+                'approvedComments',
+                'hiddenComments'
+             )
+            );
         //
     }
 
@@ -163,4 +181,25 @@ class CommentController extends Controller
             ->route('admin.comments.index')
             ->with('success', 'Comment deleted successfully!');
     }
+    //
+    public function approve(Comment $comment)
+    {
+        $comment->update([
+            'status' => 'approved',
+        ]);
+
+        return back()->with('success', 'Comment approved successfully!');
+    }
+    // End Method
+
+    public function hide(Comment $comment)
+    {
+        $comment->update([
+            'status' => 'hidden',
+        ]);
+
+        return back()->with('success', 'Comment hidden successfully!');
+        
+    }
+    // End method
 }

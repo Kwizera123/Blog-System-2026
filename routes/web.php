@@ -66,6 +66,12 @@ Route::middleware(['auth','admin'])
                 Route::delete('/admin/comments/{comment}', [CommentController::class, 'adminDestroy'])
                         ->name('admin.comments.destroy');
 
+                Route::patch('/admin/comments/{comment}/approve', [CommentController::class, 'approve'])
+                        ->name('admin.comments.approve');
+                
+                Route::patch('/admin/comments/{comment}/hide', [CommentController::class, 'hide'])
+                        ->name('admin.comments.hide');
+
                 
 
                 Route::get('/users', [UserController::class, 'index'])

@@ -88,6 +88,11 @@ class HomeController extends Controller
             'user',
             'category',
             'tags',
+            'comments' => function ($query) {
+                $query
+                    ->where('status', 'approved')
+                    ->latest();
+            },
             'comments.user',
         ]);
         return view('frontend.post', compact('post', 'categories','tags'));

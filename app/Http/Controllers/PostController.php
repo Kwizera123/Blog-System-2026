@@ -168,7 +168,17 @@ public function index(Request $request)
     public function show($slug)
         {
             $post = Post::where('slug',$slug)
-                ->with(['user','category','comments'])
+                ->with([
+                    'user',
+                    'category',
+
+                     'comments' => function ($query) {
+                        $query
+                            ->where('status', 'approved')
+                            ->latest();
+                     },
+                     'comments.user',
+                    ])
                 ->firstOrFail();
   
         return view('backend.posts.show', compact('post'));
