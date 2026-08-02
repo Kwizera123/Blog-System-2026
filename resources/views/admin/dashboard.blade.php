@@ -64,6 +64,18 @@
       </div>
 
       <div class="col-md-3 mt-2">
+        <div class="card text-center text-bg-danger shadow-sm">
+          <div class="card-body">
+            <h5>💬 <strong>Manage Comments</strong></h5>
+            <h2>{{ $totalComments }}</h2>
+            <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn- text-white">
+              <strong>View</strong>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 mt-2">
         <div class="card text-center bg-success-subtle shadow-sm">
           <div class="card-body">
             <h5>🗂️ <strong>Total Post Published:</strong></h5>

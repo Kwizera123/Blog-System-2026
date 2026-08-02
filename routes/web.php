@@ -7,9 +7,9 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\AdminController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -58,6 +58,13 @@ Route::middleware(['auth','admin'])
                 Route::get('/dashboard', [DashboardController::class, 'index'])
                 ->name('admin.dashboard');
 
+                Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+                        ->name('admin.dashboard');  
+                Route::get('/admin/comments', [CommentController::class, 'adminIndex'])
+                        ->name('admin.comments.index');
+
+                
+
                 Route::get('/users', [UserController::class, 'index'])
                         ->name('admin.users.index');
 
@@ -97,14 +104,19 @@ Route::middleware(['auth','admin'])
 
                 Route::patch('/admin/posts/{post}/unpublish', [PostController::class, 'unpublish'])
                         ->name('admin.posts.unpublish');
-
                 //Tag
                 Route::resource('tags', TagController::class)
                         ->names('admin.tags');
-
-               
-
+                // 
         });
+
+        // Route::middleware(['auth', 'admin'])->group(function () {
+
+        //         Route::get('/admin/dashboard', [AdminController::class, 'index'])
+        //                 ->name('admin.dashboard');  
+        //         Route::get('/admin/comments', [CommentController::class, 'adminIndex'])
+        //                 ->name('admin.comments.index');
+        //         });
 
 // Comment Route
 Route::resource('comments', CommentController::class)

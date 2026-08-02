@@ -15,8 +15,17 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function adminIndex()
     {
+        $comments = Comment::with([
+            'user',
+            'post'
+             
+             ])
+             ->latest()
+             ->paginate(10);
+
+             return view('backend.comments.index', compact('comments'));
         //
     }
 
