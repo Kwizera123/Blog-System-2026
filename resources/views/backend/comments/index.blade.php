@@ -14,6 +14,23 @@
       </div>
     @endif
 
+    <form action="{{ route('admin.comments.index') }}" method="GET" class="mb-4">
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" name="search" class="form-control" placeholder="Search, Authors or posts..."
+            value="{{ request('search') }}">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-sm btn-success">Search</button>
+        </div>
+        @if (request('search'))
+          <div class="col-md-2">
+            <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn-secondary">Clear</a>
+          </div>
+        @endif
+      </div>
+    </form>
+
     @if ($comments->count())
 
       <div class="table-responsive">

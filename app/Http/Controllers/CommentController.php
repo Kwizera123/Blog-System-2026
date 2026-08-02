@@ -16,15 +16,50 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
         $comments = Comment::with([
             'user',
             'post'
              
              ])
+             // Search comment
+             ->when($request->filled('search'), function ($query) use ($request) {
+                    $search = $request->search;
+
+                    $query->where(function ($q) use ($search) {
+                        $q->where(
+                            'comment',
+                            'like',
+                            "%{$search}%"
+                        )
+
+                        ->orWhereHas(
+                            'user',
+                            function ($user) use ($search) {
+                                $user->where(
+                                    'name',
+                                    'like',
+                                    "%{$search}%"
+                                );
+                            }
+                        )
+                        ->orWhereHas(
+                            'post',
+                            function($post) use ($search) {
+                                $post->where(
+                                    'title',
+                                    'like',
+                                    "%{$search}%"
+                                );
+                            }
+                        );
+                    });
+             })
+
              ->latest()
-             ->paginate(10);
+             ->paginate(10)
+             ->withQueryString();
 
              return view('backend.comments.index', compact('comments'));
         //
