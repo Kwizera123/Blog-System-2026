@@ -32,9 +32,10 @@
 
 
         @auth
-          <a href="{{ url('/dashboard') }}" class="author-widget">
-            Dashboard
-          </a>
+          {{-- <a href="{{ url('/dashboard') }}" class="nav-btn">
+            My Profile
+          </a> --}}
+          <a href="{{ url('/blogprofile') }}" class="nav-btn">My Profile</a>
         @else
           <a href="{{ route('login') }}" class="nav-btn">
             Log in

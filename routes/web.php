@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\BlogProfileController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -119,13 +119,15 @@ Route::middleware(['auth','admin'])
                 // 
         });
 
-        // Route::middleware(['auth', 'admin'])->group(function () {
+Route::get('/blogprofile', [BlogProfileController::class, 'index'])
+        ->middleware('auth')
+        ->name('blogprofile.index');
 
-        //         Route::get('/admin/dashboard', [AdminController::class, 'index'])
-        //                 ->name('admin.dashboard');  
-        //         Route::get('/admin/comments', [CommentController::class, 'adminIndex'])
-        //                 ->name('admin.comments.index');
-        //         });
+Route::Patch('/blogprofile', [BlogProfileController::class, 'update'])
+        ->middleware('auth')
+        ->name('blogprofile.update');
+
+
 
 // Comment Route
 Route::resource('comments', CommentController::class)
@@ -142,5 +144,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+
 
 require __DIR__.'/auth.php';

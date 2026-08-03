@@ -38,9 +38,11 @@
         <li class="nav-item">
           @auth
             <a class="nav-link" href="{{ route('posts.my') }}">My Posts</a>
+            <a href="{{ route('blogprofile.index') }}" class="btn btn-outline-primary">
+              My Profile
+            </a>
           @endauth
         </li>
-
       </ul>
 
       <form class="d-flex" role="search">
