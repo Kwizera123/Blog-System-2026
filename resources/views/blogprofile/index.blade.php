@@ -32,10 +32,40 @@
                 {{ session('error') }}
               </div>
             @endif
+            {{-- display the uploaded profile photo--}}
+            @if ($user->profile_photo)
+              <div class="text-center mb-4">
+                <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="{{ $user->name }}"
+                  class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
+              </div>
+            @else
+              <div class="text-center mb-4">
+                <img src="{{ asset('storage/user-profile.jpg') }}" alt="{{ $user->name }}"
+                  class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
+              </div>
+            @endif
 
-            <form action="{{ route('blogprofile.update') }}" method="POST">
+            <form action="{{ route('blogprofile.update') }}" method="POST" enctype="multipart/form-data">
               @csrf
               @method('PATCH')
+
+              <div class="mb-3">
+                <label for="profile_photo" class="form-label">Profile Photo</label>
+
+                <input type="file" id="profile_photo" name="profile_photo"
+                  class="form-control @error('profile_photo') is-invalid @enderror" accept=".jpg,.jpeg,.png,.webp">
+                <small class="text-muted">
+                  JPG, JPEG, PNG, or WEBP.
+                  Maximum size: 2 MB.
+                </small>
+
+                @error('profile_photo')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+
               <div class="mb-3">
 
                 <label for="name" class="form-label">Name</label>
