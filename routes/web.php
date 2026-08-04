@@ -119,6 +119,7 @@ Route::middleware(['auth','admin'])
                 // 
         });
 
+        // User Profile photo
 Route::get('/blogprofile', [BlogProfileController::class, 'index'])
         ->middleware('auth')
         ->name('blogprofile.index');
@@ -127,6 +128,13 @@ Route::Patch('/blogprofile', [BlogProfileController::class, 'update'])
         ->middleware('auth')
         ->name('blogprofile.update');
 
+Route::delete('blogprofile/photo', [BlogProfileController::class, 'destroyPhoto'])
+        ->middleware('auth')
+        ->name('blogprofile.photo.destroy');
+
+Route::patch('/profile/password', [BlogProfileController::class, 'updatePassword'])
+        ->middleware('auth')
+        ->name('profile.password.update');
 
 
 // Comment Route

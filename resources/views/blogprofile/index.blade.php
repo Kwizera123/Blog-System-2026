@@ -34,16 +34,33 @@
             @endif
             {{-- display the uploaded profile photo--}}
             @if ($user->profile_photo)
-              <div class="text-center mb-4">
+
+              <div class="text-left mb-4">
+
                 <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="{{ $user->name }}"
                   class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
+
+                {{-- Delete Photo--}}
+                <form action="{{ route('blogprofile.photo.destroy') }}" method="POST" class="mt-2">
+                  @csrf
+                  @method('DELETE')
+
+                  <button class="btn btn-sm btn-danger"
+                    onclick="return confirm('Are you sure you want to remove your profile photo?')">
+                    Remove Photo
+                  </button>
+                </form>
+
               </div>
             @else
               <div class="text-center mb-4">
                 <img src="{{ asset('storage/user-profile.jpg') }}" alt="{{ $user->name }}"
                   class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
               </div>
+
             @endif
+
+
 
             <form action="{{ route('blogprofile.update') }}" method="POST" enctype="multipart/form-data">
               @csrf
@@ -96,6 +113,50 @@
               <button type="submit" class="btn btn-sm btn-success">Update Profile</button>
               {{-- <a href="{{ route('posts.index') }}" class="btn btn-sm btn-secondary">Back</a> --}}
             </form>
+
+            {{-- Password Update--}}
+            <hr class="my-5">
+            <h4 class="mb-4">Change Password</h4>
+
+            <form action="{{ route('profile.password.update') }}" method="POST">
+              @csrf
+              @method('PATCH')
+              <div class="mb-3">
+                <label for="current_password" class="form-label">Current Password</label>
+                <input type="password" id="current_password" name="current_password"
+                  class="form-control
+                                                                                                                                                                                                                                                                              @error('current_password') is-invalid @enderror">
+                @error('current_password')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-labe">New Passowrd</label>
+                <input type="password" id="password" name="password"
+                  class="form-control 
+                                                                                                                                                                      @error('password') is-invalid @enderror">
+                @error('password')
+                  <div class="invalid-feedback">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </div>
+
+              <div class="mb-3">
+                <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-sm btn-warning"> Change Password</button>
+            </form>
+
+
+
+
+
 
             <div class="mb-3 mt-2">
               <strong>Member Since:</strong>

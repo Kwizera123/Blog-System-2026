@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class BlogProfileController extends Controller
 {
@@ -47,10 +49,17 @@ class BlogProfileController extends Controller
 
         if ($request->hasFile('profile_photo')) {
 
+        //Delete the old profile photo
+        if($user->profile_photo) {
+            Storage::disk('public')
+                ->delete($user->profile_photo);
+        }
+            //Upload the new profile photo
             $photoPath = $request
                 ->file('profile_photo')
                 ->store('profiles', 'public');
 
+            // Save the new path
             $validated['profile_photo'] = $photoPath;
         }
 
@@ -59,4 +68,52 @@ class BlogProfileController extends Controller
         return redirect()->route('blogprofile.index')
         ->with('success', 'Profile updated successfully.');
     }// End Method
+
+    public function destroyPhoto()
+    {
+        $user = auth()->user();
+
+        if ($user->profile_photo) {
+            Storage::disk('public')
+                ->delete($user->profile_photo);
+
+            $user->update([
+                'profile_photo' => null,
+            ]);
+        }
+
+        return redirect()
+            ->route('blogprofile.index')
+            ->with(
+                'success',
+                'Profile Photo removed successfully!'
+            );
+    }// End Method
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'current_password' => [
+                'required',
+                'current_password',
+            ],
+
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+            ],
+        ]);
+        $user->update([
+            'password' => Hash::make(
+                $request->password
+            ),
+        ]);
+        return redirect()
+            ->route('blogprofile.index')
+            ->with('success', 'Password changed successfully!');
+    }
 }
