@@ -6,7 +6,11 @@
 
     <h2 class="h2 text-success">All Posts</h2><br>
 
-    <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">+Create post</a>
+    @can('create', App\Models\Post::class)
+
+      <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">+Create New Post</a>
+    @endcan
+
     <form action="{{ route('posts.index') }}" method="GET" class="mb-3">
       <div class="row">
         <div class="col-md-6">
@@ -135,16 +139,23 @@
 
               <td>{{ $post->user->name }}</td>
               <td>
-                <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
+                @can('update', $post)
+                  <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
+                @endcan
+
                 <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success">View</a>
-                <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
-                  @csrf
-                  @method('DELETE')
-                  <button class="btn btn-sm btn-danger"
-                    onclick="return confirm('Are You Sure you want to delete this post? ')">
-                    Delete
-                  </button>
-                </form>
+
+                @can('delete', $post)
+                  <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-sm btn-danger"
+                      onclick="return confirm('Are You Sure you want to delete this post? ')">
+                      Delete
+                    </button>
+                  </form>
+                @endcan
+
               </td>
             </tr>
           @endforeach

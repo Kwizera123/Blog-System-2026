@@ -15,8 +15,15 @@ class UserController extends Controller
         $search = $request->search;
 
         $users = User::when($search, function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+
+        $query->where(function ($q) use ($search) {
+
+            $q->where('name', 'like', "%{$search}%")
+
+            ->orWhere('email', 'like', "%{$search}%");
+        });
+            
+                    
         })
         ->latest()
         ->paginate(10)

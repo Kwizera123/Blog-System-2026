@@ -107,6 +107,8 @@ public function index(Request $request)
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
+
         // Validate the form
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -129,12 +131,7 @@ public function index(Request $request)
             $imagePath = $request->file('image')->store('posts','public');
         }
 
-        //Upload Image()This works wery well
-        // if ($request->hasFile('image')) {
-        //     $validated['image'] = $request
-        //         ->file('image')
-        //         ->store('posts', 'public');
-        // }
+
 
         // Save the Date
         $post = Post::create([
@@ -280,6 +277,11 @@ public function index(Request $request)
 
     public function publish(Post $post)
     {
+        $this->authorize(
+            'update',
+            $post
+        );
+
         $post->update([
             'status' => 'published'
         ]);
@@ -291,6 +293,12 @@ public function index(Request $request)
 
          public function unpublish(Post $post)
     {
+            $this->authorize(
+            'update',
+            $post
+        );
+
+
         $post->update([
             'status' => 'draft'
         ]);

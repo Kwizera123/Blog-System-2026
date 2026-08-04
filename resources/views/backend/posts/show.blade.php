@@ -115,7 +115,7 @@
     @endforeach --}}
 
 
-    <a href="/home" class="btn btn-secondary mt-3">
+    <a href="{{ route('posts.index') }}" class="btn btn-secondary mt-3">
       ← Back
     </a>
   </div>

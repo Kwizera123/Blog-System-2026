@@ -4,63 +4,99 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class PostPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
+     /**
+     * View post list
+     */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
+   /**
+     * View a single post
      */
     public function view(User $user, Post $post): bool
     {
-        return false;
+        return true;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Create posts
      */
     public function create(User $user): bool
     {
-        return false;
+        return in_array(
+            $user->role,
+            [
+                'admin',
+                'editor',
+                'author'
+            ]
+        );
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Update posts
      */
     public function update(User $user, Post $post): bool
     {
+        // Admin can update everything
+        if($user->isAdmin()) {
+            return true;
+        }
+
+        // Editor can update posts
+         if($user->isEditor()) {
+            return true;
+        }
+
+        // Author can update posts
+        if ($user->isAuthor()){
+
         return $user->id === $post->user_id;
+        }
+
+       return false; 
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Delete posts
      */
     public function delete(User $user, Post $post): bool
     {
-        return $user->id === $post->user_id;
+         // Admin can delete everything
+         if ($user->isAdmin()) {
+            return true;
+         }
+
+         // Author can delete only own posts
+         if ($user->isAuthor()) {
+
+            return $user->id === $post->user_id;
+         }
+
+       return false;
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * Restore posts
      */
     public function restore(User $user, Post $post): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
+  /**
+     * Permanently delete posts
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        return false;
+        return $user->isAdmin();
     }
 }

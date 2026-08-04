@@ -4,7 +4,7 @@
 
   <div class="container mt-4">
     <labe class="form-label text text-primary">
-      <strong>Your Post | Reading</strong>
+      <strong>The Post | Reading</strong>
     </labe>
 
     <div class="card bg-light border-0">
@@ -170,8 +170,8 @@
               <label for="comment" class="form-label">Your Comment</label>
               <textarea name="comment" id="comment" cols="30" rows="4" class="form-control"
                 placeholder="Write your comment here...">
-                                                                                                                                 {{ old('comment') }}
-                                                                                                                      </textarea>
+                                                                                                                                     {{ old('comment') }}
+                                                                                                                          </textarea>
             </div>
             <button type="submit" class="btn btn-sm btn-primary">
               Send Comment
