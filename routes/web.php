@@ -46,9 +46,13 @@ Route::middleware('auth')->group(function() {
     //
 });
 
-Route::get('/admin/dashboard', function (){
-    return 'Welcome Admin!';
-});
+Route::get('/editor-test', function (){
+    return 'Admin or Editor access Granted!';
+        }
+      )
+      ->middleware('role:admin,editor')
+      ->name('editor.test');
+      
 
 // Admin Dashboard
 Route::middleware(['auth','admin'])

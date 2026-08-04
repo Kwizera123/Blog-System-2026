@@ -133,7 +133,7 @@
                 <label for="current_password" class="form-label">Current Password</label>
                 <input type="password" id="current_password" name="current_password"
                   class="form-control
-                                                                                                                                                                                                                                                                                                                @error('current_password') is-invalid @enderror">
+                                                                                                                                                                                                                                                                                                                      @error('current_password') is-invalid @enderror">
                 @error('current_password')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -146,7 +146,7 @@
                 <label for="password" class="form-labe">New Passowrd</label>
                 <input type="password" id="password" name="password"
                   class="form-control 
-                                                                                                                                                                                                        @error('password') is-invalid @enderror">
+                                                                                                                                                                                                              @error('password') is-invalid @enderror">
                 @error('password')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -175,8 +175,8 @@
 
             </div>
 
-            <a href="{{ route('posts.index') }}" class="btn btn-secondary">
-              Back
+            <a href="{{ route('home') }}" class="btn btn-secondary">
+              Home
             </a>
 
           </div>

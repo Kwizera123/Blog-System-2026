@@ -35,7 +35,6 @@
           {{-- <a href="{{ url('/dashboard') }}" class="nav-btn">
             My Profile
           </a> --}}
-          <a href="{{ url('/blogprofile') }}" class="nav-btn">My Profile</a>
 
           <div class="dropdown">
             <a class="btn btn-light nav-btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -50,7 +49,7 @@
                 @csrf
 
                 <li><a class="dropdown-item" href="route('logout')" onclick="event.preventDefault();
-                                                       this.closest('form').submit();">{{ __('Log Out') }}</a></li>
+                                                               this.closest('form').submit();">{{ __('Log Out') }}</a></li>
               </form>
 
               <li><a class="dropdown-item" href="#">Something else here</a></li>

@@ -33,6 +33,8 @@
                   <span class=" badge bg-success">Admin</span>
                 @else
                   <span class="badge bg-secondary">Author</span>
+                  {{-- @else
+                  <span class="badge bg-primary">Editor</span> --}}
                 @endif
               </td>
 

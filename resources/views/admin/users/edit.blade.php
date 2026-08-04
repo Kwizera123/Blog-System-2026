@@ -29,6 +29,10 @@
             Admin
           </option>
 
+          <option value="editor" {{ old('role', $user->role) == 'editor' ? 'selected' : '' }}>
+            Editor
+          </option>
+
         </select>
 
 
