@@ -53,10 +53,18 @@
 
               </div>
             @else
-              <div class="text-center mb-4">
-                <img src="{{ asset('storage/user-profile.jpg') }}" alt="{{ $user->name }}"
-                  class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
-              </div>
+                      {{-- <div class="text-center mb-4">
+                        <img src="{{ asset('storage/user-profile.jpg') }}" alt="{{ $user->name }}"
+                          class="rounded-circle img-thumbnail" width="150" height="150" style="object-fit: cover;">
+                      </div> --}}
+
+                      <div class="rounded-circle bg-secondary text-white d-inline-flex justify-content-center align-items-center"
+                        style="width: 150px; height: 150px;font-size: 50px;">
+
+                        {{ strtoupper(
+                substr($user->name, 0, 1)
+              ) }}
+                      </div>
 
             @endif
 
@@ -125,7 +133,7 @@
                 <label for="current_password" class="form-label">Current Password</label>
                 <input type="password" id="current_password" name="current_password"
                   class="form-control
-                                                                                                                                                                                                                                                                              @error('current_password') is-invalid @enderror">
+                                                                                                                                                                                                                                                                                                                @error('current_password') is-invalid @enderror">
                 @error('current_password')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -138,7 +146,7 @@
                 <label for="password" class="form-labe">New Passowrd</label>
                 <input type="password" id="password" name="password"
                   class="form-control 
-                                                                                                                                                                      @error('password') is-invalid @enderror">
+                                                                                                                                                                                                        @error('password') is-invalid @enderror">
                 @error('password')
                   <div class="invalid-feedback">
                     {{ $message }}

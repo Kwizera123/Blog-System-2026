@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+
 
 class BlogProfileController extends Controller
 {
@@ -66,7 +68,7 @@ class BlogProfileController extends Controller
         $user->update($validated);
 
         return redirect()->route('blogprofile.index')
-        ->with('success', 'Profile updated successfully.');
+        ->with('success', 'Profile information updated successfully.');
     }// End Method
 
     public function destroyPhoto()
@@ -102,9 +104,12 @@ class BlogProfileController extends Controller
 
             'password' => [
                 'required',
-                'string',
-                'min:8',
                 'confirmed',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+
             ],
         ]);
         $user->update([

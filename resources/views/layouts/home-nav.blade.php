@@ -36,6 +36,28 @@
             My Profile
           </a> --}}
           <a href="{{ url('/blogprofile') }}" class="nav-btn">My Profile</a>
+
+          <div class="dropdown">
+            <a class="btn btn-light nav-btn btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {{ Auth::user()->name }}
+            </a>
+
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ url('/blogprofile') }}">Profile</a></li>
+              <!--Authentication -->
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <li><a class="dropdown-item" href="route('logout')" onclick="event.preventDefault();
+                                                       this.closest('form').submit();">{{ __('Log Out') }}</a></li>
+              </form>
+
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+
+
         @else
           <a href="{{ route('login') }}" class="nav-btn">
             Log in
