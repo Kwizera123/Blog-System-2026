@@ -50,7 +50,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255', 
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,author,editor',
+            'role' => 'required|in:admin,author,editor,user',
         ]);
 
         //Preventing admin from removing their own admin access

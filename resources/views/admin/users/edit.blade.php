@@ -58,6 +58,10 @@
             Editor
           </option>
 
+          <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>
+            User
+          </option>
+
         </select>
 
       </div>

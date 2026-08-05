@@ -33,8 +33,10 @@
                   <span class=" badge bg-success">Admin</span>
                 @elseif ($user->role === 'author')
                   <span class="badge bg-secondary">Author</span>
-                @else
+                @elseif ($user->role === 'editor')
                   <span class="badge bg-primary">Editor</span>
+                @else
+                  <span class="badge bg-warning">User</span>
                 @endif
               </td>
 
