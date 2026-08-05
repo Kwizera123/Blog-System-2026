@@ -161,6 +161,6 @@ Route::middleware(['auth','role:admin'])
        });
 
 
- // Route::get('/read-post', [HomeController::class, 'index'])->name('post');
+//   Route::get('/read-post', [HomeController::class, 'index'])->name('post');
 
 require __DIR__.'/auth.php';

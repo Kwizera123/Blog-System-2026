@@ -48,10 +48,10 @@
                 <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
                   @csrf
                   @method('DELETE')
-                  <buttn class="btn btn-sm btn-danger"
-                    onclick="return confirm('Are you sure you want to deletethis user?')">
+                  <button class="btn btn-sm btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this user?')">
                     Delete
-                  </buttn>
+                    </button>
                 </form>
               </td>
             </tr>

@@ -7,7 +7,9 @@
         <h2>I always wish the best!</h2>
 
 
-
+        <a href="{{ route('home') }}" class="btn btn-sm btn-secondary mt-4">
+            Home
+        </a>
 
 
 

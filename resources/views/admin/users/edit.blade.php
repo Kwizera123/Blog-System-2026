@@ -46,8 +46,8 @@
 
         <select name="role" id="role" class="form-select">
 
-          <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>
-            Admin
+          <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>
+            User
           </option>
 
           <option value="author" {{ old('role', $user->role) === 'author' ? 'selected' : '' }}>
@@ -58,8 +58,8 @@
             Editor
           </option>
 
-          <option value="user" {{ old('role', $user->role) === 'user' ? 'selected' : '' }}>
-            User
+          <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>
+            Admin
           </option>
 
         </select>
