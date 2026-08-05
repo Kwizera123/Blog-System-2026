@@ -36,9 +36,10 @@
       <div class="col-md-3">
         <div class="card text-center text-bg-danger shadow-sm">
           <div class="card-body">
-            <h5>💬 <strong>Total Comments:</strong> </h5>
-            <h2>{{ $totalComments }}</h2>
-            <a href="#" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+            <h5>💬 <strong>Pending Comments</strong> </h5>
+            <h2>{{ $pendingComments }}</h2>
+            <a href="{{ route('admin.comments.index', ['status' => 'pending']) }}"
+              class="btn btn-sm btn- text-white"><strong>Review</strong></a>
           </div>
         </div>
       </div>
@@ -57,7 +58,7 @@
         <div class="card text-center text-bg-info shadow-sm">
           <div class="card-body">
             <h5><strong>Total Tags:</strong></h5>
-            <h2>??</h2>
+            <h2>{{ $totalTags }}</h2>
             <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
           </div>
         </div>
@@ -116,7 +117,17 @@
         @forelse ($recentPosts as $post)
           <tr>
             <td>{{ $post->title }}</td>
-            <td>{{ $post->status }}</td>
+            <td>
+              @if($post->status === 'published')
+                <span class="badge bg-success">
+                  Published
+                </span>
+              @else
+                <span class="badge bg-warning text-dark">
+                  Draft
+                </span>
+              @endif
+            </td>
             <td>{{ $post->user->name }}</td>
             <td>{{ $post->created_at->diffForHumans() }}</td>
             <td>

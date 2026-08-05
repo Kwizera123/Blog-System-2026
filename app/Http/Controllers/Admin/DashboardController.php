@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Tag;
 
 
 
@@ -18,9 +19,13 @@ class DashboardController extends Controller
         $totalPosts = Post::count();
         $totalUsers = User::count();
         $totalComments = Comment::count();
+        $pendingComments = Comment::where('status','pending')->count();
+
         $totalCategories = Category::count();
+        $totalTags = Tag::count();
         $publishPosts = Post::where('status','published')->count();
         $draftPosts = Post::where('status','draft')->count();
+        
         
 
         $recentPosts = Post::with('user', 'category')
@@ -41,7 +46,9 @@ class DashboardController extends Controller
             'totalUsers',
             'totalPosts',
             'totalComments',
+            'pendingComments',
             'totalCategories',
+            'totalTags',
             'recentPosts',
             'latestUsers',
             'recentComments',
