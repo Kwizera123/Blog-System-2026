@@ -108,7 +108,7 @@ public function index(Request $request)
     public function store(Request $request)
     {
         $this->authorize('create', Post::class);
-
+        sleep(30);
         // Validate the form
         $validated = $request->validate([
             'title' => 'required|max:255',

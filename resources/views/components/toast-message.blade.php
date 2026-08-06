@@ -1,3 +1,23 @@
+@if($errors->any())
+
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+
+    <div class="toast show text-bg-danger border-0">
+
+      <div class="toast-body">
+
+        ❌ Please check the form errors.
+
+      </div>
+
+    </div>
+
+  </div>
+
+@endif
+
+
+
 @php
   $notifications = [
     'success',
@@ -27,16 +47,16 @@
   <div class="toast-container position-fixed top-0 end-0 p-3">
 
     <div id="successToast" class="toast show border-0
-     @if($type === 'success')
-      text-bg-success
-    @elseif($type === 'error')
-      text-bg-danger
-    @elseif ($type === 'warning')
-      text-bg-warning
-    @else
-      text-bg-info
-    @endif
-      " role="alert" data-bs-delay="5000">
+               @if($type === 'success')
+                text-bg-success
+              @elseif($type === 'error')
+                text-bg-danger
+              @elseif ($type === 'warning')
+                text-bg-warning
+              @else
+                text-bg-info
+              @endif
+                " role="alert" data-bs-delay="5000">
 
       <div class="d-flex">
 

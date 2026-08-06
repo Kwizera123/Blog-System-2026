@@ -58,7 +58,8 @@
 
       <div class="table-responsive">
         <table class="table table-striped table-hover align-middle">
-          <a href="{{ route('admin.categories.create') }}" class="btn btn-sm btn-primary mt-3">Create Category</a>
+          <a href="{{ route('admin.categories.create') }}" class="btn btn-sm btn-primary mt-3"><i
+              class="bi bi-pencil-fill"></i> Create Category</a>
 
           <p class="text-muted mt-2">
             showing {{ $categories->count() }} of {{ $categories->total() }} categories.
@@ -68,7 +69,7 @@
             <div class="input-group mt-2">
               <input type="text" name="search" class="form-control" placeholder="Search category by name..."
                 value="{{ request('search') }}">
-              <button class="btn btn-primary">Search</button>
+              <button class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
             </div>
           </form>
           @if($categories->isEmpty())
@@ -95,24 +96,24 @@
                   <td>{{ $category->posts_count }}</td>
                   <td>{{ $category->created_at->diffForHumans() }}</td>
                   <td>
-                    <a href="#" class="btn btn-sm btn-warning">View</a>
-                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-success">Update</a>
+                    <a href="#" class="btn btn-sm btn-warning"><i class="bi bi-eye"></i> View</a>
+                    <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-success"><i
+                        class="bi bi-pencil-square"></i> Update</a>
                     {{-- <form action="{{ route('admin.categories.destroy', $category) }}" method="POST"
                       style="display: inline">
                       @csrf
                       @method('DELETE')
                       <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         data-url="{{ route('admin.categories.destroy', $category) }}">Delete</button>
+
                     </form> --}}
-<button
-    class="btn btn-sm btn-danger"
-    data-bs-toggle="modal"
-    data-bs-target="#deleteModal"
-    data-url="{{ route('admin.categories.destroy', $category) }}">
 
-    Delete
+                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                      data-url="{{ route('admin.categories.destroy', $category) }}">
+                      <i class="bi bi-trash"></i>
+                      Delete
 
-</button>
+                    </button>
                   </td>
                 </tr>
               @empty
@@ -125,7 +126,8 @@
         </table>
       </div>
     </div>
-    <a href=" {{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
+    <a href=" {{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary"><i class="bi bi-skip-backward-circle"></i>
+      Back</a>
     {{ $categories->links() }}
   </div>
 @endsection
