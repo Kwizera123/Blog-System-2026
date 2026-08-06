@@ -250,7 +250,7 @@ public function index(Request $request)
 
     return redirect()
         ->route('posts.index')
-        ->with('success', 'Post updated successfully!');
+        ->with('info', 'Post updated successfully!');
 
         //
     }
@@ -271,7 +271,7 @@ public function index(Request $request)
 
     return redirect()
         ->route('posts.index')
-        ->with('success', 'Post deleted successfully!');
+        ->with('error', 'Post deleted successfully!');
         //End Method
     }
 
@@ -304,7 +304,7 @@ public function index(Request $request)
         ]);
 
         return back()
-            ->with('success','Post moved back to draft.');
+            ->with('warning','Post moved back to draft.');
     }
      //End Method
 

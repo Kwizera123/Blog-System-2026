@@ -5,7 +5,7 @@
   <!-- Main Content Area -->
 
 
-  <div class="container mt-5">
+  <div class="container py-4 mt-5">
 
     <div class="row justify-content-center">
 
@@ -22,16 +22,17 @@
           </div>
 
           <div class="card-body">
-            @if (session('success'))
-              <div class="alert alert-success mt-3">
-                {{ session('success') }}
-              </div>
-            @endif
-            @if (session('error'))
-              <div class="alert alert-danger mt-3">
-                {{ session('error') }}
-              </div>
-            @endif
+            {{-- @if (session('success'))
+            <div class="alert alert-success mt-3">
+              {{ session('success') }}
+            </div>
+            @endif --}}
+            {{-- @if (session('error'))
+            <div class="alert alert-danger mt-3">
+              {{ session('error') }}
+            </div>
+            @endif --}}
+            <x-flash-message />
             {{-- display the uploaded profile photo--}}
             @if ($user->profile_photo)
 
@@ -133,7 +134,7 @@
                 <label for="current_password" class="form-label">Current Password</label>
                 <input type="password" id="current_password" name="current_password"
                   class="form-control
-                                                                                                                                                                                                                                                                                                                      @error('current_password') is-invalid @enderror">
+                                                                                                                                                                                                                                                                                                                                @error('current_password') is-invalid @enderror">
                 @error('current_password')
                   <div class="invalid-feedback">
                     {{ $message }}
@@ -146,7 +147,7 @@
                 <label for="password" class="form-labe">New Passowrd</label>
                 <input type="password" id="password" name="password"
                   class="form-control 
-                                                                                                                                                                                                              @error('password') is-invalid @enderror">
+                                                                                                                                                                                                                        @error('password') is-invalid @enderror">
                 @error('password')
                   <div class="invalid-feedback">
                     {{ $message }}
