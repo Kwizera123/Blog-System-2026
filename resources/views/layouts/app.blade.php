@@ -18,8 +18,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+<x-delete-confirm />
+
 <body>
+
     @include('layouts.navigation')
+
     <div class="container py-4 mt-3">
 
         {{-- @if(session('success'))

@@ -97,12 +97,22 @@
                   <td>
                     <a href="#" class="btn btn-sm btn-warning">View</a>
                     <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-sm btn-success">Update</a>
-                    <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" style="display: inline">
+                    {{-- <form action="{{ route('admin.categories.destroy', $category) }}" method="POST"
+                      style="display: inline">
                       @csrf
                       @method('DELETE')
-                      <button class="btn btn-sm btn-danger"
-                        onclick="return confirm('Are You sure you want to delete this category?' )">Delete</button>
-                    </form>
+                      <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        data-url="{{ route('admin.categories.destroy', $category) }}">Delete</button>
+                    </form> --}}
+<button
+    class="btn btn-sm btn-danger"
+    data-bs-toggle="modal"
+    data-bs-target="#deleteModal"
+    data-url="{{ route('admin.categories.destroy', $category) }}">
+
+    Delete
+
+</button>
                   </td>
                 </tr>
               @empty
@@ -115,7 +125,7 @@
         </table>
       </div>
     </div>
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
+    <a href=" {{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
     {{ $categories->links() }}
   </div>
 @endsection
