@@ -41,6 +41,7 @@
   </div>
   @endif --}}
   {{-- @include('layouts.home_left_sidebar') --}}
+  <x-flash-message />
   @yield('content')
   {{-- @include('layouts.home_right_sidebar') --}}
   <!-- Main Layout Container -->

@@ -10,84 +10,112 @@
       <p class="text-muted">Here is what is happening in youe application today.</p>
     </div>
 
-    <div class="row mt-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h4 class="mb-3">
+          ⚡ Quick Actions
+        </h4>
 
-      <div class="col-md-3">
-        <div class="card text-center shadow-sm text-bg-success">
+        <div class="d-flex flex-wrap gap-2">
+          <a href="{{ route('posts.create') }}" class="btn btn-sm btn-primary">
+            📝 Create Post
+          </a>
+          <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn-success">
+            👥 Manage Users
+          </a>
+          <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn-warning">
+            🗂️ Manage Categories
+          </a>
+          <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn-info">
+            🏷️ Manage Tags
+          </a>
+          <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn-danger">
+            💬 Moderate Comments
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row g-3 mt-4">
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card text-center shadow-sm text-bg-success h-100">
           <div class=" card-body">
             <h5>👥 <strong>Total User:</strong></h5>
             <h2>{{ $totalUsers }}</h2>
-            <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+            <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="card text-center shadow-sm text-bg-primary">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card text-center shadow-sm text-bg-primary h-100">
           <div class="card-body">
             <h5>📝 <strong>Total Posts:</strong></h5>
             <h2>{{ $totalPosts }}</h2>
-            <a href="{{ route('posts.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+            <a href="{{ route('posts.index') }}" class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
 
           </div>
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="card text-center text-bg-danger shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card text-center text-bg-danger shadow-sm h-100">
           <div class="card-body">
             <h5>💬 <strong>Pending Comments</strong> </h5>
             <h2>{{ $pendingComments }}</h2>
             <a href="{{ route('admin.comments.index', ['status' => 'pending']) }}"
-              class="btn btn-sm btn- text-white"><strong>Review</strong></a>
+              class="btn btn-sm btn- btn-outline-light"><strong>Review</strong></a>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="card text-center text-bg-warning shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card text-center text-bg-warning shadow-sm h-100">
           <div class="card-body">
             <h5>🗂️ <strong>Total Categorie:</strong></h5>
             <h2>{{ $totalCategories }}</h2>
-            <a href="{{ route('admin.categories.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+            <a href="{{ route('admin.categories.index') }}"
+              class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3 mt-2">
-        <div class="card text-center text-bg-info shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3 mt-2">
+        <div class="card text-center text-bg-info shadow-sm h-100">
           <div class="card-body">
             <h5><strong>Total Tags:</strong></h5>
             <h2>{{ $totalTags }}</h2>
-            <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn- text-white"><strong>View</strong></a>
+            <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3 mt-2">
-        <div class="card text-center text-bg-danger shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3 mt-2">
+        <div class="card text-center text-bg-danger shadow-sm h-100">
           <div class="card-body">
             <h5>💬 <strong>Manage Comments</strong></h5>
             <h2>{{ $totalComments }}</h2>
-            <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn- text-white">
+            <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn- btn-outline-light">
               <strong>View</strong>
             </a>
           </div>
         </div>
       </div>
 
-      <div class="col-md-3 mt-2">
-        <div class="card text-center bg-success-subtle shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3 mt-2">
+        <div class="card text-center bg-success-subtle shadow-sm h-100">
           <div class="card-body">
             <h5>🗂️ <strong>Total Post Published:</strong></h5>
             <h2 class="badge text-bg-success">{{ $publishPosts }}</h2>
-            <a href="#" class="btn btn-sm btn- text-white"><strong></strong></a>
+
           </div>
         </div>
       </div>
 
-      <div class="col-md-3 mt-2">
-        <div class="card text-center bg-danger-subtle shadow-sm">
+      <div class="col-12 col-sm-6 col-lg-3 mt-2">
+        <div class="card text-center bg-danger-subtle shadow-sm h-100">
           <div class="card-body">
             <h5>🗂️ <strong>Total Draft Posts:</strong></h5>
             <h2 class="badge text-bg-danger"><strong>{{ $draftPosts }}</strong></h2>
@@ -119,12 +147,16 @@
             <td>{{ $post->title }}</td>
             <td>
               @if($post->status === 'published')
-                <span class="badge bg-success">
+                <span class="badge text-bg-success">
                   Published
                 </span>
-              @else
-                <span class="badge bg-warning text-dark">
+              @elseif($post->status === 'draft')
+                <span class="badge text-bg-warning">
                   Draft
+                </span>
+              @else
+                <span class="badge text-bg-secondary">
+                  {{ ucfirst($post->status) }}
                 </span>
               @endif
             </td>
@@ -135,8 +167,10 @@
             </td>
           </tr>
         @empty
-          <tr colspan="3" class="text-center text-muted">
-            <td>No Posts found.</td>
+          <tr>
+            <td colspan="3" class="text-center text-muted py-4">
+              No Posts found.
+            </td>
           </tr>
         @endforelse
       </tbody>
@@ -160,16 +194,20 @@
             <td>{{ $user->email }}</td>
             <td>
               @if($user->role === 'admin')
-                <span class="badge bg-success">Admin</span>
+                <span class="badge text-bg-success">Admin</span>
+              @elseif($user->role === 'editor')
+                <span class="badge text-bg-primary">Editor</span>
+              @elseif($user->role === 'author')
+                <span class="badge text-bg-primary">Author</span>
               @else
-                <span class="badge bg-secondary">Author</span>
+                <span class="badge text-bg-danger">User</span>
               @endif
             </td>
             <td>{{ $user->created_at->diffForHumans() }}</td>
           </tr>
         @empty
           <tr>
-            <td colspan="4" class="text-center text-muted">No Users found</td>
+            <td colspan="4" class="text-center text-muted py-4">No Users found</td>
           </tr>
         @endforelse
       </tbody>
@@ -179,10 +217,10 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <td>User</td>
-          <td>Post</td>
-          <td>Comment</td>
-          <td>created</td>
+          <th>User</th>
+          <th>Post</th>
+          <th>Comment</th>
+          <th>Created</th>
         </tr>
       </thead>
       <tbody>
@@ -194,8 +232,10 @@
             <td>{{ $comment->created_at->diffForHumans() }}</td>
           </tr>
         @empty
-          <tr colspan="4" class="text-center text-muted mb-4">
-            <td>No Comments Found</td>
+          <tr>
+            <td colspan="4" class="text-center text-muted py-4">
+              No Comments Found
+            </td>
           </tr>
         @endforelse
       </tbody>

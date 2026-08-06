@@ -20,25 +20,28 @@
 
 <body>
     @include('layouts.navigation')
-    <div class=" container mt-3">
-        @if(session('success'))
-            <div class="alert alert-success mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
+    <div class="container py-4 mt-3">
+
+        {{-- @if(session('success'))
+        <div class="alert alert-success mt-3">
+            {{ session('success') }}
+        </div>
+        @endif --}}
         <!-- Error -->
-        @if(session('error'))
-            <div class="alert alert-danger mt-3">
-                {{ session('error') }}
-            </div>
-        @endif
+        {{-- @if(session('error'))
+        <div class="alert alert-danger mt-3">
+            {{ session('error') }}
+        </div>
+        @endif --}}
         <!-- Uodate -->
-        @if(session('info'))
-            <div class="alert alert-info mt-3">
-                {{ session('info') }}
-            </div>
-        @endif
-        <!-- Page Content -->
+        {{-- @if(session('info'))
+        <div class="alert alert-info mt-3">
+            {{ session('info') }}
+        </div>
+        @endif --}}
+
+
+        <x-flash-message /> <!-- Page Content -->
         @yield('content')
     </div>
     @include('layouts.footer')
