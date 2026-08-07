@@ -17,6 +17,7 @@
       <table class="table table-striped align-middle">
         <thead>
           <tr>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
@@ -26,6 +27,7 @@
         <tbody>
           @forelse ($users as $user)
             <tr>
+              <td>{{ $users->firstItem() + $loop->index }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
               <td>
@@ -51,7 +53,7 @@
                   <button class="btn btn-sm btn-danger"
                     onclick="return confirm('Are you sure you want to delete this user?')">
                     Delete
-                    </button>
+                  </button>
                 </form>
               </td>
             </tr>

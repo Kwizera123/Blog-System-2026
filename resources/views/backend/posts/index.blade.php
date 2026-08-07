@@ -75,6 +75,7 @@
       <table class="table table-striped bordered">
         <thead>
           <tr>
+            <th>#</th>
             <th>Title</th>
             <th>Category</th>
             <th>Content</th>
@@ -89,7 +90,8 @@
         <tbody>
           @foreach ($posts as $post)
             <tr>
-              {{-- {{ dd($post->slug) }} --}}
+               {{-- {{ dd($post->slug) }} --}}
+              <td>{{ $posts->firstItem() + $loop->index }}</td>
               <td>{{ $post->title }}</td>
               <td>{{ $post->category->name }}</td>
               <td>{{ Str::limit($post->content, 5) }}</td>

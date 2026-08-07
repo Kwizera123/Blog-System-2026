@@ -29,7 +29,8 @@
         <tbody>
           @foreach ($tags as $tag)
             <tr>
-              <td>{{ $tag->id }}</td>
+
+              <td>{{ $tags->firstItem() + $loop->index }}</td>
               <td>{{ $tag->name }}</td>
               <td>
                 <a href="{{ route('admin.tags.edit', $tag) }}" class="btn btn-sm btn-warning">Edit</a>

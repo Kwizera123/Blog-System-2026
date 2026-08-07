@@ -27,9 +27,7 @@ class CategoryController extends Controller
         ->paginate(10)
         ->withQueryString();
 
-
-
-    $totalCategories = Category::count();
+    // $categories->total();
 
     $totalPosts = Post::count();
 
@@ -37,20 +35,15 @@ class CategoryController extends Controller
     $largestCategory = Category::withCount('posts')
         ->orderByDesc('posts_count')
         ->first();
-// dd($largestCategory);
-
-
-
 
     return view('admin.categories.index', compact(
         'categories',
         'totalPosts',
         'search',
-        'totalCategories',
         'largestCategory'
     ));
 }
-    //
+    //End Method
 
     public function create()
     {

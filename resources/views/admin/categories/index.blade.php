@@ -12,7 +12,7 @@
           <div class="card text-center alert alert-warning shadow-sm">
             <div class="card-body">
               <h5><i class="bi bi-list-check"></i> <strong>Total Categories:</strong> </h5>
-              {{ $totalCategories }}
+              {{ $categories->total() }}
             </div>
           </div>
         </div>
@@ -98,7 +98,8 @@
             <tbody>
               @forelse ($categories as $category)
                 <tr>
-                  <td>{{ $category->id }}</td>
+
+                  <td>{{ $categories->firstItem() + $loop->index }}</td>
                   <td>{{ $category->name }}</td>
                   <td>{{ $category->posts_count }}</td>
                   <td>{{ $category->created_at->diffForHumans() }}</td>

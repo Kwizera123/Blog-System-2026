@@ -80,7 +80,7 @@
 
           <div class="post-content">
             <div class="post-meta">{{ $post->created_at->diffForHumans() }}</div>
-            <h3 class="post-title"><a href="#">{{ $post->title }}</a></h3>
+            <h3 class="post-title"><a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a></h3>
             <p class="post-excerpt">{{ Str::limit($post->content, 120) }}</p>
             <div class="post-meta">By: <strong>{{ $post->user->name }}</strong></div>
             <a href="{{ route('post.show', $post->slug) }}" class="read-more">Read Article &rarr;</a>
