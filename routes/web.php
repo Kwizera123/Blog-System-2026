@@ -25,10 +25,6 @@ Route::get('/', [HomeController::class, 'index'])
 
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');
-
-  Route::get('/posts/{$slug}', [PostController::class, 'show'])
-                 ->name('posts.show');
-
 /*
 |--------------------------------------------------------------------------
 | Authenticated User Routes
@@ -91,9 +87,6 @@ Route::middleware(['auth','role:admin'])
         ->prefix('admin')
         ->group(function() {
 
-        //Admin Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-                ->name('admin.dashboard'); 
 
          Route::get('/admin/dashboard', [DashboardController::class, 'index'])
                         ->name('admin.dashboard'); 

@@ -12,43 +12,44 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index(Request $request)
-    {
-        $search = $request->search;   
+  public function index(Request $request)
+{
+    $search = $request->search;
 
-        $categories = Category::when($search, function ($query, $search) {
-            $query->where('name', 'like', "%{$search}");
+
+    $categories = Category::withCount('posts')
+        ->when($search, function ($query, $search) {
+
+            $query->where('name', 'like', "%{$search}%");
+
         })
-             ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-            
-                   
-
-
-        $totalCategories = Category::count();
-        $totalPosts = \App\Models\Post::count();
-
-        $categories = Category::withCount('posts')
-           ->latest()
-            ->paginate(10);
-
-        $largestCategory = Category::withCount('posts')
-            ->orderByDesc('posts_count')
-            ->first();
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
 
 
 
-        return view('admin.categories.index', compact(
-            'categories',
-            'totalPosts',
-            'search',
-            'totalCategories',
-            'totalPosts',
-            'largestCategory'
-            ));
-    }
+    $totalCategories = Category::count();
+
+    $totalPosts = Post::count();
+
+
+    $largestCategory = Category::withCount('posts')
+        ->orderByDesc('posts_count')
+        ->first();
+// dd($largestCategory);
+
+
+
+
+    return view('admin.categories.index', compact(
+        'categories',
+        'totalPosts',
+        'search',
+        'totalCategories',
+        'largestCategory'
+    ));
+}
     //
 
     public function create()

@@ -12,8 +12,15 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::orderBy('name')->get();
-        $tags = Tag::orderBy('name')->get();
+        $categories = Category::orderBy('name')
+        ->select('id','name')
+        ->get();
+        
+        
+
+        $tags = Tag::orderBy('name')
+        ->select('id','name')
+        ->get();
 
         $posts = Post::with([
             'user',

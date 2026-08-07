@@ -11,7 +11,7 @@
         <div class="col-md-3">
           <div class="card text-center alert alert-warning shadow-sm">
             <div class="card-body">
-              <h5>🗂️ <strong>Total Categories:</strong> </h5>
+              <h5><i class="bi bi-list-check"></i> <strong>Total Categories:</strong> </h5>
               {{ $totalCategories }}
             </div>
           </div>
@@ -20,7 +20,7 @@
         <div class="col-md-3">
           <div class="card text-center shadow-sm alert alert-primary">
             <div class="card-body">
-              <h5 class="fade show">📝 <strong>Total Post:</strong></h5>
+              <h5 class="fade show"><i class="bi bi-postcard"></i> <strong>Total Post:</strong></h5>
               {{ $totalPosts }}
             </div>
           </div>
@@ -30,9 +30,14 @@
           <div class="card text-center shadow-sm alert alert-success" role="alert">
             <div class=" card-body">
 
-              <h2 class="alert-heading  fade show"><strong>Largest Category:</strong></h2>
+              <h2 class="alert-heading  fade show">🏆 <strong>Largest Category:</strong>
+              </h2>
 
-              <p class="text-body-emphasis">{{ $largestCategory->name }}</p>
+              <p class="text-body-emphasis">
+              <h3 class="text-dark">
+                {{ $largestCategory->name }}
+              </h3>
+              </p>
 
             </div>
           </div>
@@ -40,10 +45,12 @@
 
 
 
+
+
         <div class="col-md-3">
           <div class="card text-center alert alert-info shadow-sm">
             <div class="card-body">
-              <h5>💬<strong>Posts </strong></h5>
+              <h5><i class="bi bi-signpost-2-fill"></i> <strong>Largest Category Posts:</strong></h5>
 
               {{ $largestCategory->posts_count }}
             </div>
@@ -65,8 +72,8 @@
             showing {{ $categories->count() }} of {{ $categories->total() }} categories.
           </p>
 
-          <form action="{{ route('admin.categories.index') }}" method="GET" class="mb-3">
-            <div class="input-group mt-2">
+          <form action="{{ route('admin.categories.index') }}" method="GET" class="mb-4">
+            <div class="input-group mt-2 mb-4">
               <input type="text" name="search" class="form-control" placeholder="Search category by name..."
                 value="{{ request('search') }}">
               <button class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
