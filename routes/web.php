@@ -29,6 +29,9 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/blog', [BlogController::class, 'index'])
         ->name('blog.index');
 
+Route::get('/tutorials', [TutorialController::class, 'index'])
+        ->name('tutorials.index');
+
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');
 /*
