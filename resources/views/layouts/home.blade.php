@@ -23,27 +23,16 @@
   <!-- Responsive Navigation Bar -->
   @include('layouts.home-nav')
 
-
-
+  <!-- Main Layout Container -->
   <div class="container main-layout">
 
-    {{-- --}}
-    <!-- Error -->
-    {{-- @if(session('error'))
-    <div class="alert alert-danger mt-3">
-      {{ session('error') }}
-    </div>
-    @endif --}}
-    <!-- Uodate -->
-    {{-- @if(session('info'))
-    <div class="alert alert-info mt-3">
-      {{ session('info') }}
-    </div>
-    @endif --}}
+
     @include('layouts.home_left_sidebar')
+
     @yield('content')
+    <!-- End Main Layout Container -->
     @include('layouts.home_right_sidebar')
-    <!-- Main Layout Container -->
+
   </div>
 
   <!-- Footer -->

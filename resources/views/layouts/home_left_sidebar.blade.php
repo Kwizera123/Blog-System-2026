@@ -1,7 +1,7 @@
 <aside class="sidebar sidebar-left">
   <div class="widget">
     <h3>Categories</h3>
-    <form action="{{ route('home') }}" method="GET">
+    <form action="{{ request()->routeIs('blog.index') ? route('blog.index') : route('home') }}" method="GET">
 
       <select name="category" id="category" class="search-box text-white mt-2" style="width: 100%">
         <option value="">All Categories</option>
@@ -20,13 +20,12 @@
 
       @foreach ($categories as $category)
         <li>
-          <a href="{{ route('home', ['category' => $category->id]) }}">
+          <a
+            href="{{ request()->routeIs('blog.index') ? route('blog.index', ['category' => $category->id]) : route('home', ['category' => $category->id]) }}">
             {{ $category->name }}
           </a>
         </li>
       @endforeach
-
-
 
     </ul>
 
@@ -34,7 +33,7 @@
 
   <div class="widget">
     <h3>Popular Tags</h3>
-    <form action="{{ route('home') }}" method="GET">
+    <form action="{{ request()->routeIs('blog.index') ? route('blog.index') : route('home') }}" method="GET">
       <select name="tag" id="tag" class="search-box text-white mt-2" style="width: 100%">
 
         <option value="">All Tags</option>
@@ -52,7 +51,8 @@
 
     <div class="tag-cloud mt-3">
       @foreach ($tags as $tag)
-        <a href="{{ route('home', ['tag' => $tag->id]) }}" class="tag">{{ $tag->name }}</a>
+        <a href="{{ request()->routeIs('blog.index') ? route('blog.index', ['tag' => $tag->id]) : route('home', ['tag' => $tag->id]) }}"
+          class="tag">{{ $tag->name }}</a>
       @endforeach
     </div>
   </div>

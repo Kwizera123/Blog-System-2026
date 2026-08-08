@@ -65,18 +65,28 @@ class BlogController extends Controller
 
         // Category filter
         ->when($request->filled('category'), function ($query) use ($request) {
+
             $query->where('category_id', $request->category);
+
         })
 
         // Tag filter
         ->when($request->filled('tag'), function ($query) use ($request) {
+
             $query->whereHas('tags', function ($tag) use ($request) {
+
                 $tag->where('tags.id', $request->tag);
+
             });
+
         })
 
+        // Latest posts first
         ->latest()
+
+        // Pagination
         ->paginate(5)
+
         ->withQueryString();
 
         return view('blog', compact(
@@ -86,4 +96,3 @@ class BlogController extends Controller
         ));
     }
 }
-
