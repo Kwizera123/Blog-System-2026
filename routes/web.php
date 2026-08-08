@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\BlogProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\BlogController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])
         ->name('home');
+        
+Route::get('/blog', [BlogController::class, 'index'])
+        ->name('blog.index');
 
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');
