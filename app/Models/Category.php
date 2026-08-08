@@ -14,5 +14,10 @@ class Category extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function tutorials()
+    {
+        return $this->hasMany(Tutorial::class);
+    }
     //
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\BlogProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\TutorialController;
 
 
 /*
@@ -24,7 +25,7 @@ use App\Http\Controllers\Frontend\BlogController;
 
 Route::get('/', [HomeController::class, 'index'])
         ->name('home');
-        
+
 Route::get('/blog', [BlogController::class, 'index'])
         ->name('blog.index');
 
