@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Tutorial;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class TutorialController extends Controller
 {
@@ -29,7 +33,10 @@ class TutorialController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.tutorials.create', compact('categories'));
+        //end Method
     }
 
     /**
@@ -37,7 +44,39 @@ class TutorialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'video_url' => 'nullable|url|max:255',
+            'status' => 'required|in:draft,published',
+        ]);
+
+        $slug = Str::slug($validated['title']);
+
+        $originalSlug = $slug;
+        $counter = 1;
+
+        while (Tutorial::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '_' . $counter;
+            $counter++;
+        }
+
+        if($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')
+                ->store('tutorials', 'public');
+        }
+
+        $validated['slug'] = $slug;
+        $validated['user_id'] = auth()->id();
+
+        Tutorial::create($validated);
+
+        return redirect()
+            ->route('admin.tutorials.index')
+            ->with('success', 'Tutorial created successfully.');
+        //End Method
     }
 
     /**
@@ -45,22 +84,90 @@ class TutorialController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        //End Method
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tutorial $tutorial)
     {
-        //
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.tutorials.edit', compact(
+            'categories',
+            'tutorial'
+            ));
+        //End Method
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tutorial $tutorial)
     {
+        $validated =  $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'video_url' => 'nullable|url|max:255',
+            'status' => 'required|in:draft,published',
+
+        ]);
+          /*
+    |--------------------------------------------------------------------------
+    | Generate slug
+    |--------------------------------------------------------------------------
+    */
+    $slug = Str::slug($validated['title']);
+
+    $originalSlug = $slug;
+    $counter = 1;
+
+    while (
+        Tutorial::where('slug', $slug)
+            ->where('id', '!=', $tutorial->id)
+            ->exists()
+    ) {
+        $slug = $originalSlug . '-' . $counter;
+    }
+
+    $validated['slug'] = $slug;
+
+      /*
+    |--------------------------------------------------------------------------
+    | Replace image
+    |--------------------------------------------------------------------------
+    */
+
+    if ($request->hasfile('image')){
+        //Delete old image
+        if($tutorial->image) {
+            Storage::disk('public')->delete($tutorial->image);
+        }
+
+        // Store new image
+        $validated['image'] = $request->file('image')
+            ->store('tutorials', 'public');
+    }else{
+        // Keep existing image
+        $validated['image'] = $tutorial->image;
+    }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Update tutorial
+    |--------------------------------------------------------------------------
+    */
+
+    $tutorial->update($validated);
+
+    return redirect()
+            ->route('admin.tutorials.index')
+            ->with('success', 'Tutorial updated successfully.');
+
         //
     }
 
