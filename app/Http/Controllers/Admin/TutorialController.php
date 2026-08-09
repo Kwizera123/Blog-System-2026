@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 
+
 class TutorialController extends Controller
 {
     /**
@@ -59,7 +60,7 @@ class TutorialController extends Controller
         $counter = 1;
 
         while (Tutorial::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '_' . $counter;
+            $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
 
@@ -174,8 +175,19 @@ class TutorialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tutorial $tutorial)
     {
+        //Delete tutorial image from storage
+        if($tutorial->image) {
+            Storage::disk('public')->delete($tutorial->image);
+        }
+
+        // Delete tutorial from database
+        $tutorial->delete();
+
+        return redirect()
+            ->route('admin.tutorials.index')
+            ->with('error', 'Tutorial deleted successfullty.');
         //
     }
 }

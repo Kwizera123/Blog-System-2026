@@ -30,7 +30,7 @@
           <tbody>
             @foreach ($tutorials as $tutorial)
               <tr>
-                <td>{{ $tutorial->id }}</td>
+                <td>{{ $tutorials->firstItem() + $loop->index}}</td>
                 <td>{{ $tutorial->title }}</td>
                 <td>{{ $tutorial->user->name }}</td>
                 <td>{{ $tutorial->category->name }}</td>
@@ -40,6 +40,15 @@
                   <a href="{{ route('admin.tutorials.edit', $tutorial) }}" class="btn btn-sm btn-success">
                     Edit
                   </a>
+                  <form action="{{ route('admin.tutorials.destroy', $tutorial) }}" method="POST" class="d-inline"
+                    onsubmit="return confirm('Are you sure you want to delete this tutorial?');">
+
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">
+                      🗑️ Delete
+                    </button>
+                  </form>
                 </td>
               </tr>
 
