@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\BlogProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\BlogController;
-use App\Http\Controllers\Frontend\TutorialController;
+use App\Http\Controllers\Frontend\TutorialController as FrontendTutorialController;
+use App\Http\Controllers\Admin\TutorialController as AdminTutorialController;
+
 
 
 /*
@@ -29,7 +31,7 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/blog', [BlogController::class, 'index'])
         ->name('blog.index');
 
-Route::get('/tutorials', [TutorialController::class, 'index'])
+Route::get('/tutorials', [FrontendTutorialController::class, 'index'])
         ->name('tutorials.index');
 
   Route::get('/post/{post}', [HomeController::class, 'show'])
@@ -159,6 +161,9 @@ Route::middleware(['auth','role:admin'])
          Route::resource('tags', TagController::class)
                         ->names('admin.tags');
 
+        //Admin Tutorial Controller
+        Route::resource('tutorials', AdminTutorialController::class)
+                ->names('admin.tutorials');
 
        });
 
