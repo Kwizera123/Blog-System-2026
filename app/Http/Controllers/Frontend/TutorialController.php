@@ -74,5 +74,22 @@ class TutorialController extends Controller
             'categories',
             'tags'
         ));
-    }
+    }// End Method
+
+    public function show(Tutorial $tutorial) 
+    {
+        abort_if($tutorial->status !== 'published', 404);
+        $tutorial->load([
+            'user',
+            'category'
+        ]);
+
+        $categories = Category::orderBy('name')->get();
+        $tags = Tag::orderBy('name')->get();
+
+        return view('tutorials.show', compact(
+            'tutorial',
+            'categories',
+            'tags'));
+    }//End Method
 }

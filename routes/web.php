@@ -34,6 +34,9 @@ Route::get('/blog', [BlogController::class, 'index'])
 Route::get('/tutorials', [FrontendTutorialController::class, 'index'])
         ->name('tutorials.index');
 
+Route::get('/tutorials/{tutorial:slug}', [FrontendTutorialController::class, 'show'])
+        ->name('tutorials.show');
+
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');
 /*
