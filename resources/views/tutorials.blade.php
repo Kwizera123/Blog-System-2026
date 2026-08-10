@@ -32,14 +32,19 @@
               <button type="submit" class="btn btn-sm btn-secondary w-100"><i class="bi bi-funnel"></i> Filter</button>
             </div>
           </div>
-
         </div>
-
-
 
         <div class="col-md-2">
           <button type="submit" class="btn btn-sm btn-primary w-100"><i class="bi bi-search"></i> Search</button>
         </div>
+
+        <div class="col-md-3 mt-2 mt-md-2">
+          <a href="{{ route('tutorials.index') }}" class="btn btn-sm btn-secondary w-100"><i
+              class="bi bi-funnel"></i>Clear Filter</a>
+        </div>
+
+
+
       </div>
     </form>
     {{-- --}}
@@ -90,6 +95,4 @@
 
     {{ $tutorials->links() }}
 
-  </div>
-
-@endsection
+</div>@endsection

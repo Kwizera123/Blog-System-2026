@@ -20,8 +20,17 @@
 
       @foreach ($categories as $category)
         <li>
-          <a
-            href="{{ request()->routeIs('blog.index') ? route('blog.index', ['category' => $category->id]) : route('home', ['category' => $category->id]) }}">
+          <a href="
+                                                                              @if (request()->routeIs('blog.*'))
+                                                                                {{ route('blog.index', ['category' => $category->id]) }}
+
+                                                                              @elseif (request()->routeIs('tutorials.*'))
+                                                                                {{ route('tutorials.index', ['category' => $category->id]) }}
+
+                                                                              @else
+                                                                                {{ route('home', ['category' => $category->id]) }}
+                                                                              @endif
+                                                                                          ">
             {{ $category->name }}
           </a>
         </li>
@@ -31,7 +40,7 @@
 
   </div>
 
-  <div class="widget">
+  <div class=" widget">
     <h3>Popular Tags</h3>
     <form action="{{ request()->routeIs('blog.index') ? route('blog.index') : route('home') }}" method="GET">
       <select name="tag" id="tag" class="search-box text-white mt-2" style="width: 100%">
@@ -50,11 +59,43 @@
     </form>
 
     <div class="tag-cloud mt-3">
+
       @foreach ($tags as $tag)
-        <a href="{{ request()->routeIs('blog.index') ? route('blog.index', ['tag' => $tag->id]) : route('home', ['tag' => $tag->id]) }}"
-          class="tag">{{ $tag->name }}</a>
+
+
+        @php
+
+          if (request()->routeIs('blog.*')) {
+
+            $tagUrl = route('blog.index', [
+              'tag' => $tag->id
+            ]);
+
+          } elseif (request()->routeIs('tutorials.*')) {
+
+            $tagUrl = route('tutorials.index', [
+              'tag' => $tag->id
+            ]);
+
+          } else {
+
+            $tagUrl = route('home', [
+              'tag' => $tag->id
+            ]);
+
+          }
+
+        @endphp
+
+        <a href="{{ $tagUrl }}" class="tag">
+          {{ $tag->name }}
+        </a>
+
+
       @endforeach
+
     </div>
+
   </div>
 
 
