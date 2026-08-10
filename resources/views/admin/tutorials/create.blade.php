@@ -49,6 +49,32 @@
         @enderror
       </div>
 
+      {{-- Tag --}}
+      <div class="mb-3">
+
+        <label for="tags" class="form-label">Tags</label>
+
+        <select name="tags[]" id="tags" class=" mb-3 form-control @error('tags') is-invalid @enderror" multiple>
+
+          @foreach ($tags as $tag)
+
+            <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'selected' : '' }}>
+              {{ $tag->name }}
+            </option>
+
+          @endforeach
+
+        </select>
+
+        @error('tags')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+        @enderror
+        <span class="text-emerald-500 mt-4"><small>Hold Ctrl(Windows) or Command(Mac)to select multiple
+            tags.</small></span>
+      </div>
+
       {{-- Content --}}
       <div class="mb-3">
         <label for="content" class="form-label">

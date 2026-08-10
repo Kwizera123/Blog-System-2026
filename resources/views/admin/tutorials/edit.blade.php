@@ -23,10 +23,70 @@
         </select>
       </div>
 
+      <!--Tags-->
+      {{-- <div class="mb-3">
+        <label for="tags" class="form-label">Tags</label>
+        <select name="tags[]" id="tags" class="form-control mb-2 @error('tags') is-invalid @enderror" multiple>
+
+          @foreach ($tags as $tag)
+          <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $tutorial->tags->pluck('id')->toArray())) ?
+            'selected' : '' }}>
+            {{ $tag->name }}
+          </option>
+          @endforeach
+        </select>
+        @error('tags')
+        <div class="invalid-feedback mb-1">
+          {{ $message }}
+        </div>
+        @enderror
+        <small class="text-emerald-500 mt-4"><strong> Hold Ctrl (Windows) or Command (Mac) to select multiple
+            tags.</strong>
+        </small>
+      </div> --}}
+
+      {{-- Tags --}}
+
+      <div class="mb-3">
+
+        <label for="tags" class="form-label">
+          Tags
+        </label>
+
+        <select name="tags[]" id="tags" class="form-control @error('tags') is-invalid @enderror" multiple>
+
+          
+          @foreach ($tags as $tag)
+
+            <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $tutorial->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
+
+              {{ $tag->name }}
+
+            </option>
+
+          @endforeach
+
+
+        </select>
+
+        @error('tags')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+        @enderror
+
+        <small class="text-muted">
+          Hold Ctrl (Windows) or Command (Mac) to select multiple tags.
+        </small>
+
+      </div>
+
+      <!--End of Tags-->
+
       <div class="mb-3"> <label for="content" class="form-label"> Tutorial Content </label>
         <textarea name="content" id="content" rows="10" class="form-control" required>
-                                                                                                        {{ old('content', $tutorial->content) }}
-                                                                                                        </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                          {{ old('content', $tutorial->content) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                          </textarea>
       </div>
 
       <div class="mb-3">

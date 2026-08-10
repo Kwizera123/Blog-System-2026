@@ -8,6 +8,7 @@ use App\Models\Tutorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Tag;
 
 
 
@@ -36,7 +37,12 @@ class TutorialController extends Controller
     {
         $categories = Category::orderBy('name')->get();
 
-        return view('admin.tutorials.create', compact('categories'));
+        $tags = Tag::orderBy('name')->get();
+
+        return view('admin.tutorials.create', compact(
+            'categories',
+            'tags'
+            ));
         //end Method
     }
 
@@ -48,6 +54,7 @@ class TutorialController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'tags' => 'nullable|array',
             'content' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'video_url' => 'nullable|url|max:255',
@@ -72,7 +79,9 @@ class TutorialController extends Controller
         $validated['slug'] = $slug;
         $validated['user_id'] = auth()->id();
 
-        Tutorial::create($validated);
+        $tutorial = Tutorial::create($validated);
+
+        $tutorial->tags()->sync($request->tags ?? []);
 
         return redirect()
             ->route('admin.tutorials.index')
@@ -92,16 +101,24 @@ class TutorialController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tutorial $tutorial)
-    {
+   public function edit(Tutorial $tutorial)
+{
         $categories = Category::orderBy('name')->get();
+
+
+        $tags = Tag::orderBy('name')->get();
+
+        $tutorial->load('tags');
 
         return view('admin.tutorials.edit', compact(
             'categories',
+            'tags',
             'tutorial'
-            ));
-        //End Method
-    }
+        ));
+
+
+}// End Method
+
 
     /**
      * Update the specified resource in storage.
@@ -115,6 +132,8 @@ class TutorialController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'video_url' => 'nullable|url|max:255',
             'status' => 'required|in:draft,published',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
 
         ]);
           /*
@@ -133,6 +152,7 @@ class TutorialController extends Controller
             ->exists()
     ) {
         $slug = $originalSlug . '-' . $counter;
+        $counter++;
     }
 
     $validated['slug'] = $slug;
@@ -165,11 +185,13 @@ class TutorialController extends Controller
 
     $tutorial->update($validated);
 
+    $tutorial->tags()->sync($request->tags ?? []);
+
     return redirect()
             ->route('admin.tutorials.index')
             ->with('success', 'Tutorial updated successfully.');
 
-        //
+        //End Method
     }
 
     /**
