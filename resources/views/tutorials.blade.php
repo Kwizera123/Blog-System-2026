@@ -10,6 +10,39 @@
     <p class="text-muted mb-3">
       Learn web development through step-by-step tutorials.
     </p>
+    {{-- Search--}}
+    <form action="{{ route('tutorials.index') }}" method="GET" class="mb-4">
+      <div class="row">
+        <div class="col-md-10">
+          <input type="text" name="search" value="{{ request('search') }}" class="form-control"
+            placeholder="Search tutorials...">
+
+          <div class="row mt-3">
+            <div class="col-md-10">
+              <select name="category" id="category" class="form-control">
+                <option value="">All Categories</option>
+                @foreach ($categories as $category)
+                  <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : ''}}>
+                    {{ $category->name }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-sm btn-secondary w-100"><i class="bi bi-funnel"></i> Filter</button>
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-sm btn-primary w-100"><i class="bi bi-search"></i> Search</button>
+        </div>
+      </div>
+    </form>
+    {{-- --}}
 
     @forelse ($tutorials as $tutorial)
 
@@ -38,8 +71,7 @@
               {{ $tutorial->category->name }}
             </span>
           @endif
-          <p>
-            {{ Str::limit(strip_tags($tutorial->content), 180) }}
+          <p> {{ Str::limit(strip_tags($tutorial->content), 180) }}
           </p>
 
           <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-2">Read Tutorial</a>
