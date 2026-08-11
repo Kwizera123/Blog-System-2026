@@ -91,6 +91,8 @@ class TutorialController extends Controller
             'tags',
         ]);
 
+        $tagIds = $tutorial->tags->pluck('id');
+
         $categories = Category::orderBy('name')->get();
         $tags = Tag::orderBy('name')->get();
 
@@ -110,10 +112,19 @@ class TutorialController extends Controller
         $relatedTutorials = Tutorial::with([
             'user',
             'category',
+            'tags',
         ])
         ->where('status', 'published')
-        ->where('category_id', $tutorial->category_id)
         ->where('id','!=',$tutorial->id)
+        ->where(function ($query) use ($tagIds, $tutorial) {
+            $query->where('category_id', $tutorial->category_id)
+
+            ->orWhereHas('tags', function ($tagQuery) use ($tagIds) {
+                $tagQuery->whereIn('tags.id', $tagIds);
+            });
+        })
+      
+        
         ->latest()
         ->take(3)
         ->get();
