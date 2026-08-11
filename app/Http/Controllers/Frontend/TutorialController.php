@@ -106,12 +106,25 @@ class TutorialController extends Controller
             ->oldest()
             ->first();
 
+        //
+        $relatedTutorials = Tutorial::with([
+            'user',
+            'category',
+        ])
+        ->where('status', 'published')
+        ->where('category_id', $tutorial->category_id)
+        ->where('id','!=',$tutorial->id)
+        ->latest()
+        ->take(3)
+        ->get();
+
         return view('tutorials.show', compact(
             'tutorial',
             'categories',
             'tags',
             'previousTutorial',
-            'nextTutorial'
+            'nextTutorial',
+            'relatedTutorials'
             ));
     }//End Method
 }

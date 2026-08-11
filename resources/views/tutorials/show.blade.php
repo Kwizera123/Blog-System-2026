@@ -79,28 +79,66 @@
 
       @endif
 
+      {{-- -Previous / Next Tutorial navigation--}}
+
+      <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
+        <!--Previous Tutorial.  -->
+        <div>
+          @if ($previousTutorial)
+            <a href="{{ route('tutorials.show', $previousTutorial) }}" class="btn btn-sm btn-outline-primary">
+              ← Previous Tutorial
+            </a>
+          @endif
+        </div>
+
+        {{-- Next Tutorial--}}
+        <div>
+          @if($nextTutorial)
+            <a href="{{ route('tutorials.show', $nextTutorial) }}" class="btn btn-sm btn-outline-success">
+              Next Tutorial →
+            </a>
+          @endif
+        </div>
+      </div>
+
+      {{-- Related Tutorials --}}
+      @if ($relatedTutorials->isNotEmpty())
+        <div class="mt-5 pt-4 border-top">
+          <h3 class="mb-4">Related Tutorials</h3>
+          <div class="row">
+            @foreach ($relatedTutorials as $relatedTutorial)
+
+              <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                  @if ($relatedTutorial->image)
+                    <img src="{{ asset('storage/' . $relatedTutorial->image) }}" class="card-img-top"
+                      alt="{{ $relatedTutorial->title }}" style="height: 160px; object-fit: cover;">
+                  @endif
+                  <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">
+                      {{ $relatedTutorial->title }}
+                    </h5>
+                    @if($relatedTutorial->category)
+                      <span class="badge bg-secondary align-self-start mb-2">
+                        {{ $relatedTutorial->category->name }}
+                      </span>
+                    @endif
+                    <p class="text-muted small">
+                      {{ $relatedTutorial->created_at->diffForHumans() }}
+                    </p>
+                    <a href="{{ route('tutorials.show', $relatedTutorial) }}" class="btn btn-sm btn-primary mt-auto">Read
+                      Tutorial</a>
+                  </div>
+                </div>
+              </div>
+
+            @endforeach
+          </div>
+        </div>
+      @endif
+
     </article>
-    {{-- -Previous / Next Tutorial navigation--}}
 
-    <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
-      <!--Previous Tutorial.  -->
-      <div>
-        @if ($previousTutorial)
-          <a href="{{ route('tutorials.show', $previousTutorial) }}" class="btn btn-sm btn-outline-primary">
-            ← Previous Tutorial
-          </a>
-        @endif
-      </div>
-
-      {{-- Next Tutorial--}}
-      <div>
-        @if($nextTutorial)
-          <a href="{{ route('tutorials.show', $nextTutorial) }}" class="btn btn-sm btn-outline-success">
-            Next Tutorial →
-          </a>
-        @endif
-      </div>
-    </div>
 
   </div>
 @endsection
