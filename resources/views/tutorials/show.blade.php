@@ -14,7 +14,7 @@
         <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong>
         </small>
       </p>
-
+      <!--Category-->
       @if($tutorial->category)
         <span class="badge bg-secondary mb-3">
           {{ $tutorial->category->name }}
@@ -80,5 +80,27 @@
       @endif
 
     </article>
+    {{-- -Previous / Next Tutorial navigation--}}
+
+    <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
+      <!--Previous Tutorial.  -->
+      <div>
+        @if ($previousTutorial)
+          <a href="{{ route('tutorials.show', $previousTutorial) }}" class="btn btn-sm btn-outline-primary">
+            ← Previous Tutorial
+          </a>
+        @endif
+      </div>
+
+      {{-- Next Tutorial--}}
+      <div>
+        @if($nextTutorial)
+          <a href="{{ route('tutorials.show', $nextTutorial) }}" class="btn btn-sm btn-outline-success">
+            Next Tutorial →
+          </a>
+        @endif
+      </div>
+    </div>
+
   </div>
 @endsection

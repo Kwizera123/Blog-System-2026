@@ -87,15 +87,31 @@ class TutorialController extends Controller
         abort_if($tutorial->status !== 'published', 404);
         $tutorial->load([
             'user',
-            'category'
+            'category',
+            'tags',
         ]);
 
         $categories = Category::orderBy('name')->get();
         $tags = Tag::orderBy('name')->get();
 
+        //Find the previous published tutorial
+        $previousTutorial = Tutorial::where('status','published')
+            ->where('created_at','<', $tutorial->created_at)
+            ->latest()
+            ->first();
+
+        //find the next published tutorial
+        $nextTutorial = Tutorial::where('status','published')
+            ->where('created_at', '>', $tutorial->created_at)
+            ->oldest()
+            ->first();
+
         return view('tutorials.show', compact(
             'tutorial',
             'categories',
-            'tags'));
+            'tags',
+            'previousTutorial',
+            'nextTutorial'
+            ));
     }//End Method
 }
