@@ -10,8 +10,9 @@
       </h1>
 
       <p class="text-muted">
-        By {{ $tutorial->user->name }}
-        .{{ $tutorial->created_at->diffForHumans() }}
+        By {{ $tutorial->user->name }}.
+        <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong>
+        </small>
       </p>
 
       @if($tutorial->category)
@@ -19,6 +20,21 @@
           {{ $tutorial->category->name }}
         </span>
       @endif
+      <!--Tags-->
+
+      @if ($tutorial->tags->isNotEmpty())
+        <div class="mb-3">
+          <strong>Tags:</strong>
+          @foreach ($tutorial->tags as $tag)
+
+            <a href="{{ route('tutorials.index', ['tag' => $tag->id]) }}" class="badge bg-primary text-decoration-none me-1">
+              {{ $tag->name }}
+            </a>
+          @endforeach
+        </div>
+      @endif
+
+
 
       @if ($tutorial->image)
         <div class="mb-4">

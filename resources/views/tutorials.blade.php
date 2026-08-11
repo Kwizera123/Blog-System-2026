@@ -64,15 +64,13 @@
             {{ $tutorial->title }}
           </h2>
 
-          <p class="text-muted mb-2">
+          <p class="text-muted mb-0">
 
-            By {{ $tutorial->user->name }}
-            .
-            {{ $tutorial->created_at->diffForHumans() }}
-
+            By {{ $tutorial->user->name }}.
+            <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong></small>
           </p>
           @if($tutorial->category)
-            <span class="badge bg-secondary mb-3">
+            <span class="badge bg-secondary mb-2">
               {{ $tutorial->category->name }}
             </span>
           @endif

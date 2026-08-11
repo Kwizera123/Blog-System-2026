@@ -58,8 +58,14 @@ class TutorialController extends Controller
         ->when($request->filled('category'), function ($query) use ($request) {
 
             $query->where('category_id', $request->category);
-
         })
+
+          // Tag filter
+          ->when($request->filled('tag'), function ($query) use ($request) {
+            $query->whereHas('tags', function ($tagQuery) use ($request) {
+                $tagQuery->where('tags.id', $request->tag);
+            });
+          })
 
         // Latest tutorials first
         ->latest()
