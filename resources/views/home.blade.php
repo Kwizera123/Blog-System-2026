@@ -68,7 +68,7 @@
 
       @forelse ($posts as $post)
         <!-- Post 1 -->
-        <article class="post-card">
+        <article class="post-card tutorial-card">
 
           <div class="post-image">
             @if ($post->image)

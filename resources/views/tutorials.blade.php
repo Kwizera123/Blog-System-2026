@@ -17,7 +17,7 @@
           <input type="text" name="search" value="{{ request('search') }}" class="form-control"
             placeholder="Search tutorials...">
 
-          <div class="row mt-3">
+          <div class="row mt-2">
             <div class="col-md-10">
               <select name="category" id="category" class="form-control">
                 <option value="">All Categories</option>
@@ -28,19 +28,19 @@
                 @endforeach
               </select>
             </div>
-            <div class="col-md-2">
-              <button type="submit" class="btn btn-sm btn-secondary w-100"><i class="bi bi-funnel"></i> Filter</button>
+            <div class="col-md-2 mt-1">
+              <button type="submit" class="btn btn-sm btn-secondary"><i class="bi bi-funnel"></i> Filter</button>
             </div>
           </div>
         </div>
 
-        <div class="col-md-2">
-          <button type="submit" class="btn btn-sm btn-primary w-100"><i class="bi bi-search"></i> Search</button>
+        <div class="col-md-2 mt-1">
+          <button type="submit" class="btn btn-sm btn-primary">Search</button>
         </div>
 
         <div class="col-md-3 mt-2 mt-md-2">
-          <a href="{{ route('tutorials.index') }}" class="btn btn-sm btn-secondary w-100"><i
-              class="bi bi-funnel"></i>Clear Filter</a>
+          <a href="{{ route('tutorials.index') }}" class="btn btn-sm btn-secondary">Clear
+            Filter</a>
         </div>
 
 
@@ -48,40 +48,40 @@
       </div>
     </form>
     {{-- --}}
-
     @forelse ($tutorials as $tutorial)
 
-      <article class="card mb-4 shadow-sm">
+      <article class="card tutorial-card mb-4 shadow-sm border-0">
 
         @if($tutorial->image)
-          <img src="{{ asset('storage/' . $tutorial->image) }}" class="card-img-top" alt="{{ $tutorial->title }}"
-            style="max-height: 300px; object-fit: cover;">
+          <img src="{{ asset('storage/' . $tutorial->image) }}" class="card-img-top tutorial-card-image" alt="{{ $tutorial->title }}"
+            style="height: 240px; object-fit: cover;">
         @endif
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
-          <h2 class="h4">
+          <h2 class="h4 mb-2">
             {{ $tutorial->title }}
           </h2>
 
-          <p class="text-muted mb-0">
+          <p class="text-muted mb-4">
 
             By {{ $tutorial->user->name }}.
             <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong></small>
           </p>
           @if($tutorial->category)
-            <span class="badge bg-secondary mb-2">
+            <span class="badge bg-secondary mb-3">
               {{ $tutorial->category->name }}
             </span>
           @endif
-          <p> {{ Str::limit(strip_tags($tutorial->content), 180) }}
+          <p class="mb-3"> {{ Str::limit(strip_tags($tutorial->content), 180) }}
           </p>
 
-          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-2">Read Tutorial</a>
+          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-auto">Read Tutorial</a>
 
         </div>
 
       </article>
+
 
     @empty
 
@@ -91,6 +91,9 @@
 
     @endforelse
 
+
+
     {{ $tutorials->links() }}
 
-</div>@endsection
+  </div>
+@endsection

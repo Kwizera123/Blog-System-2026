@@ -151,10 +151,17 @@ img {
 }
 
 /* --- Layout Grid (Standard 3 Columns) --- */
-.main-layout {
+/* .main-layout {
     display: grid;
     grid-template-columns: 240px 1fr 260px;
     gap: 2rem;
+    padding: 2.5rem 0;
+} */
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) 220px;
+    gap: 1.5rem;
     padding: 2.5rem 0;
 }
 
@@ -241,6 +248,23 @@ img {
     color: var(--dark-blue);
 }
 
+.tutorial-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.tutorial-card-image {
+    height: 240px;
+    object-fit: cover;
+}
+
 /* --- Sidebar Styling --- */
 .sidebar {
     display: flex;
@@ -253,6 +277,7 @@ img {
     padding: 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .widget h3 {
@@ -386,6 +411,10 @@ img {
         background-color: var(--pure-white);
         border-radius: 2px;
         transition: 0.2s ease-in-out;
+    }
+
+    .tutorial-card-image {
+        height: 200px;
     }
 
     /* Target mobile menu reveal via pure CSS checkbox state */

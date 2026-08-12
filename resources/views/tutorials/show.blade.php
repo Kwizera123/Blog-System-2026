@@ -108,7 +108,7 @@
           <div class="row">
             @foreach ($relatedTutorials as $relatedTutorial)
 
-              <div class="col-md-4 mb-4">
+              <div class="col-md-4 mb-0">
                 <div class="card h-100 shadow-sm">
                   @if ($relatedTutorial->image)
                     <img src="{{ asset('storage/' . $relatedTutorial->image) }}" class="card-img-top"
