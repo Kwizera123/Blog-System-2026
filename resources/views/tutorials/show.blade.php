@@ -5,18 +5,18 @@
 
     <article>
 
-      <h1 class="mb-3">
+      <h1 class="mb-2 h4 tutorial-card-title">
         {{ $tutorial->title }}
       </h1>
 
-      <p class="text-muted">
+      <p class="text-muted tutorial-card-meta">
         By {{ $tutorial->user->name }}.
         <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong>
         </small>
       </p>
       <!--Category-->
       @if($tutorial->category)
-        <span class="badge bg-secondary mb-3">
+        <span class="badge tutorial-category-badge mb-3">
           {{ $tutorial->category->name }}
         </span>
       @endif
@@ -42,7 +42,7 @@
         </div>
       @endif
 
-      <div class="tutorial-content">
+      <div class="tutorial-content ">
         {!! $tutorial->content !!}
       </div>
 
@@ -119,7 +119,7 @@
                       {{ $relatedTutorial->title }}
                     </h5>
                     @if($relatedTutorial->category)
-                      <span class="badge bg-secondary align-self-start mb-2">
+                      <span class="badge tutorial-category-badge align-self-start mb-2">
                         {{ $relatedTutorial->category->name }}
                       </span>
                     @endif

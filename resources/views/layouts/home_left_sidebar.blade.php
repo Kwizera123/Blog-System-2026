@@ -21,16 +21,16 @@
       @foreach ($categories as $category)
         <li>
           <a href="
-                                                                              @if (request()->routeIs('blog.*'))
-                                                                                {{ route('blog.index', ['category' => $category->id]) }}
+                                                                                            @if (request()->routeIs('blog.*'))
+                                                                                              {{ route('blog.index', ['category' => $category->id]) }}
 
-                                                                              @elseif (request()->routeIs('tutorials.*'))
-                                                                                {{ route('tutorials.index', ['category' => $category->id]) }}
+                                                                                            @elseif (request()->routeIs('tutorials.*'))
+                                                                                              {{ route('tutorials.index', ['category' => $category->id]) }}
 
-                                                                              @else
-                                                                                {{ route('home', ['category' => $category->id]) }}
-                                                                              @endif
-                                                                                          ">
+                                                                                            @else
+                                                                                              {{ route('home', ['category' => $category->id]) }}
+                                                                                            @endif
+                                                                                                        ">
             {{ $category->name }}
           </a>
         </li>

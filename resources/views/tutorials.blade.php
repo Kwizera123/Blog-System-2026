@@ -53,30 +53,30 @@
       <article class="card tutorial-card mb-4 shadow-sm border-0">
 
         @if($tutorial->image)
-          <img src="{{ asset('storage/' . $tutorial->image) }}" class="card-img-top tutorial-card-image" alt="{{ $tutorial->title }}"
-            style="height: 240px; object-fit: cover;">
+          <img src="{{ asset('storage/' . $tutorial->image) }}" class="card-img-top tutorial-card-image"
+            alt="{{ $tutorial->title }}" style="height: 240px; object-fit: cover;">
         @endif
 
         <div class="card-body p-4">
 
-          <h2 class="h4 mb-2">
+          <h2 class="h4 mb-2 tutorial-card-title">
             {{ $tutorial->title }}
           </h2>
 
-          <p class="text-muted mb-4">
+          <p class="text-muted mb-4 tutorial-card-meta">
 
             By {{ $tutorial->user->name }}.
             <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong></small>
           </p>
           @if($tutorial->category)
-            <span class="badge bg-secondary mb-3">
+            <span class="badge tutorial-category-badge mb-2">
               {{ $tutorial->category->name }}
             </span>
           @endif
-          <p class="mb-3"> {{ Str::limit(strip_tags($tutorial->content), 180) }}
+          <p class="mb-3 tutorial-card-excerpt"> {{ Str::limit(strip_tags($tutorial->content), 180) }}
           </p>
 
-          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-auto">Read Tutorial</a>
+          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-2">Read Tutorial →</a>
 
         </div>
 
