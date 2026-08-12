@@ -14,7 +14,7 @@
       <div class="nav-menu">
         <ul class="nav-links">
           <li><a href="/" class="active">Home</a></li>
-          <li><a href="tutorials">Tutorials</a></li>
+          <li><a href="{{ route('tutorials.index') }}">Tutorials</a></li>
           <li><a href="#">About</a></li>
           <li><a href="blog">Blog</a></li>
         </ul>
@@ -65,7 +65,7 @@
 
           <li><a class="dropdown-item" href="route('logout')"
               onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   this.closest('form').submit();">{{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     this.closest('form').submit();">{{
               __('Log Out') }}</a>
           </li>
         </form>

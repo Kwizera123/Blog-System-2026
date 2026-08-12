@@ -5,10 +5,15 @@
     <p class="text-muted mt-2">
       Manage your tutorials from the admin panel.
     </p>
+    <div class="d-flex justify-content-between">
+      <a href="{{ route('admin.tutorials.create') }}" class="btn btn-sm btn-primary mb-3 mt-3">
+        <i class="bi bi-pencil-fill"></i> Create Tutorial
+      </a>
 
-    <a href="{{ route('admin.tutorials.create') }}" class="btn btn-sm btn-primary mb-3 mt-3">
-      <i class="bi bi-pencil-fill"></i> Create Tutorial
-    </a>
+      <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary mb-3 mt-3">
+        <i class="bi bi-speedometer"></i> Dashboard
+      </a>
+    </div>
     @if ($tutorials->isEmpty())
       <div class="alert alert-info">
         No tutorials have been created yet.

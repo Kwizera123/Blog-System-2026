@@ -32,6 +32,11 @@
           <a href="{{ route('admin.comments.index') }}" class="btn btn-sm btn-danger">
             💬 Moderate Comments
           </a>
+
+          <a href="{{ route('admin.tutorials.index') }}" class="btn btn-sm btn-success">
+            <i class="bi bi-stars"></i> Tutorial Management
+          </a>
+
         </div>
 
       </div>
@@ -52,7 +57,8 @@
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="card text-center shadow-sm text-bg-primary h-100">
           <div class="card-body">
-            <h5>📝 <strong>Total Posts:</strong></h5>
+            <h5>📝 <strong>Total Posts:</strong>
+            </h5>
             <h2>{{ $totalPosts }}</h2>
             <a href="{{ route('posts.index') }}" class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
 
@@ -85,7 +91,9 @@
       <div class="col-12 col-sm-6 col-lg-3 mt-2">
         <div class="card text-center text-bg-info shadow-sm h-100">
           <div class="card-body">
-            <h5><strong>Total Tags:</strong></h5>
+            <h5>
+              <strong>Total Tags:</strong>
+            </h5>
             <h2>{{ $totalTags }}</h2>
             <a href="{{ route('admin.tags.index') }}" class="btn btn-sm btn- btn-outline-light"><strong>View</strong></a>
           </div>
@@ -160,7 +168,8 @@
                 </span>
               @endif
             </td>
-            <td>{{ $post->user->name }}</td>
+            <td>{{ $post->user->name }}
+            </td>
             <td>{{ $post->created_at->diffForHumans() }}</td>
             <td>
               <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
