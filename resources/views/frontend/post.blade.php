@@ -2,6 +2,9 @@
 
 @section('content')
 
+  @php
+    use App\Helpers\TutorialContentHelper;
+  @endphp
   <div class="container mt-4">
     <labe class="form-label text text-primary">
       <strong>The Post | Reading</strong>
@@ -45,9 +48,10 @@
         </p>
         <hr class="mt-2 mb-2 h-r">
 
-        <div class="post-content blog-article-content">
+        <div class="post-content tutorial-content blog-article-content">
 
-          {!! $post->content !!}
+          {{-- {!! $post->content !!} --}}
+          {!! TutorialContentHelper::render($post->content) !!}
 
         </div>
 
@@ -173,8 +177,8 @@
               <label for="comment" class="form-label">Your Comment</label>
               <textarea name="comment" id="comment" cols="30" rows="4" class="form-control"
                 placeholder="Write your comment here...">
-                                                                                                                                                                                                                                                             {{ old('comment') }}
-                                                                                                                                                                                                                                                  </textarea>
+                                                                                                                                                                                                                                                                                                                                                                             {{ old('comment') }}
+                                                                                                                                                                                                                                                                                                                                                                  </textarea>
             </div>
             <button type="submit" class="btn btn-sm btn-primary">
               Send Comment

@@ -341,8 +341,7 @@ img {
 }
 
 .h-r{
-    
-    color: cornflowerblue;
+    color: #2196F3;
 }
 
 .read-more {
@@ -405,23 +404,20 @@ img {
 }
 
 .tutorial-content pre {
-    background: #0f172a;
-    color: #f8fafc;
-    padding: 1rem;
+    background: #1e1e1e;
+    color: #ffffff;
+    padding: 20px;
     border-radius: 8px;
     overflow-x: auto;
-    margin: 1.5rem 0;
-    line-height: 1.6;
+    margin: 20px 0;
 }
 
 .tutorial-content pre code {
     background: transparent;
     color: inherit;
     padding: 0;
-    border-radius: 0;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-family: monospace;
+    white-space: pre;
 }
 
 

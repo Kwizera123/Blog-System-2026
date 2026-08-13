@@ -1,6 +1,9 @@
 @extends('layouts.home')
 
 @section('content')
+  @php
+    use App\Helpers\TutorialContentHelper;
+  @endphp
   <div class="container">
 
     <article>
@@ -43,7 +46,8 @@
       @endif
 
       <div class="tutorial-content">
-        {!! $tutorial->content !!}
+        {{-- {!! $tutorial->content !!} --}}
+        {!! TutorialContentHelper::render($tutorial->content) !!}
       </div>
 
       @if ($tutorial->video_url)
