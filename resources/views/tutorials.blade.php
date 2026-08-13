@@ -7,7 +7,7 @@
     <h1 class="mb-4 mt-0"><strong>📚 Tutorials</strong>
     </h1>
 
-    <p class="text-muted mb-3">
+    <p class="text-muted tutorial-content mb-3">
       Learn web development through step-by-step tutorials.
     </p>
     {{-- Search--}}
@@ -76,7 +76,8 @@
           <p class="mb-3 tutorial-card-excerpt"> {{ Str::limit(strip_tags($tutorial->content), 180) }}
           </p>
 
-          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary mt-2">Read Tutorial →</a>
+          <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary tutorial-read-btn mt-2">Read
+            Tutorial →</a>
 
         </div>
 
