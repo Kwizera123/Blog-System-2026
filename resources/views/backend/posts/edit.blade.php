@@ -107,8 +107,8 @@
       <div class=" mb-3">
         <label for="" class="form-label">Content</label>
         <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                  {{ old('content', $post->content) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                  </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ old('content', $post->content) }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            </textarea>
       </div>
       <div class="mb-3">
         <label for="" class="form-label">Featured Image</label>
@@ -117,17 +117,31 @@
 
       <div class="mb-3">
         <label for="" class="control-label"><span class="text text-danger">YouTube</span> Video URL</label>
-        <input type="url" name="video_url" class="form-control" placeholder="https://www.youtube.com/watch?=...">
+
+<input
+    type="url"
+    name="video_url"
+    class="form-control"
+    value="{{ old('video_url', $post->video_url) }}"
+    placeholder="https://www.youtube.com/watch?v=..."
+>
+
         <small class="text-muted">
           Optional. Paste a YouTube video link.
         </small>
       </div>
 
       <div class="mb-3">
-        <label for="" class="form-label">Status</label>
-        <select name="status" id="" class="form-control">
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
+        <label for="status" class="form-label">Status</label>
+
+        <select name="status" id="status" class="form-control">
+          <option value="draft" @selected($post->status === 'draft')>
+            Draft
+          </option>
+
+          <option value="published" @selected($post->status === 'published')>
+            Published
+          </option>
         </select>
       </div>
 

@@ -5,7 +5,7 @@
 
     <article>
 
-      <h1 class="mb-2 h4 tutorial-content tutorial-card-title">
+      <h1 class="mb-2 tutorial-card-title">
         {{ $tutorial->title }}
       </h1>
 
@@ -38,7 +38,7 @@
 
       @if ($tutorial->image)
         <div class="mb-4">
-          <img src="{{ asset('storage/' . $tutorial->image) }}" alt="{{ $tutorial->title }}" class="img-fluid rounded">
+          <img src="{{ asset('storage/' . $tutorial->image) }}" alt="{{ $tutorial->title }}" class="img-fluid  rounded">
         </div>
       @endif
 
@@ -65,7 +65,7 @@
 
         @if($videoId)
           <div class="mt-4">
-            <h3 class="mb-3 tutorial-content">Tutorial Video</h3>
+            <h3 class="mb-3">Tutorial Video</h3>
 
             <div class="ratio ratio-16x9">
               <iframe src="https://www.youtube.com/embed/{{ $videoId }}" title="{{ $tutorial->title }}"
@@ -104,11 +104,11 @@
       {{-- Related Tutorials --}}
       @if ($relatedTutorials->isNotEmpty())
         <div class="mt-5 pt-4 border-top">
-          <h3 class="tutorial-content mb-4">Related Tutorials</h3>
+          <h3 class="mb-4">Related Tutorials</h3>
           <div class="row">
             @foreach ($relatedTutorials as $relatedTutorial)
 
-              <div class="col-md-4 mb-0">
+              <div class="col-md-4 mt-2 mb-0">
                 <div class="card h-100 shadow-sm">
                   @if ($relatedTutorial->image)
                     <img src="{{ asset('storage/' . $relatedTutorial->image) }}" class="card-img-top"

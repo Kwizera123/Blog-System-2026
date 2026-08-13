@@ -43,9 +43,12 @@
 
 
         </p>
-        <hr class="mt-2 mb-2">
-        <div>
+        <hr class="mt-2 mb-2 h-r">
+
+        <div class="post-content blog-article-content">
+
           {!! $post->content !!}
+
         </div>
 
 
@@ -81,9 +84,9 @@
         @endif --}}
 
         @if($post->embed_video_url)
-          <hr>
+          <hr class="mb-2 h-r">
           <h3>Video Tutorial</h3>
-          <div class="ratio ratio-16x9">
+          <div class="ratio ratio-16x9 mt-2">
             <iframe src="{{ $post->embed_video_url}}" allowfullscreen>
             </iframe>
           </div>
@@ -170,8 +173,8 @@
               <label for="comment" class="form-label">Your Comment</label>
               <textarea name="comment" id="comment" cols="30" rows="4" class="form-control"
                 placeholder="Write your comment here...">
-                                                                                                                                     {{ old('comment') }}
-                                                                                                                          </textarea>
+                                                                                                                                                                                                                                                             {{ old('comment') }}
+                                                                                                                                                                                                                                                  </textarea>
             </div>
             <button type="submit" class="btn btn-sm btn-primary">
               Send Comment

@@ -7,7 +7,7 @@
     <h1 class="mb-4 mt-0"><strong>📚 Tutorials</strong>
     </h1>
 
-    <p class="text-muted tutorial-content mb-3">
+    <p class="text-muted mb-3">
       Learn web development through step-by-step tutorials.
     </p>
     {{-- Search--}}
