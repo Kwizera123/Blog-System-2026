@@ -55,7 +55,7 @@
 
         <select name="tags[]" id="tags" class="form-control @error('tags') is-invalid @enderror" multiple>
 
-          
+
           @foreach ($tags as $tag)
 
             <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $tutorial->tags->pluck('id')->toArray())) ? 'selected' : '' }}>
@@ -83,10 +83,26 @@
 
       <!--End of Tags-->
 
-      <div class="mb-3"> <label for="content" class="form-label"> Tutorial Content </label>
-        <textarea name="content" id="content" rows="10" class="form-control" required>
-                                                                                                                                                                                                                                                                                                                                                                                                                                          {{ old('content', $tutorial->content) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                          </textarea>
+      <div class="mb-3">
+
+        <label for="contentEditor" class="form-label">
+          Content
+        </label>
+
+        <div class="mb-2">
+
+          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+            &lt;/&gt; Code Block
+          </button>
+
+        </div>
+
+        <textarea name="content" rows="15" class="form-control" id="contentEditor"
+          placeholder="Write your tutorial content here...">
+
+
+            {{ old('content', $tutorial->content) }}
+            </textarea>
       </div>
 
       <div class="mb-3">
@@ -134,5 +150,35 @@
       <a href="{{ route('admin.tutorials.index') }}" class="btn btn-secondary"> Cancel </a>
 
     </form>
+<script>
+    function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const codeBlock = `[code]
+${selectedText}
+[/code]`;
+
+        editor.value =
+            editor.value.substring(0, start) +
+            codeBlock +
+            editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition =
+            start + codeBlock.length;
+
+        editor.setSelectionRange(
+            newCursorPosition,
+            newCursorPosition
+        );
+    }
+</script>
   </div>
 @endsection

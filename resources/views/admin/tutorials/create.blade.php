@@ -77,12 +77,21 @@
 
       {{-- Content --}}
       <div class="mb-3">
-        <label for="content" class="form-label">
+        <label for="contentEditor" class="form-label">
           Tutorial Content
         </label>
 
-        <textarea name="content" id="content" rows="10" class="form-control @error('content') is-invalid @enderror"
+        <div class="mb-2">
+
+          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+            &lt;/&gt; Code Block
+          </button>
+
+        </div>
+
+        <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content') }}</textarea>
+
 
         @error('content')
           <div class="invalid-feedback">
@@ -163,5 +172,35 @@
 
 
     </form>
+    <script>
+      function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const codeBlock = `[code]
+          ${selectedText}
+          [/code]`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          codeBlock +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition =
+          start + codeBlock.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+    </script>
   </div>
 @endsection

@@ -105,11 +105,19 @@
 
 
       <div class=" mb-3">
-        <label for="" class="form-label">Content</label>
-        <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ old('content', $post->content) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            </textarea>
+        <label for="contentEditor" class="form-label">Content</label>
+
+
+        <div class="mb-2">
+          <button type="button" class="btn btn-dark sm" onclick="insertCodeBlock()">&lt;/&gt; Code Block</button>
+        </div>
+        <textarea name="content" rows="15" class="form-control" id="contentEditor"
+          placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
+
+                   </textarea>
+
       </div>
+
       <div class="mb-3">
         <label for="" class="form-label">Featured Image</label>
         <input type="file" name="image" class="form-control">
@@ -118,13 +126,8 @@
       <div class="mb-3">
         <label for="" class="control-label"><span class="text text-danger">YouTube</span> Video URL</label>
 
-<input
-    type="url"
-    name="video_url"
-    class="form-control"
-    value="{{ old('video_url', $post->video_url) }}"
-    placeholder="https://www.youtube.com/watch?v=..."
->
+        <input type="url" name="video_url" class="form-control" value="{{ old('video_url', $post->video_url) }}"
+          placeholder="https://www.youtube.com/watch?v=...">
 
         <small class="text-muted">
           Optional. Paste a YouTube video link.
@@ -149,6 +152,39 @@
       <a href="{{ route('posts.index') }}" class="btn btn-sm btn-secondary">Back</a>
 
     </form>
+
+    <script>
+      function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const codeBlock = `[code]
+                ${selectedText}
+                [/code]`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          codeBlock +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition =
+          start + codeBlock.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+    </script>
+
+
     @if ($post->status == 'draft')
       <form action="{{ route('admin.posts.publish', $post) }}" method="POST" class="d-inline">
         @csrf

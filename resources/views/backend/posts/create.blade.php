@@ -57,11 +57,22 @@
 
 
       <div class="mb-3">
-        <label for="" class="form-label">Content</label>
-        <textarea name="content" rows="6" class="form-control" id="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 {{ old('content') }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </textarea>
+
+        <label for="contentEditor" class="form-label">
+          Content
+        </label>
+
+        <div class="mb-2">
+
+          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+            &lt;/&gt; Code Block
+          </button>
+
+        </div>
+        <textarea name="content" rows="15" class="form-control" id="contentEditor"
+          placeholder="Write your tutorial content here...">{{ old('content') }}</textarea>
       </div>
+
       <div class="mb-3">
         <label for="" class="form-label">Featured Image</label>
         <input type="file" name="image" class="form-control">
@@ -87,5 +98,36 @@
       <button class="btn btn-primary">Publish Post</button>
       <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
     </form>
+
+<script>
+    function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const codeBlock = `[code]
+${selectedText}
+[/code]`;
+
+        editor.value =
+            editor.value.substring(0, start) +
+            codeBlock +
+            editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition =
+            start + codeBlock.length;
+
+        editor.setSelectionRange(
+            newCursorPosition,
+            newCursorPosition
+        );
+    }
+</script>
   </div>
 @endsection
