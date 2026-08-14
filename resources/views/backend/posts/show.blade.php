@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
+  @php
+    use App\Helpers\TutorialContentHelper;
+  @endphp
   <div class="container mt-4">
     <labe class="form-label text text-primary">
-      <strong>Your Post:</strong>
+      <strong>Your Post : User</strong>
     </labe>
     <div class="card">
 
@@ -14,11 +16,14 @@
           By: {{ $post->user->name }} | Category: {{ $post->category->name }}
         </p>
         <hr>
-        <p>
-          {{ $post->content }}
-        </p>
+
+        <div class="tutorial-content">
+          {!! TutorialContentHelper::render($post->content) !!}
+          {{-- {{ $post->content }} --}}
+        </div>
+
         @if($post->image)
-          <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="{{ $post->title }}" width="200">
+          <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid mb-3" alt="{{ $post->title }}" width="200">
         @endif
 
 

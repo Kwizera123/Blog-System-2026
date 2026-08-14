@@ -109,12 +109,27 @@
 
 
         <div class="mb-2">
-          <button type="button" class="btn btn-dark sm" onclick="insertCodeBlock()">&lt;/&gt; Code Block</button>
+
+          <select id="codeLanguage" class="form-select form-select-sm w-auto d-inline-block">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+            <option value="php">PHP</option>
+            <option value="blade">Blade</option>
+            <option value="laravel">Laravel</option>
+          </select>
+
+          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+            &lt;/&gt; Code Block
+          </button>
+
         </div>
+
+
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
 
-                   </textarea>
+                                   </textarea>
 
       </div>
 
@@ -158,14 +173,16 @@
 
         const editor = document.getElementById('contentEditor');
 
+        const language = document.getElementById('codeLanguage').value;
+
         const start = editor.selectionStart;
         const end = editor.selectionEnd;
 
         const selectedText = editor.value.substring(start, end);
 
-        const codeBlock = `[code]
-                ${selectedText}
-                [/code]`;
+        const codeBlock = `[code:${language}]
+    ${selectedText}
+    [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +

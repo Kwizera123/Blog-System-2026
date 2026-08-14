@@ -91,6 +91,15 @@
 
         <div class="mb-2">
 
+          <select id="codeLanguage" class="form-select form-select-sm w-auto d-inline-block">
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+            <option value="php">PHP</option>
+            <option value="blade">Blade</option>
+            <option value="laravel">Laravel</option>
+          </select>
+
           <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
             &lt;/&gt; Code Block
           </button>
@@ -101,8 +110,8 @@
           placeholder="Write your tutorial content here...">
 
 
-            {{ old('content', $tutorial->content) }}
-            </textarea>
+              {{ old('content', $tutorial->content) }}
+              </textarea>
       </div>
 
       <div class="mb-3">
@@ -150,35 +159,39 @@
       <a href="{{ route('admin.tutorials.index') }}" class="btn btn-secondary"> Cancel </a>
 
     </form>
-<script>
-    function insertCodeBlock() {
+    <script>
+
+      function insertCodeBlock() {
 
         const editor = document.getElementById('contentEditor');
+
+        const language = document.getElementById('codeLanguage').value;
 
         const start = editor.selectionStart;
         const end = editor.selectionEnd;
 
         const selectedText = editor.value.substring(start, end);
 
-        const codeBlock = `[code]
-${selectedText}
-[/code]`;
+        const codeBlock = `[code:${language}]
+                      ${selectedText}
+                      [/code]`;
 
         editor.value =
-            editor.value.substring(0, start) +
-            codeBlock +
-            editor.value.substring(end);
+          editor.value.substring(0, start) +
+          codeBlock +
+          editor.value.substring(end);
 
         editor.focus();
 
         const newCursorPosition =
-            start + codeBlock.length;
+          start + codeBlock.length;
 
         editor.setSelectionRange(
-            newCursorPosition,
-            newCursorPosition
+          newCursorPosition,
+          newCursorPosition
         );
-    }
-</script>
+      }
+
+    </script>
   </div>
 @endsection
