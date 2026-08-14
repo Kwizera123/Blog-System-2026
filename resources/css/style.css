@@ -370,6 +370,8 @@ img {
     overflow-x: auto;
 }
 
+
+
 .tutorial-code-block pre code {
     background: transparent;
     color: inherit;
@@ -377,7 +379,33 @@ img {
     font-family: monospace;
     white-space: pre;
 }
+/* Copy code */
+.code-header {
+    background: #111;
+    color: #fff;
 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 8px 12px;
+}
+
+.copy-code-btn {
+    border: 1px solid #777;
+    background: transparent;
+    color: #fff;
+
+    padding: 4px 10px;
+    border-radius: 4px;
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.copy-code-btn:hover {
+    background: #333;
+}
 
 
 .read-more {

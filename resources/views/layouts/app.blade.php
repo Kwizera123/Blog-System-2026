@@ -57,6 +57,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+    <script>
+        function copyCode(button) {
+
+            const codeBlock = button
+                .closest('.tutorial-code-block');
+
+            const code = codeBlock
+                .querySelector('code')
+                .innerText;
+
+            navigator.clipboard.writeText(code);
+
+            button.innerText = 'Copied!';
+
+            setTimeout(() => {
+                button.innerText = 'Copy';
+            }, 2000);
+        }
+    </script>
 </body>
 
 </html>

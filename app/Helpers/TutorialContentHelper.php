@@ -25,17 +25,31 @@ class TutorialContentHelper
             $code = trim($matches[2]);
 
             return '
-                <div class="tutorial-code-block">
-                    <div class="code-language">' .
-                        e(strtoupper($language)) .
-                    '</div>
-                    <pre><code class="language-' .
-                        e($prismLanguage) .
-                    '">' .
-                        e($code) .
-                    '</code></pre>
-                </div>
-            ';
+                    <div class="tutorial-code-block">
+
+                        <div class="code-header">
+
+                            <span class="code-language">' .
+                                e(strtoupper($language)) .
+                            '</span>
+
+                            <button
+                                type="button"
+                                class="copy-code-btn"
+                                onclick="copyCode(this)">
+                                Copy
+                            </button>
+
+                        </div>
+
+                        <pre><code class="language-' .
+                            e($prismLanguage) .
+                        '">' .
+                            e($code) .
+                        '</code></pre>
+
+                    </div>
+                ';
         },
         $content
     );
