@@ -93,6 +93,25 @@
             <em>I</em>
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h1>', '</h1>')">
+            H1
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h2>', '</h2>')">
+            H2
+          </button>
+          {{-- <button type="button" class="btn btn-danger btn-sm" onclick="testHeading()">
+            H2 TEST
+          </button> --}}
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h3>', '</h3>')">
+            H3
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h4>', '</h4>')">
+            H4
+          </button>
+
         </div>
 
 
@@ -126,7 +145,10 @@
       <a href="{{ route('posts.index') }}" class="btn btn-secondary">Back</a>
     </form>
 
+
+    {{--
     <script>
+
 
       function insertCodeBlock() {
 
@@ -140,8 +162,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                          ${selectedText}
-                                          [/code]`;
+                                                ${selectedText}
+                                                [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -158,7 +180,86 @@
           newCursorPosition
         );
       }
-      // FontStyle
+
+      function testHeading() {
+
+        alert('1 - function started');
+
+        const editor = document.getElementById('contentEditor');
+
+        alert('2 - editor found: ' + (editor !== null));
+
+        alert('3 - selected text: "' +
+          editor.value.substring(
+            editor.selectionStart,
+            editor.selectionEnd
+          ) +
+          '"');
+      }
+
+
+
+    </script> --}}
+
+    <script>
+
+      function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const language = document.getElementById('codeLanguage').value;
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const codeBlock = `[code:${language}]
+      ${selectedText}
+      [/code]`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          codeBlock +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + codeBlock.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+
+
+      function wrapSelection(before, after) {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+
+        const end = editor.selectionEnd;
+
+        const selectedText =
+          editor.value.substring(start, end);
+
+        const replacement =
+          before + selectedText + after;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          replacement +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          start + before.length,
+          start + before.length + selectedText.length
+        );
+      }
 
     </script>
   </div>

@@ -108,6 +108,22 @@
             <em>I</em>
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h1>', '</h1>')">
+            H1
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h2>', '</h2>')">
+            H2
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h3>', '</h3>')">
+            H3
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h4>', '</h4>')">
+            H4
+          </button>
+
         </div>
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
@@ -207,8 +223,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-        ${selectedText}
-        [/code]`;
+            ${selectedText}
+            [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
