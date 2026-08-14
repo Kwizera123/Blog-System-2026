@@ -100,9 +100,6 @@
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h2>', '</h2>')">
             H2
           </button>
-          {{-- <button type="button" class="btn btn-danger btn-sm" onclick="testHeading()">
-            H2 TEST
-          </button> --}}
 
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h3>', '</h3>')">
             H3
@@ -162,8 +159,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                ${selectedText}
-                                                [/code]`;
+                                                    ${selectedText}
+                                                    [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -215,8 +212,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-      ${selectedText}
-      [/code]`;
+          ${selectedText}
+          [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
