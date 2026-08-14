@@ -98,6 +98,18 @@
 
         </div>
 
+        <div class="mb-2">
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<strong>', '</strong>')">
+            <strong>B</strong>
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<em>', '</em>')">
+            <em>I</em>
+          </button>
+
+        </div>
+
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content') }}</textarea>
 
@@ -195,8 +207,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-  ${selectedText}
-  [/code]`;
+        ${selectedText}
+        [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +

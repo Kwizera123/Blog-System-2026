@@ -78,6 +78,32 @@
                 button.innerText = 'Copy';
             }, 2000);
         }
+        //FontStyle
+        function wrapSelection(before, after) {
+
+            const editor = document.getElementById('contentEditor');
+
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+
+            const selectedText = editor.value.substring(start, end);
+
+            const replacement =
+                before + selectedText + after;
+
+            editor.value =
+                editor.value.substring(0, start) +
+                replacement +
+                editor.value.substring(end);
+
+            editor.focus();
+
+            editor.setSelectionRange(
+                start + before.length,
+                start + before.length + selectedText.length
+            );
+        }
+
     </script>
 </body>
 
