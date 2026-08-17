@@ -534,7 +534,14 @@ img {
 
 .category-list {
     list-style: none;
+
 }
+
+
+li {
+
+}
+
 
 .category-list li {
     margin-bottom: 0.5rem;

@@ -9,7 +9,7 @@
       @method('PUT')
 
       <div class="mb-3">
-        <label for="title" class="form-label">TutorialTitle</label>
+        <label for="title" class="form-label">Tutorial Title</label>
         <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $tutorial->title) }}"
           required>
       </div>
@@ -132,14 +132,22 @@
             H4
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createList('ul')">
+            • List
+          </button>
+
+          <button type=" button" class="btn btn-outline-secondary btn-sm" onclick="createList('ol')">
+            1. List
+          </button>
+
         </div>
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">
 
 
-                                    {{ old('content', $tutorial->content) }}
-                                    </textarea>
+                                                                                                                  {{ old('content', $tutorial->content) }}
+                                                                                                                  </textarea>
       </div>
 
       <div class="mb-3">
@@ -201,8 +209,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-          ${selectedText}
-          [/code]`;
+                                                                                        ${selectedText}
+                                                                                        [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -247,6 +255,41 @@
         );
       }
 
+      // List
+
+      function createList(type) {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const lines = selectedText
+          .split('\n')
+          .filter(line => line.trim() !== '');
+
+        const listItems = lines
+          .map(line => `<li>${line.trim()}</li>`)
+          .join('\n');
+
+        const list = `<${type}>\n${listItems}\n</${type}>`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          list +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + list.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
     </script>
   </div>
 @endsection

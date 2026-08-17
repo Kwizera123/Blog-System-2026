@@ -124,6 +124,16 @@
             H4
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm"
+            onclick="wrapSelection('<ul><li>', '</li></ul>')">
+            • List
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-sm"
+            onclick="wrapSelection('<ol><li>', '</li></ol>')">
+            1. List
+          </button>
+
         </div>
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
@@ -224,8 +234,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-            ${selectedText}
-            [/code]`;
+                                ${selectedText}
+                                [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -267,6 +277,41 @@
         editor.setSelectionRange(
           start + before.length,
           start + before.length + selectedText.length
+        );
+      }
+
+      // List
+      function createList(type) {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const lines = selectedText
+          .split('\n')
+          .filter(line => line.trim() !== '');
+
+        const listItems = lines
+          .map(line => `<li>${line.trim()}</li>`)
+          .join('\n');
+
+        const list = `<${type}>\n${listItems}\n</${type}>`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          list +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + list.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
         );
       }
 

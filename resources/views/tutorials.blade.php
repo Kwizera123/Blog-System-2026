@@ -3,10 +3,9 @@
 @section('content')
 
   <div class="container">
-
     <h1 class="mb-4 mt-0"><strong>📚 Tutorials</strong>
     </h1>
-
+    <li>hello Laravel</li>
     <p class="text-muted mb-3">
       Learn web development through step-by-step tutorials.
     </p>
@@ -59,9 +58,9 @@
 
         <div class="card-body p-4">
 
-          <h2 class="h4 mb-2 tutorial-card-title">
+          <h1 class="h4 mb-2 tutorial-card-title">
             {{ $tutorial->title }}
-          </h2>
+          </h1>
 
           <p class="text-muted mb-4 tutorial-card-meta">
 
