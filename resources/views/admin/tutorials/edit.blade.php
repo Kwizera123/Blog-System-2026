@@ -100,9 +100,7 @@
             <option value="laravel">Laravel</option>
           </select>
 
-          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
-            &lt;/&gt; Code Block
-          </button>
+
 
         </div>
 
@@ -132,6 +130,10 @@
             H4
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
+            P
+          </button>
+
           <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createList('ul')">
             • List
           </button>
@@ -140,14 +142,22 @@
             1. List
           </button>
 
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="insertLink()">
+            🔗 Link
+          </button>
+
+          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+            &lt;/&gt; Code Block
+          </button>
+
         </div>
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">
 
 
-                                                                                                                  {{ old('content', $tutorial->content) }}
-                                                                                                                  </textarea>
+                                                                                                                                                          {{ old('content', $tutorial->content) }}
+                                                                                                                                                          </textarea>
       </div>
 
       <div class="mb-3">
@@ -209,8 +219,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                                                        ${selectedText}
-                                                                                        [/code]`;
+                                                                                                                                ${selectedText}
+                                                                                                                                [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -290,6 +300,57 @@
           newCursorPosition
         );
       }
+      // Link
+
+      function insertLink() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        if (!selectedText) {
+          alert('Please select the text you want to turn into a link.');
+          return;
+        }
+
+        const url = prompt('Enter the URL:');
+
+        if (!url) {
+          return;
+        }
+
+        const trimmedUrl = url.trim();
+
+        if (
+          !trimmedUrl.startsWith('https://') &&
+          !trimmedUrl.startsWith('http://') &&
+          !trimmedUrl.startsWith('mailto:')
+        ) {
+          alert('Please enter a valid URL starting with http://, https://, or mailto:');
+          return;
+        }
+
+        const link =
+          `<a href="${trimmedUrl}" target="_blank" rel="noopener noreferrer">${selectedText}</a>`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          link +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + link.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+
     </script>
   </div>
 @endsection
