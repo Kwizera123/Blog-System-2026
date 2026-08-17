@@ -104,60 +104,98 @@
 
         </div>
 
-        <div class="mb-2">
+        <div class="border rounded p-2 mb-2 bg-light">
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<strong>', '</strong>')">
-            <strong>B</strong>
-          </button>
+          <div class="d-flex flex-wrap gap-2 align-items-center">
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<em>', '</em>')">
-            <em>I</em>
-          </button>
+            {{-- Text Formatting --}}
+            <span class="text-muted small fw-bold">
+              Text:
+            </span>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h1>', '</h1>')">
-            H1
-          </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<strong>', '</strong>')">
+              <strong>B</strong>
+            </button>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h2>', '</h2>')">
-            H2
-          </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<em>', '</em>')">
+              <em>I</em>
+            </button>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h3>', '</h3>')">
-            H3
-          </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
+              P
+            </button>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h4>', '</h4>')">
-            H4
-          </button>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
-            P
-          </button>
+            <span class="border-start mx-1" style="height: 25px;"></span>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createList('ul')">
-            • List
-          </button>
 
-          <button type=" button" class="btn btn-outline-secondary btn-sm" onclick="createList('ol')">
-            1. List
-          </button>
+            {{-- Headings --}}
+            <span class="text-muted small fw-bold">
+              Headings:
+            </span>
 
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="insertLink()">
-            🔗 Link
-          </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h1>', '</h1>')">
+              H1
+            </button>
 
-          <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
-            &lt;/&gt; Code Block
-          </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h2>', '</h2>')">
+              H2
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h3>', '</h3>')">
+              H3
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<h4>', '</h4>')">
+              H4
+            </button>
+
+
+            <span class="border-start mx-1" style="height: 25px;"></span>
+
+
+            {{-- Lists --}}
+            <span class="text-muted small fw-bold">
+              Lists:
+            </span>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createList('ul')">
+              • List
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createList('ol')">
+              1. List
+            </button>
+
+
+            <span class="border-start mx-1" style="height: 25px;"></span>
+
+
+            {{-- Links --}}
+            <span class="text-muted small fw-bold">
+              Links:
+            </span>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="insertLink()">
+              🔗 Link
+            </button>
+
+
+            <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
+              &lt;/&gt; Code Block
+            </button>
+
+          </div>
 
         </div>
+
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">
 
 
-                                                                                                                                                          {{ old('content', $tutorial->content) }}
-                                                                                                                                                          </textarea>
+                                                                                                                                                                                                {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
       </div>
 
       <div class="mb-3">
@@ -207,33 +245,66 @@
     </form>
     <script>
 
+      //Improve insertCodeBlock()
+
       function insertCodeBlock() {
 
         const editor = document.getElementById('contentEditor');
 
-        const language = document.getElementById('codeLanguage').value;
+        const language =
+          document.getElementById('codeLanguage').value;
 
         const start = editor.selectionStart;
         const end = editor.selectionEnd;
 
-        const selectedText = editor.value.substring(start, end);
+        const selectedText =
+          editor.value.substring(start, end);
 
-        const codeBlock = `[code:${language}]
-                                                                                                                                ${selectedText}
-                                                                                                                                [/code]`;
+        let codeBlock;
+
+        let cursorPosition;
+
+
+        // If text is selected
+        if (selectedText.trim() !== '') {
+
+          codeBlock =
+            `[code:${language}]
+                                      ${selectedText}
+                                      [/code]`;
+
+          cursorPosition =
+            start + codeBlock.length;
+
+        }
+
+        // If nothing is selected
+        else {
+
+          codeBlock =
+            `[code:${language}]
+
+                                      [/code]`;
+
+          cursorPosition =
+            start + `[code:${language}]
+                                      `.length;
+        }
+
 
         editor.value =
           editor.value.substring(0, start) +
           codeBlock +
           editor.value.substring(end);
 
+
         editor.focus();
 
-        const newCursorPosition = start + codeBlock.length;
 
+        // Put cursor in the appropriate position
         editor.setSelectionRange(
-          newCursorPosition,
-          newCursorPosition
+          cursorPosition,
+          cursorPosition
         );
       }
 

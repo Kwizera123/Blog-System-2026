@@ -506,9 +506,6 @@ img {
 }
 
 
-
-
-
 /* --- Sidebar Styling --- */
 .sidebar {
     display: flex;
@@ -534,11 +531,6 @@ img {
 
 .category-list {
     list-style: none;
-
-}
-
-
-li {
 
 }
 
