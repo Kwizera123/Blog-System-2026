@@ -5,7 +5,7 @@
   <div class="container">
     <h1 class="mb-4 mt-0"><strong>📚 Tutorials</strong>
     </h1>
-    <li>hello Laravel</li>
+
     <p class="text-muted mb-3">
       Learn web development through step-by-step tutorials.
     </p>

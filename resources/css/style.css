@@ -468,6 +468,7 @@ img {
     line-height: 1.8;
 }
 
+
 .tutorial-content h2,
 .tutorial-content h3,
 .tutorial-content h4 {
@@ -480,7 +481,7 @@ img {
     font-size: 2rem;
     font-weight: 700;
     color: var(--dark-blue);
-    margin-top: 2.5rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
     line-height: 1.3;
 }

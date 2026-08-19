@@ -108,6 +108,36 @@
             </button>
 
 
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<blockquote>', '</blockquote>')">
+              ❝ Quote
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<hr>', '')">
+              <strong>HR</strong>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'text-align: left;\'>', '</div>')">
+              Left
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'text-align: center;\'>', '</div>')">
+              Center
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'text-align: right;\'>', '</div>')">
+              Right
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'text-align: justify;\'>', '</div>')">
+              Justify
+            </button>
+
+
             <span class="border-start mx-1" style="height: 25px;"></span>
 
 
@@ -163,13 +193,9 @@
             </button>
 
             <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
-              &lt;/&gt; Code Block
+              &lt;/&gt; Code
             </button>
 
-            <button type="button" class="btn btn-outline-secondary btn-sm"
-              onclick="wrapSelection('<blockquote>', '</blockquote>')">
-              ❝ Quote
-            </button>
 
           </div>
 
@@ -224,8 +250,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                                                                                                            ${selectedText}
-                                                                                                                                            [/code]`;
+                                                                                                                                                                  ${selectedText}
+                                                                                                                                                                  [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -289,8 +315,8 @@
 
           codeBlock =
             `[code:${language}]
-              ${selectedText}
-              [/code]`;
+                                    ${selectedText}
+                                    [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -303,11 +329,11 @@
           codeBlock =
             `[code:${language}]
 
-              [/code]`;
+                                    [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-              `.length;
+                                    `.length;
         }
 
 
