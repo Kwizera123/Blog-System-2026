@@ -141,6 +141,10 @@
               <em>I</em>
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<u>', '</u>')">
+              <u>U</u>
+            </button>
+
             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
               P
             </button>
@@ -204,6 +208,11 @@
               &lt;/&gt; Code Block
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<blockquote>', '</blockquote>')">
+              ❝ Quote
+            </button>
+
           </div>
 
         </div>
@@ -262,7 +271,7 @@
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
 
-                                                                                                                                                     </textarea>
+                                                                                                                                                             </textarea>
 
       </div>
 
@@ -328,8 +337,8 @@
 
           codeBlock =
             `[code:${language}]
-    ${selectedText}
-    [/code]`;
+            ${selectedText}
+            [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -342,11 +351,11 @@
           codeBlock =
             `[code:${language}]
 
-    [/code]`;
+            [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-    `.length;
+            `.length;
         }
 
 

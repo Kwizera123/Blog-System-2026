@@ -190,6 +190,11 @@
               Code
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<blockquote>', '</blockquote>')">
+              ❝ Quote
+            </button>
+
           </div>
 
         </div>
@@ -199,7 +204,7 @@
           placeholder="Write your tutorial content here...">
 
 
-                                                                                                                                                                                                                                                            {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
+                                                                                                                                                                                                                                                                  {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
       </div>
 
       <div class="mb-3">
@@ -274,8 +279,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                ${selectedText}
-                                                [/code]`;
+                                                      ${selectedText}
+                                                      [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -288,11 +293,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                [/code]`;
+                                                      [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                `.length;
+                                                      `.length;
         }
 
 

@@ -178,6 +178,12 @@
             <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
               &lt;/&gt; Code Block
             </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<blockquote>', '</blockquote>')">
+              ❝ Quote
+            </button>
+
           </div>
 
         </div>
@@ -294,8 +300,8 @@
 
           codeBlock =
             `[code:${language}]
-        ${selectedText}
-        [/code]`;
+                ${selectedText}
+                [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -308,11 +314,11 @@
           codeBlock =
             `[code:${language}]
 
-        [/code]`;
+                [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-        `.length;
+                `.length;
         }
 
 
