@@ -112,6 +112,10 @@
               <em>I</em>
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<u>', '</u>')">
+              <u>U</u>
+            </button>
+
             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
               P
             </button>
@@ -290,8 +294,8 @@
 
           codeBlock =
             `[code:${language}]
-  ${selectedText}
-  [/code]`;
+        ${selectedText}
+        [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -304,11 +308,11 @@
           codeBlock =
             `[code:${language}]
 
-  [/code]`;
+        [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-  `.length;
+        `.length;
         }
 
 

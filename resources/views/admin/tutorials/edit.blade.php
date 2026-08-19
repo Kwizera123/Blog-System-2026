@@ -122,6 +122,10 @@
               <em>I</em>
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<u>', '</u>')">
+              <u>U</u>
+            </button>
+
             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<p>', '</p>')">
               P
             </button>
@@ -183,7 +187,7 @@
 
 
             <button type="button" class="btn btn-dark btn-sm" onclick="insertCodeBlock()">
-              &lt;/&gt; Code Block
+              Code
             </button>
 
           </div>
@@ -195,7 +199,7 @@
           placeholder="Write your tutorial content here...">
 
 
-                                                                                                                                                                                                {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
+                                                                                                                                                                                                                                                            {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
       </div>
 
       <div class="mb-3">
@@ -270,8 +274,8 @@
 
           codeBlock =
             `[code:${language}]
-                                      ${selectedText}
-                                      [/code]`;
+                                                ${selectedText}
+                                                [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -284,11 +288,11 @@
           codeBlock =
             `[code:${language}]
 
-                                      [/code]`;
+                                                [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                      `.length;
+                                                `.length;
         }
 
 
@@ -309,6 +313,7 @@
       }
 
 
+      //
       function wrapSelection(before, after) {
 
         const editor = document.getElementById('contentEditor');
