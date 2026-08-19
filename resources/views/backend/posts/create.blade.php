@@ -144,8 +144,14 @@
               <option value="<span style='font-size: 16px;'>">Normal</option>
               <option value="<span style='font-size: 20px;'>">Large</option>
               <option value="<span style='font-size: 24px;'>">Extra Large</option>
+              <option value="<span style='font-size: 30px;'>">Huge Large</option>
             </select>
 
+            <input type="color" class="form-control form-control-color" title="Text Color"
+              onchange="wrapSelection('<span style=\'color:' + this.value + ';\'>', '</span>')">
+
+            <input type="color" class="form-control form-control-color" title="Highlight Color"
+              onchange="wrapSelection('<span style=\'background-color:' + this.value + ';\'>', '</span>')">
 
             <span class="border-start mx-1" style="height: 25px;"></span>
 
@@ -259,8 +265,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                                                                                                                                            ${selectedText}
-                                                                                                                                                                            [/code]`;
+                                                                                                                                                                                      ${selectedText}
+                                                                                                                                                                                      [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -324,8 +330,8 @@
 
           codeBlock =
             `[code:${language}]
-                                              ${selectedText}
-                                              [/code]`;
+                                                        ${selectedText}
+                                                        [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -338,11 +344,11 @@
           codeBlock =
             `[code:${language}]
 
-                                              [/code]`;
+                                                        [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                              `.length;
+                                                        `.length;
         }
 
 
