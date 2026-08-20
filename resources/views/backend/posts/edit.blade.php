@@ -178,6 +178,16 @@
               Justify
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'margin-left: 40px;\'>', '</div>')">
+              ↪️ Indent
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'margin-left: 0;\'>', '</div>')">
+              ↩️ Outdent
+            </button>
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -194,6 +204,13 @@
             <input type="color" class="form-control form-control-color" title="Highlight Color"
               onchange="wrapSelection('<span style=\'background-color:' + this.value + ';\'>', '</span>')">
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="undoEditor()">
+              ↩️ Undo
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="redoEditor()">
+              ↪️ Redo
+            </button>
 
 
             <span class="border-start mx-1" style="height: 25px;"></span>
@@ -314,7 +331,7 @@
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
 
-                                                                                                                                                                                                           </textarea>
+                                                                                                                                                                                                                     </textarea>
 
       </div>
 
@@ -380,8 +397,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                          ${selectedText}
-                                                          [/code]`;
+                                                                    ${selectedText}
+                                                                    [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -394,11 +411,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                          [/code]`;
+                                                                    [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                          `.length;
+                                                                    `.length;
         }
 
 

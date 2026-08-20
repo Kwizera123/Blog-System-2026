@@ -159,6 +159,18 @@
               Justify
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'margin-left: 40px;\'>', '</div>')">
+              ↪️ Indent
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="wrapSelection('<div style=\'margin-left: 0;\'>', '</div>')">
+              ↩️ Outdent
+            </button>
+
+
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -174,6 +186,12 @@
 
             <input type="color" class="form-control form-control-color" title="Highlight Color"
               onchange="wrapSelection('<span style=\'background-color:' + this.value + ';\'>', '</span>')">
+
+
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              onclick="document.getElementById('contentEditor').focus(); document.execCommand('redo')">
+              ↪️ Redo
+            </button>
 
 
             <span class="border-start mx-1" style="height: 25px;"></span>
@@ -244,9 +262,7 @@
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">
-
-
-                                                                                                                                                                                                                                                                                                                          {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
       </div>
 
       <div class="mb-3">
@@ -296,11 +312,134 @@
     </form>
     <script>
 
+
+      // ========================================
+      // UNDO & REDO SYSTEM
+      // ========================================
+
+      let undoStack = [];
+      let redoStack = [];
+      let currentEditorState = null;
+
+
+      // Get current editor state
+      function getEditorState() {
+
+        const editor = document.getElementById('contentEditor');
+
+        return {
+          value: editor.value,
+          selectionStart: editor.selectionStart,
+          selectionEnd: editor.selectionEnd
+        };
+
+      }
+
+
+      // Restore an editor state
+      function restoreEditorState(state) {
+
+        const editor = document.getElementById('contentEditor');
+
+        editor.value = state.value;
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          state.selectionStart,
+          state.selectionEnd
+        );
+
+      }
+
+
+      // Save the current state before a change
+      function saveUndoState() {
+
+        const state = getEditorState();
+
+        undoStack.push(state);
+
+        redoStack = [];
+
+      }
+
+
+      // Undo
+      function undoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (undoStack.length === 0) {
+          return;
+        }
+
+        // Save current state for Redo
+        redoStack.push(getEditorState());
+
+        // Get previous state
+        const previousState = undoStack.pop();
+
+        restoreEditorState(previousState);
+
+        currentEditorState = previousState;
+
+      }
+
+
+      // Redo
+      function redoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (redoStack.length === 0) {
+          return;
+        }
+
+        // Save current state for Undo
+        undoStack.push(getEditorState());
+
+        // Get next state
+        const nextState = redoStack.pop();
+
+        restoreEditorState(nextState);
+
+        currentEditorState = nextState;
+
+      }
+
+
+      // Track normal typing
+      function trackEditorInput() {
+
+        const newState = getEditorState();
+
+        if (currentEditorState === null) {
+
+          currentEditorState = newState;
+
+          return;
+        }
+
+        // Save the state BEFORE the typing change
+        undoStack.push(currentEditorState);
+
+        // New typing means Redo history must be cleared
+        redoStack = [];
+
+        currentEditorState = newState;
+
+      }
+
+
+
       //Improve insertCodeBlock()
 
       function insertCodeBlock() {
 
         const editor = document.getElementById('contentEditor');
+
+        saveUndoState();
 
         const language =
           document.getElementById('codeLanguage').value;
@@ -321,8 +460,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                                                              ${selectedText}
-                                                                                                              [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                          ${selectedText}
+                                                                                                                                                                                                                                                                                                                                                                                                                                          [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -335,11 +474,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                                                              [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                          [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                                                              `.length;
+                                                                                                                                                                                                                                                                                                                                                                                                                                          `.length;
         }
 
 
@@ -357,16 +496,165 @@
           cursorPosition,
           cursorPosition
         );
+        currentEditorState = getEditorState();
+      }
+
+      // Undo & Redo History
+
+
+
+      // function saveEditorState() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   undoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   redoStack = [];
+
+      // }
+
+
+
+      // let toolbarUndoStack = [];
+      // let toolbarRedoStack = [];
+
+      // function saveToolbarState() {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   toolbarUndoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   toolbarRedoStack = [];
+      // }
+
+
+      // function undoToolbar() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   if (toolbarUndoStack.length === 0) {
+      //     return;
+      //   }
+
+      //   // Save current state for Redo
+      //   toolbarRedoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   // Restore previous state
+      //   const previousState = toolbarUndoStack.pop();
+
+      //   editor.value = previousState.value;
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     previousState.selectionStart,
+      //     previousState.selectionEnd
+      //   );
+      // }
+
+
+      // let toolbarUndoStack = [];
+
+      // function saveToolbarState() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   toolbarUndoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+      // }
+
+
+      // function undoToolbar() {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   if (toolbarUndoStack.length === 0) {
+      //     return;
+      //   }
+
+      //   const previousState = toolbarUndoStack.pop();
+
+      //   editor.value = previousState.value;
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     previousState.selectionStart,
+      //     previousState.selectionEnd
+      //   );
+      // }
+
+
+      // ========================================
+      // Toolbar Undo
+      // ========================================
+
+      let toolbarUndoStack = [];
+
+      function saveToolbarState() {
+
+        const editor = document.getElementById('contentEditor');
+
+        toolbarUndoStack.push({
+          value: editor.value,
+          selectionStart: editor.selectionStart,
+          selectionEnd: editor.selectionEnd
+        });
+
       }
 
 
-      //
+      function undoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (toolbarUndoStack.length === 0) {
+          return;
+        }
+
+        const previousState = toolbarUndoStack.pop();
+
+        editor.value = previousState.value;
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          previousState.selectionStart,
+          previousState.selectionEnd
+        );
+
+      }
+
+
+      // 
+      // rapSelection
+
       function wrapSelection(before, after) {
 
         const editor = document.getElementById('contentEditor');
 
-        const start = editor.selectionStart;
+        // Save state BEFORE changing anything
+        saveUndoState();
 
+        const start = editor.selectionStart;
         const end = editor.selectionEnd;
 
         const selectedText =
@@ -386,7 +674,133 @@
           start + before.length,
           start + before.length + selectedText.length
         );
+
+        // Remember the new state
+        currentEditorState = getEditorState();
+
       }
+
+      //4  function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save BEFORE changing the content
+      //   saveToolbarState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+      //3 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save content BEFORE formatting
+      //   saveToolbarState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+      //2 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+
+
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   // Replace the selected text using the textarea's
+      //   // native editing mechanism.
+      //   editor.setRangeText(
+      //     replacement,
+      //     start,
+      //     end,
+      //     'select'
+      //   );
+
+      //   editor.focus();
+
+      //   // Keep the original selected text selected
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+
+      //1 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save BEFORE changing the content
+      //   saveEditorState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
 
       // List
 
@@ -423,7 +837,8 @@
           newCursorPosition
         );
       }
-      // Link
+
+      // INSERT Link
 
       function insertLink() {
 
@@ -473,6 +888,7 @@
           newCursorPosition
         );
       }
+
 
     </script>
   </div>
