@@ -149,7 +149,7 @@
               Justify
             </button>
 
- <button type="button" class="btn btn-outline-secondary btn-sm"
+            <button type="button" class="btn btn-outline-secondary btn-sm"
               onclick="wrapSelection('<div style=\'margin-left: 40px;\'>', '</div>')">
               ↪️ Indent
             </button>
@@ -157,6 +157,14 @@
             <button type="button" class="btn btn-outline-secondary btn-sm"
               onclick="wrapSelection('<div style=\'margin-left: 0;\'>', '</div>')">
               ↩️ Outdent
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sup>', '</sup>')">
+              X<sup>2</sup>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sub>', '</sub>')">
+              X<sub>2</sub>
             </button>
 
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
@@ -359,8 +367,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                                  ${selectedText}
-                                                                                  [/code]`;
+                                                                                    ${selectedText}
+                                                                                    [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -373,11 +381,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                                  [/code]`;
+                                                                                    [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                                  `.length;
+                                                                                    `.length;
         }
 
 

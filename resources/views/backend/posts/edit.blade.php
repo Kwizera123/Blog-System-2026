@@ -188,6 +188,14 @@
               ↩️ Outdent
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sup>', '</sup>')">
+              X<sup>2</sup>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sub>', '</sub>')">
+              X<sub>2</sub>
+            </button>
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -331,7 +339,7 @@
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
 
-                                                                                                                                                                                                                     </textarea>
+                                                                                                                                                                                                                                                                     </textarea>
 
       </div>
 
@@ -370,6 +378,7 @@
 
     </form>
 
+    {{--
     <script>
 
       // Improve insertCodeBlock()
@@ -397,8 +406,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                    ${selectedText}
-                                                                    [/code]`;
+                                                                                                                    ${selectedText}
+                                                                                                                    [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -411,11 +420,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                    [/code]`;
+                                                                                                                    [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                    `.length;
+                                                                                                                    `.length;
         }
 
 
@@ -437,13 +446,16 @@
 
 
 
-      //
+      // updated
+
       function wrapSelection(before, after) {
 
         const editor = document.getElementById('contentEditor');
 
-        const start = editor.selectionStart;
+        // Save state BEFORE changing anything
+        saveUndoState();
 
+        const start = editor.selectionStart;
         const end = editor.selectionEnd;
 
         const selectedText =
@@ -463,7 +475,41 @@
           start + before.length,
           start + before.length + selectedText.length
         );
+
+        // Remember the new state
+        currentEditorState = getEditorState();
+
       }
+
+
+      //1 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   const start = editor.selectionStart;
+
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+
       // List
 
 
@@ -500,7 +546,628 @@
           newCursorPosition
         );
       }
+
+
+
+      //1 function createList(type) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText = editor.value.substring(start, end);
+
+      //   const lines = selectedText
+      //     .split('\n')
+      //     .filter(line => line.trim() !== '');
+
+      //   const listItems = lines
+      //     .map(line => `<li>${line.trim()}</li>`)
+      //     .join('\n');
+
+      //   const list = `<${type}>\n${listItems}\n</${type}>`;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     list +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   const newCursorPosition = start + list.length;
+
+      //   editor.setSelectionRange(
+      //     newCursorPosition,
+      //     newCursorPosition
+      //   );
+      // }
+
       // Link
+
+      function insertLink() {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        if (!selectedText) {
+          alert('Please select the text you want to turn into a link.');
+          return;
+        }
+
+        const url = prompt('Enter the URL:');
+
+        if (!url) {
+          return;
+        }
+
+        const trimmedUrl = url.trim();
+
+        if (
+          !trimmedUrl.startsWith('https://') &&
+          !trimmedUrl.startsWith('http://') &&
+          !trimmedUrl.startsWith('mailto:')
+        ) {
+          alert('Please enter a valid URL starting with http://, https://, or mailto:');
+          return;
+        }
+
+        const link =
+          `<a href="${trimmedUrl}" target="_blank" rel="noopener noreferrer">${selectedText}</a>`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          link +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + link.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+
+
+    </script> --}}
+
+    {{-- Old Script--}}
+
+    <script>
+
+
+      // ========================================
+      // UNDO & REDO SYSTEM
+      // ========================================
+
+      let undoStack = [];
+      let redoStack = [];
+      let currentEditorState = null;
+
+
+      // Get current editor state
+      function getEditorState() {
+
+        const editor = document.getElementById('contentEditor');
+
+        return {
+          value: editor.value,
+          selectionStart: editor.selectionStart,
+          selectionEnd: editor.selectionEnd
+        };
+
+      }
+
+
+      // Restore an editor state
+      function restoreEditorState(state) {
+
+        const editor = document.getElementById('contentEditor');
+
+        editor.value = state.value;
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          state.selectionStart,
+          state.selectionEnd
+        );
+
+      }
+
+
+      // Save the current state before a change
+      function saveUndoState() {
+
+        const state = getEditorState();
+
+        undoStack.push(state);
+
+        redoStack = [];
+
+      }
+
+
+      // Undo
+      function undoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (undoStack.length === 0) {
+          return;
+        }
+
+        // Save current state for Redo
+        redoStack.push(getEditorState());
+
+        // Get previous state
+        const previousState = undoStack.pop();
+
+        restoreEditorState(previousState);
+
+        currentEditorState = previousState;
+
+      }
+
+
+      // Redo
+      function redoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (redoStack.length === 0) {
+          return;
+        }
+
+        // Save current state for Undo
+        undoStack.push(getEditorState());
+
+        // Get next state
+        const nextState = redoStack.pop();
+
+        restoreEditorState(nextState);
+
+        currentEditorState = nextState;
+
+      }
+
+
+      // Track normal typing
+      function trackEditorInput() {
+
+        const newState = getEditorState();
+
+        if (currentEditorState === null) {
+
+          currentEditorState = newState;
+
+          return;
+        }
+
+        // Save the state BEFORE the typing change
+        undoStack.push(currentEditorState);
+
+        // New typing means Redo history must be cleared
+        redoStack = [];
+
+        currentEditorState = newState;
+
+      }
+
+
+
+      //Improve insertCodeBlock()
+
+      function insertCodeBlock() {
+
+        const editor = document.getElementById('contentEditor');
+
+        saveUndoState();
+
+        const language =
+          document.getElementById('codeLanguage').value;
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText =
+          editor.value.substring(start, end);
+
+        let codeBlock;
+
+        let cursorPosition;
+
+
+        // If text is selected
+        if (selectedText.trim() !== '') {
+
+          codeBlock =
+            `[code:${language}]
+                                                                                                                                                                                                                                                                                                                                                                                                                                            ${selectedText}
+                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
+
+          cursorPosition =
+            start + codeBlock.length;
+
+        }
+
+        // If nothing is selected
+        else {
+
+          codeBlock =
+            `[code:${language}]
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
+
+          cursorPosition =
+            start + `[code:${language}]
+                                                                                                                                                                                                                                                                                                                                                                                                                                            `.length;
+        }
+
+
+        editor.value =
+          editor.value.substring(0, start) +
+          codeBlock +
+          editor.value.substring(end);
+
+
+        editor.focus();
+
+
+        // Put cursor in the appropriate position
+        editor.setSelectionRange(
+          cursorPosition,
+          cursorPosition
+        );
+        currentEditorState = getEditorState();
+      }
+
+      // Undo & Redo History
+
+
+
+      // function saveEditorState() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   undoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   redoStack = [];
+
+      // }
+
+
+
+      // let toolbarUndoStack = [];
+      // let toolbarRedoStack = [];
+
+      // function saveToolbarState() {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   toolbarUndoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   toolbarRedoStack = [];
+      // }
+
+
+      // function undoToolbar() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   if (toolbarUndoStack.length === 0) {
+      //     return;
+      //   }
+
+      //   // Save current state for Redo
+      //   toolbarRedoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+
+      //   // Restore previous state
+      //   const previousState = toolbarUndoStack.pop();
+
+      //   editor.value = previousState.value;
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     previousState.selectionStart,
+      //     previousState.selectionEnd
+      //   );
+      // }
+
+
+      // let toolbarUndoStack = [];
+
+      // function saveToolbarState() {
+
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   toolbarUndoStack.push({
+      //     value: editor.value,
+      //     selectionStart: editor.selectionStart,
+      //     selectionEnd: editor.selectionEnd
+      //   });
+      // }
+
+
+      // function undoToolbar() {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   if (toolbarUndoStack.length === 0) {
+      //     return;
+      //   }
+
+      //   const previousState = toolbarUndoStack.pop();
+
+      //   editor.value = previousState.value;
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     previousState.selectionStart,
+      //     previousState.selectionEnd
+      //   );
+      // }
+
+
+      // ========================================
+      // Toolbar Undo
+      // ========================================
+
+      let toolbarUndoStack = [];
+
+      function saveToolbarState() {
+
+        const editor = document.getElementById('contentEditor');
+
+        toolbarUndoStack.push({
+          value: editor.value,
+          selectionStart: editor.selectionStart,
+          selectionEnd: editor.selectionEnd
+        });
+
+      }
+
+
+      function undoToolbar() {
+
+        const editor = document.getElementById('contentEditor');
+
+        if (toolbarUndoStack.length === 0) {
+          return;
+        }
+
+        const previousState = toolbarUndoStack.pop();
+
+        editor.value = previousState.value;
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          previousState.selectionStart,
+          previousState.selectionEnd
+        );
+
+      }
+
+
+      // 
+      // rapSelection
+
+      function wrapSelection(before, after) {
+
+        const editor = document.getElementById('contentEditor');
+
+        // Save state BEFORE changing anything
+        saveUndoState();
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText =
+          editor.value.substring(start, end);
+
+        const replacement =
+          before + selectedText + after;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          replacement +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        editor.setSelectionRange(
+          start + before.length,
+          start + before.length + selectedText.length
+        );
+
+        // Remember the new state
+        currentEditorState = getEditorState();
+
+      }
+
+      //4  function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save BEFORE changing the content
+      //   saveToolbarState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+      //3 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save content BEFORE formatting
+      //   saveToolbarState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+      //2 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+
+
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   // Replace the selected text using the textarea's
+      //   // native editing mechanism.
+      //   editor.setRangeText(
+      //     replacement,
+      //     start,
+      //     end,
+      //     'select'
+      //   );
+
+      //   editor.focus();
+
+      //   // Keep the original selected text selected
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+
+      //1 function wrapSelection(before, after) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   // Save BEFORE changing the content
+      //   saveEditorState();
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText =
+      //     editor.value.substring(start, end);
+
+      //   const replacement =
+      //     before + selectedText + after;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     replacement +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   editor.setSelectionRange(
+      //     start + before.length,
+      //     start + before.length + selectedText.length
+      //   );
+      // }
+
+      // List
+
+      function createList(type) {
+
+        const editor = document.getElementById('contentEditor');
+
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+
+        const selectedText = editor.value.substring(start, end);
+
+        const lines = selectedText
+          .split('\n')
+          .filter(line => line.trim() !== '');
+
+        const listItems = lines
+          .map(line => `<li>${line.trim()}</li>`)
+          .join('\n');
+
+        const list = `<${type}>\n${listItems}\n</${type}>`;
+
+        editor.value =
+          editor.value.substring(0, start) +
+          list +
+          editor.value.substring(end);
+
+        editor.focus();
+
+        const newCursorPosition = start + list.length;
+
+        editor.setSelectionRange(
+          newCursorPosition,
+          newCursorPosition
+        );
+      }
+
+      // INSERT Link
 
       function insertLink() {
 

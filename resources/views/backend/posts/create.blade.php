@@ -147,6 +147,14 @@
               ↩️ Outdent
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sup>', '</sup>')">
+              X<sup>2</sup>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<sub>', '</sub>')">
+              X<sub>2</sub>
+            </button>
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -283,8 +291,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                                                                                                                                                                ${selectedText}
-                                                                                                                                                                                                [/code]`;
+                                                                                                                                                                                                          ${selectedText}
+                                                                                                                                                                                                          [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -348,8 +356,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                  ${selectedText}
-                                                                  [/code]`;
+                                                                            ${selectedText}
+                                                                            [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -362,11 +370,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                  [/code]`;
+                                                                            [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                  `.length;
+                                                                            `.length;
         }
 
 
@@ -418,6 +426,7 @@
 
       // List
 
+
       function createList(type) {
 
         const editor = document.getElementById('contentEditor');
@@ -451,6 +460,42 @@
           newCursorPosition
         );
       }
+
+
+      // function createList(type) {
+
+      //   const editor = document.getElementById('contentEditor');
+
+      //   const start = editor.selectionStart;
+      //   const end = editor.selectionEnd;
+
+      //   const selectedText = editor.value.substring(start, end);
+
+      //   const lines = selectedText
+      //     .split('\n')
+      //     .filter(line => line.trim() !== '');
+
+      //   const listItems = lines
+      //     .map(line => `<li>${line.trim()}</li>`)
+      //     .join('\n');
+
+      //   const list = `<${type}>\n${listItems}\n</${type}>`;
+
+      //   editor.value =
+      //     editor.value.substring(0, start) +
+      //     list +
+      //     editor.value.substring(end);
+
+      //   editor.focus();
+
+      //   const newCursorPosition = start + list.length;
+
+      //   editor.setSelectionRange(
+      //     newCursorPosition,
+      //     newCursorPosition
+      //   );
+      // }
+
       // Link
 
       function insertLink() {

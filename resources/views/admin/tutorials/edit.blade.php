@@ -169,6 +169,15 @@
               ↩️ Outdent
             </button>
 
+<button type="button" class="btn btn-outline-secondary btn-sm"
+  onclick="wrapSelection('<sup>', '</sup>')">
+  X<sup>2</sup>
+</button>
+
+<button type="button" class="btn btn-outline-secondary btn-sm"
+  onclick="wrapSelection('<sub>', '</sub>')">
+  X<sub>2</sub>
+</button>
 
 
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
@@ -262,7 +271,7 @@
 
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           {{ old('content', $tutorial->content) }}                                                                                                                                                                                        </textarea>
       </div>
 
       <div class="mb-3">
@@ -460,8 +469,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                                                                                                                                                                                                                                                                                                                                                                                          ${selectedText}
-                                                                                                                                                                                                                                                                                                                                                                                                                                          [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                            ${selectedText}
+                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -474,11 +483,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                          [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                                                                                                                                                                                                                                                                                                                                                                                          `.length;
+                                                                                                                                                                                                                                                                                                                                                                                                                                            `.length;
         }
 
 
