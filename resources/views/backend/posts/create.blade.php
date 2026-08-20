@@ -155,6 +155,10 @@
               X<sub>2</sub>
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<s>', '</s>')">
+              <s>S</s>
+            </button>
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -291,8 +295,8 @@
         const selectedText = editor.value.substring(start, end);
 
         const codeBlock = `[code:${language}]
-                                                                                                                                                                                                          ${selectedText}
-                                                                                                                                                                                                          [/code]`;
+                                                                                                                                                                                                              ${selectedText}
+                                                                                                                                                                                                              [/code]`;
 
         editor.value =
           editor.value.substring(0, start) +
@@ -356,8 +360,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                            ${selectedText}
-                                                                            [/code]`;
+                                                                                ${selectedText}
+                                                                                [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -370,11 +374,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                            [/code]`;
+                                                                                [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                            `.length;
+                                                                                `.length;
         }
 
 

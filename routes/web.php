@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -36,6 +37,9 @@ Route::get('/tutorials', [FrontendTutorialController::class, 'index'])
 
 Route::get('/tutorials/{tutorial:slug}', [FrontendTutorialController::class, 'show'])
         ->name('tutorials.show');
+
+Route::get('/about', [PageController::class, 'about'])
+        ->name('about');
 
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');

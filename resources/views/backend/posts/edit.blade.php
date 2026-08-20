@@ -196,6 +196,10 @@
               X<sub>2</sub>
             </button>
 
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="wrapSelection('<s>', '</s>')">
+              <s>S</s>
+            </button>
+
             <select class="form-control form-select-sm d-inline-block" style="width: auto;"
               onchange="wrapSelection(this.value, '</span>'); this.selectedIndex = 0;">
               <option value="">Font Size</option>
@@ -339,7 +343,7 @@
         <textarea name="content" rows="15" class="form-control" id="contentEditor"
           placeholder="Write your tutorial content here...">{{ old('content', $post->content) }}
 
-                                                                                                                                                                                                                                                                     </textarea>
+                                                                                                                                                                                                                                                                       </textarea>
 
       </div>
 
@@ -406,8 +410,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                                                                    ${selectedText}
-                                                                                                                    [/code]`;
+                                                                                                                      ${selectedText}
+                                                                                                                      [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -420,11 +424,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                                                                    [/code]`;
+                                                                                                                      [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                                                                    `.length;
+                                                                                                                      `.length;
         }
 
 
@@ -789,8 +793,8 @@
 
           codeBlock =
             `[code:${language}]
-                                                                                                                                                                                                                                                                                                                                                                                                                                            ${selectedText}
-                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                              ${selectedText}
+                                                                                                                                                                                                                                                                                                                                                                                                                                              [/code]`;
 
           cursorPosition =
             start + codeBlock.length;
@@ -803,11 +807,11 @@
           codeBlock =
             `[code:${language}]
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                            [/code]`;
+                                                                                                                                                                                                                                                                                                                                                                                                                                              [/code]`;
 
           cursorPosition =
             start + `[code:${language}]
-                                                                                                                                                                                                                                                                                                                                                                                                                                            `.length;
+                                                                                                                                                                                                                                                                                                                                                                                                                                              `.length;
         }
 
 
