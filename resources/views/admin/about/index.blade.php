@@ -60,6 +60,32 @@
           <a href="{{ route('admin.about.items.edit', $item) }}" class="btn btn-primary btn-sm">
             ✏️ Edit
           </a>
+          {{-- Sorting--}}
+
+          <form action="{{ route('admin.about.items.moveUp', $item) }}" method="POST" class="d-inline">
+
+            @csrf
+            @method('PATCH')
+
+            <button type="submit" class="btn btn-outline-primary btn-sm">
+              ⬆️
+            </button>
+
+          </form>
+
+
+          <form action="{{ route('admin.about.items.moveDown', $item) }}" method="POST" class="d-inline">
+
+            @csrf
+            @method('PATCH')
+
+            <button type="submit" class="btn btn-outline-secondary btn-sm">
+              ⬇️
+            </button>
+
+          </form>
+
+          {{--end of sorting --}}
 
           <form action="{{ route('admin.about.items.destroy', $item) }}" method="POST" class="d-inline"
             onsubmit="return confirm('Are you sure you want to delete this section?');">

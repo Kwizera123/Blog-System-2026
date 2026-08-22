@@ -198,7 +198,12 @@ Route::middleware(['auth','role:admin'])
 
         Route::delete('/about/items/{aboutItem}', [AdminAboutController::class, 'destroyItem'])
                 ->name('admin.about.items.destroy');
+        // Sorting
+        Route::patch('/about/items/{aboutItem}/move-up', [AdminAboutController::class, 'moveUp'])
+                 ->name('admin.about.items.moveUp');
 
+        Route::patch('/about/items/{aboutItem}/move-down', [AdminAboutController::class, 'moveDown'])
+                 ->name('admin.about.items.moveDown'); 
        });
 
 

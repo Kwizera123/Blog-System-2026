@@ -102,4 +102,55 @@ class AdminAboutController extends Controller
             ->route('admin.about.index')
             ->with('success', 'Aboutt section deleted successfully.');
     }
+    // End Method
+
+    public function moveUp(AboutItem $aboutItem)
+{
+    $previousItem = AboutItem::where('about_page_id', $aboutItem->about_page_id)
+        ->where('sort_order', '<', $aboutItem->sort_order)
+        ->orderByDesc('sort_order')
+        ->first();
+
+    if ($previousItem) {
+
+        $currentOrder = $aboutItem->sort_order;
+
+        $aboutItem->update([
+            'sort_order' => $previousItem->sort_order
+        ]);
+
+        $previousItem->update([
+            'sort_order' => $currentOrder
+        ]);
+    }
+
+    return redirect()
+        ->route('admin.about.index');
+    }
+    // End Method
+
+    public function moveDown(AboutItem $aboutItem)
+{
+    $nextItem = AboutItem::where('about_page_id', $aboutItem->about_page_id)
+        ->where('sort_order', '>', $aboutItem->sort_order)
+        ->orderBy('sort_order')
+        ->first();
+
+    if ($nextItem) {
+
+        $currentOrder = $aboutItem->sort_order;
+
+        $aboutItem->update([
+            'sort_order' => $nextItem->sort_order
+        ]);
+
+        $nextItem->update([
+            'sort_order' => $currentOrder
+        ]);
+    }
+
+    return redirect()
+        ->route('admin.about.index');
+    }
+    //End Method
 }
