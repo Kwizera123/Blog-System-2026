@@ -11,7 +11,7 @@ class PageController extends Controller
 {
     public function about()
     {
-        $about = AboutPage::first();
+        $about = AboutPage::with('aboutItems')->first();
 
         $categories = Category::latest()->get();
         $tags = Tag::latest()->get();

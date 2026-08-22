@@ -20,5 +20,10 @@ class AboutPage extends Model
         'cta_title',
         'cta_content',
     ];
+
+    public function aboutItems()
+    {
+        return $this->hasMany(AboutItem::class);
+    }
     //
 }
