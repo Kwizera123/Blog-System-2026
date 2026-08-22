@@ -7,6 +7,7 @@ use App\Models\AboutPage;
 use App\Models\Category;
 use App\Models\ContactPage;
 use App\Models\Tag;
+use App\Models\ContactMessage;
 
 class PageController extends Controller
 {
@@ -37,5 +38,22 @@ class PageController extends Controller
             'categories',
             'tags'
             ));
+    }
+    // End Method
+
+    public function storeContact(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'subject' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string'],
+        ]);
+
+        ContactMessage::create($validated);
+
+        return redirect()
+                ->route('contact')
+                ->with('success', 'Your message has been sent successfully.');
     }
 }

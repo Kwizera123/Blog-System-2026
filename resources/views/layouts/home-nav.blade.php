@@ -29,53 +29,6 @@
           </div>
         </form>
 
-
-        <!--temporarily Closed-->
-        {{-- @guest
-        <a href="{{ route('login') }}" class="nav-btn">Login</a>
-        <a href="{{ route('register') }}" class="nav-btn">Register</a>
-        @endguest --}}
-
-        {{-- Authenticated --}}
-        {{-- @auth
-
-        @can('create', App\Models\Post::class)
-        <li>
-          <a href="{{ route('posts.index') }}" class="dropdown-item">Post</a>
-        </li>
-        <li>
-          <a href="{{ route('posts.my') }}" class="dropdown-item">My Posts</a>
-        </li>
-        @endcan
-
-        @if(auth()->user()->isAdmin())
-        <li>
-          <a href="{{ route('admin.dashboard') }}" class="dropdown-item">
-            Admin Dashboard
-          </a>
-        </li>
-        @endif
-        <li><a class="dropdown-item" href="{{ url('/blogprofile') }}">Profile</a></li>
-
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <!--Authentication -->
-        <form method="POST" action="{{ route('logout') }}">
-          @csrf
-
-          <li><a class="dropdown-item" href="route('logout')"
-              onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             this.closest('form').submit();">{{
-              __('Log Out') }}</a>
-          </li>
-        </form>
-
-        @endauth --}}
-        <!--End temporarily Closed Authantication-->
-
-        <!--Authantication under use  -->
-
         @auth
 
           <div class="dropdown">
