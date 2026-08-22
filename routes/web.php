@@ -193,6 +193,12 @@ Route::middleware(['auth','role:admin'])
         Route::get('/about/items/create', [AdminAboutController::class, 'createItem'])
                 ->name('admin.about.items.create');
 
+        Route::post('/about/items', [AdminAboutController::class, 'storeItem'])
+                 ->name('admin.about.items.store');
+
+        Route::delete('/about/items/{aboutItem}', [AdminAboutController::class, 'destroyItem'])
+                ->name('admin.about.items.destroy');
+
        });
 
 

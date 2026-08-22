@@ -35,6 +35,10 @@
       About Sections
     </h3>
 
+    <a href="{{ route('admin.about.items.create') }}" class="btn btn-success mb-3">
+      <i class="bi bi-check2-all"></i> <i class="bi bi-file-earmark-plus-fill"></i> Add About Section
+    </a>
+
     @foreach ($about->aboutItems->sortBy('sort_order') as $item)
 
       <div class="card mb-3">
@@ -56,6 +60,16 @@
           <a href="{{ route('admin.about.items.edit', $item) }}" class="btn btn-primary btn-sm">
             ✏️ Edit
           </a>
+
+          <form action="{{ route('admin.about.items.destroy', $item) }}" method="POST" class="d-inline"
+            onsubmit="return confirm('Are you sure you want to delete this section?');">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit" class="btn btn-danger btn-sm">
+              🗑️ Delete
+            </button>
+          </form>
 
         </div>
 

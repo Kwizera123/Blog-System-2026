@@ -66,5 +66,40 @@ class AdminAboutController extends Controller
     }
     // End of Method
 
-    
+    public function createItem()
+    {
+        return view('admin.about.items.create');
+    }
+    // End of Methos
+
+    public function storeItem(Request $request)
+{
+    $aboutPage = AboutPage::first();
+
+    $validated = $request->validate([
+        'section' => ['required', 'string', 'max:255'],
+        'content' => ['required', 'string'],
+    ]);
+
+    $nextSortOrder = $aboutPage->aboutItems()->max('sort_order') + 1;
+
+    $aboutPage->aboutItems()->create([
+        'section' => $validated['section'],
+        'content' => $validated['content'],
+        'sort_order' => $nextSortOrder,
+    ]);
+
+    return redirect()
+        ->route('admin.about.index')
+        ->with('success', 'About section created successfully.');
+}
+    //End of method
+    public function destroyItem(AboutItem $aboutItem)
+    {
+        $aboutItem->delete();
+
+        return redirect()
+            ->route('admin.about.index')
+            ->with('success', 'Aboutt section deleted successfully.');
+    }
 }
