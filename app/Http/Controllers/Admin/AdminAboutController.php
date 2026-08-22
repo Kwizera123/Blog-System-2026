@@ -100,7 +100,7 @@ class AdminAboutController extends Controller
 
         return redirect()
             ->route('admin.about.index')
-            ->with('success', 'Aboutt section deleted successfully.');
+            ->with('success', 'About section deleted successfully.');
     }
     // End Method
 
@@ -125,7 +125,8 @@ class AdminAboutController extends Controller
     }
 
     return redirect()
-        ->route('admin.about.index');
+        ->route('admin.about.index')
+        ->with('success', 'About section Moved Up successfully.');;
     }
     // End Method
 
@@ -150,7 +151,8 @@ class AdminAboutController extends Controller
     }
 
     return redirect()
-        ->route('admin.about.index');
+        ->route('admin.about.index')
+        ->with('success', 'About section Moved Down successfully.');;
     }
     //End Method
 }

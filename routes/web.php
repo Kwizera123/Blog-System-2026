@@ -42,6 +42,8 @@ Route::get('/tutorials/{tutorial:slug}', [FrontendTutorialController::class, 'sh
 
 Route::get('/about', [PageController::class, 'about'])
         ->name('about');
+Route::get('/contact', [PageController::class, 'contact'])
+    ->name('contact');
 
   Route::get('/post/{post}', [HomeController::class, 'show'])
        ->name('post.show');
