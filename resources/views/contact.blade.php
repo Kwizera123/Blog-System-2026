@@ -8,7 +8,7 @@
 
   <div class="container">
 
-    <div class="text-center mb-5">
+    <div class="text-center mb-2">
 
       <h1>
         {{ $contact->title }}
@@ -61,7 +61,7 @@
         </div>
         @if (session('success'))
 
-          <div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
+          <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
 
             {{ session('success') }}
 

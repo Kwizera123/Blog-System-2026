@@ -37,6 +37,14 @@
             <i class="bi bi-stars"></i> Tutorial Management
           </a>
 
+          <a href="{{ route('admin.contact-messages.index') }}" class="btn message text-white">
+            <i class="bi bi-chat-left-text"></i> Contact Message Management
+          </a>
+
+          <a href="{{ route('admin.about.index') }}" class="btn about text-white">
+            <i class="bi bi-chat-left-text"></i> About Page Management
+          </a>
+
         </div>
 
       </div>

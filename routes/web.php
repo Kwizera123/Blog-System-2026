@@ -15,6 +15,8 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\TutorialController as FrontendTutorialController;
 use App\Http\Controllers\Admin\TutorialController as AdminTutorialController;
 use App\Http\Controllers\Admin\AdminAboutController;
+use App\Http\Controllers\Admin\ContactMessageController;
+
 
 
 
@@ -209,6 +211,16 @@ Route::middleware(['auth','role:admin'])
 
         Route::patch('/about/items/{aboutItem}/move-down', [AdminAboutController::class, 'moveDown'])
                  ->name('admin.about.items.moveDown'); 
+
+        Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+                 ->name('admin.contact-messages.index');
+
+        Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
+                 ->name('admin.contact-messages.show');
+
+        Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
+                 ->name('admin.contact-messages.destroy');
+
        });
 
 

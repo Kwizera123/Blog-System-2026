@@ -680,7 +680,32 @@ img {
     list-style: none;
     gap: 1rem;
 }
+/* CSS Buttons */
+.message{
+    background-color: #3A86FF;
+    color: #fff;
+    font-size: small;
+}
+.message:hover {
+    background-color: #118AB2;
+}
+.about{
+    background: #E76F51;
+     color: #fff;
+    font-size: small;
+}
+.about:hover
+{
+    background: #FF9D4D;
+}
 
+.read-message{
+    color: #3A86FF;
+    font-weight: 600;
+}
+.dashboard {
+    width: 150px;
+}
 /* --- Media Queries for Responsive Design --- */
 
 /* Tablet & Smaller Desktops (Collapses layout but retains elements) */
