@@ -18,6 +18,14 @@
 
       <div class="col-md-12 mx-auto">
 
+        <h2 class="mb-2 tutorial-card-title text-primary">
+          {{ $about->title }}
+        </h2>
+
+        <p class="mb-4">
+          {{ $about->introduction }}
+        </p>
+
         @foreach ($about->aboutItems->sortBy('sort_order') as $item)
 
           <div class="mt-4">

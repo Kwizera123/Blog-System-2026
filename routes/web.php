@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\TutorialController as FrontendTutorialController;
 use App\Http\Controllers\Admin\TutorialController as AdminTutorialController;
+use App\Http\Controllers\Admin\AdminAboutController;
+
 
 
 
@@ -171,6 +173,25 @@ Route::middleware(['auth','role:admin'])
         //Admin Tutorial Controller
         Route::resource('tutorials', AdminTutorialController::class)
                 ->names('admin.tutorials');
+
+        // Admin About Page Management
+        Route::get('/about', [AdminAboutController::class, 'index'])
+                ->name('admin.about.index');
+
+        Route::get('/about/edit', [AdminAboutController::class, 'edit'])
+                ->name('admin.about.edit');
+
+        Route::put('/about', [AdminAboutController::class, 'update'])
+                ->name('admin.about.update');
+
+        Route::get('/about/items/{aboutItem}/edit', [AdminAboutController::class, 'editItem'])
+                ->name('admin.about.items.edit');
+
+        Route::put('/about/items/{aboutItem}', [AdminAboutController::class, 'updateItem'])
+                ->name('admin.about.items.update');
+
+        Route::get('/about/items/create', [AdminAboutController::class, 'createItem'])
+                ->name('admin.about.items.create');
 
        });
 

@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\AboutPage;
+use App\Models\AboutItem;
+
+
+class AdminAboutController extends Controller
+{
+    public function index()
+    {
+        $about = AboutPage::with('aboutItems')
+            ->first();
+
+        return view('admin.about.index', compact('about'));
+    }
+    //End Method
+
+    public function edit()
+    {
+        $about = AboutPage::first();
+
+        return view('admin.about.edit', compact('about'));
+    }
+    // End of Method
+
+    public function update(Request $request)
+    {
+        $about = AboutPage::first();
+
+        $validated = $request->validate([
+            'title' => ['required','string', 'max:255'],
+            'introduction' => ['required', 'string'],
+        ]);
+
+        $about->update($validated);
+
+        return redirect()
+                ->route('admin.about.index')
+                ->with('success', 'About Page updated successfully.');
+    }
+    //End Method
+
+    public function editItem(AboutItem $aboutItem)
+    {
+        return view('admin.about.items.edit', compact('aboutItem'));
+    }
+    // end Method
+
+    public function updateItem(Request $request, AboutItem $aboutItem)
+    {
+        $validated = $request->validate([
+            'section' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'sort_order' => ['required', 'integer', 'min:1'],
+        ]);
+
+        $aboutItem->update($validated);
+
+        return redirect()
+            ->route('admin.about.index')
+            ->with('success', 'About section updated successfully.');
+    }
+    // End of Method
+
+    
+}
