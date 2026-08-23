@@ -18,6 +18,12 @@ class ContactMessageController extends Controller
 
     public function show(ContactMessage $contactMessage)
     {
+        if (!$contactMessage->is_read) {
+
+            $contactMessage->update([
+                'is_read' => true,
+            ]);
+        }
         return view('admin.contact-messages.show', compact('contactMessage'));
     }
     //End Method

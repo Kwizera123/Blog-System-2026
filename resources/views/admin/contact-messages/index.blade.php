@@ -21,6 +21,17 @@
           <h5>
             {{ $message->subject }}
           </h5>
+          @if (!$message->is_read)
+            <span class="badge bg-primary">
+              🔵 Unread
+            </span>
+
+          @else
+            <span class="badge bg-secondary">
+              ⚪ Read
+            </span>
+
+          @endif
 
           <p class="mb-1">
             <strong>Name:</strong>
