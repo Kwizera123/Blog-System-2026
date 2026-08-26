@@ -65,6 +65,16 @@
                     Admin Dashboard
                   </a>
                 </li>
+
+                <li>
+                  <a href="{{ route('admin.contact-messages.index') }}" class="dropdown-item">
+                    📩 Contact Messages
+                    <span class="translate-center badge rounded-pill bg-danger mb-1">
+                      2
+                    </span>
+                  </a>
+                </li>
+
               @endif
 
               <li>
