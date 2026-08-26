@@ -140,6 +140,40 @@
         </div>
       </div>
 
+      <div class="col-md-3 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+          <div class="card-body">
+
+            <h6 class="text-muted">
+              Unread Messages
+            </h6>
+            @if ($unreadMessages >= 1)
+              <h2><span class="translate-center badge rounded-pill bg-danger mb-1">
+                  {{ $unreadMessages }}
+                </span>
+              </h2>
+            @else
+
+              <h2><span class="translate-center badge rounded-pill bg-secondary mb-1">
+                  {{ $unreadMessages }}
+                </span>
+              </h2>
+            @endif
+
+
+
+            <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-sm btn-primary">
+              📩 View Messages
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
 

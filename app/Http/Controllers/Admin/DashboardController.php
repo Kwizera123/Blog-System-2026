@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Tag;
+use App\Models\ContactMessage;
 
 
 
@@ -20,6 +21,7 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $totalComments = Comment::count();
         $pendingComments = Comment::where('status','pending')->count();
+        $unreadMessages = ContactMessage::where('is_read', false)->count();
 
         $totalCategories = Category::count();
         $totalTags = Tag::count();
@@ -47,6 +49,7 @@ class DashboardController extends Controller
             'totalPosts',
             'totalComments',
             'pendingComments',
+            'unreadMessages',
             'totalCategories',
             'totalTags',
             'recentPosts',

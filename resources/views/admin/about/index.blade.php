@@ -4,16 +4,19 @@
 
   <div class="container mt-4">
 
-    <h1 class="mb-4">
-      📚 Manage About Page
-    </h1>
+    <div class="row d-flex flex-row-reverse">
+      <h1 class="mb-4">
+        📚 Manage About Page
+      </h1>
+      <a href="{{ route('admin.dashboard') }}" class="btn btn-dark mb-2 dashboard"><i class="bi bi-speedometer"></i>
+        Dashboard</a>
+    </div>
 
     <div class="card mb-4">
 
       <div class="card-body">
 
-        <h2>
-          {{ $about->title }}
+        <h2> {{ $about->title }}
         </h2>
 
         <p class="text-muted">
@@ -45,12 +48,10 @@
 
         <div class="card-body">
 
-          <h4>
-            {{ $item->section }}
+          <h4> {{ $item->section }}
           </h4>
 
-          <p>
-            {{ $item->content }}
+          <p> {{ $item->content }}
           </p>
 
           <small class="text-muted d-block mb-2">
