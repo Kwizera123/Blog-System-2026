@@ -66,12 +66,32 @@
                   </a>
                 </li>
 
-                <li>
+                {{-- <li>
                   <a href="{{ route('admin.contact-messages.index') }}" class="dropdown-item">
                     📩 Contact Messages
                     <span class="translate-center badge rounded-pill bg-danger mb-1">
-                      2
+
+                      {{ $unreadMessages }}
                     </span>
+                  </a>
+                </li> --}}
+
+                <li>
+                  <a href="{{ route('admin.contact-messages.index') }}"
+                    class="dropdown-item d-flex justify-content-between align-items-center">
+
+                    <span>
+                      📩 Contact Messages
+                    </span>
+
+                    @if ($unreadMessages > 0)
+
+                      <span class="badge bg-danger">
+                        {{ $unreadMessages }}
+                      </span>
+
+                    @endif
+
                   </a>
                 </li>
 
