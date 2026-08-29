@@ -1,14 +1,13 @@
 @extends('layouts.app')
 @section('content')
-  <div class="container mt-4">
-
-
+  {{-- <div class="container mt-4"> --}}
 
     <h2 class="h2 text-success">All Posts</h2><br>
 
     @can('create', App\Models\Post::class)
 
-      <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">+Create New Post</a>
+      <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3"><i class="bi bi-cloud-plus-fill"></i> Create New
+        Post</a>
     @endcan
 
     <form action="{{ route('posts.index') }}" method="GET" class="mb-3">
@@ -84,18 +83,36 @@
     </form>
     @if($posts->count() > 0)
       <div class="table-responsive">
-        <table class="table table-striped bordered">
-          <thead>
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+
+          <small class="text-muted">
+
+            Showing
+            <strong>{{ $posts->firstItem() }}</strong>
+            –
+            <strong>{{ $posts->lastItem() }}</strong>
+            of
+            <strong>{{ $posts->total() }}</strong>
+            posts
+
+          </small>
+
+        </div>
+
+        <table class="table table-striped table-bordered align-middle">
+          <thead class="table-dark">
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Content</th>
-              <th>Image</th>
-              <th>Video</th>
-              <th>Status</th>
+              <th class="text-center">#</th>
+              <th class="text-center">Title</th>
+              <th class="text-center">Category</th>
+              <th class="text-center">Content</th>
+              <th class="text-center">Image</th>
+              <th class="text-center">Video</th>
+              <th class="text-center">Status</th>
               <th>Author</th>
-              <th>Actions</th>
+              <th>Created</th>
+              <th class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -103,15 +120,39 @@
               <tr>
                 {{-- {{ dd($post->slug) }} --}}
                 <td>{{ $posts->firstItem() + $loop->index }}</td>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->category->name }}</td>
-                <td>{{ Str::limit($post->content, 5) }}</td>
+                <td>
+                  <a href="{{ route('posts.show', $post) }}" class="text-decoration-none fw-semibold">
+                    {{ $post->title }}
+                  </a>
+
+                </td>
+                <td>
+                  @if($post->category)
+                    <span class="badge text-bg-info">
+                      <i class="bi bi-folder"></i>
+                      {{ $post->category->name }}
+                    </span>
+                  @else
+                    <span class="badge text-bg-secondary">
+                      No Category
+                    </span>
+                  @endif
+                </td>
+                <td>
+                  <a href="{{ route('posts.show', $post) }}" class="text-decoration-none text-dark">
+
+                    {{ Str::limit(strip_tags($post->content), 60) }}
+
+                  </a>
+
+                  {{-- {{ Str::limit($post->content, 5) }} --}}
+                </td>
                 <td>
                   @if($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail" width="50" height="50"
+                    <img src="{{ asset('storage/' . $post->image) }}" class="img-thumbnail shadow-sm" width="50" height="50"
                       style="object-fit: cover;" alt="{{ $post->title }}">
                   @else
-                    <img src="{{ asset('storage/no_image.png') }}" class="img-thumbnail" width="50" height="50"
+                    <img src="{{ asset('storage/no_image.png') }}" class="img-thumbnail shadow-sm" width="50" height="50"
                       style="object-fit: cover;" alt="{{ $post->title }}">
 
                   @endif
@@ -167,63 +208,99 @@
                   @endif
                 </td>
 
-                <td>{{ $post->user->name }}</td>
                 <td>
-
-                  @can('update', $post)
-                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning"><i
-                        class="bi bi-pencil-square"></i>
-                      Edit</a>
-                  @endcan
-
-                  @if($post->status === 'draft')
-
-                    <form action="{{ route('admin.posts.publish', $post) }}" method="POST" style="display:inline;">
-
-                      @csrf
-                      @method('PATCH')
-
-                      <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Publish this post?')">
-                        <i class="bi bi-check-circle"></i>
-                        Publish
-
-                      </button>
-
-                    </form>
-
-                  @elseif($post->status === 'published')
-
-                    <form action="{{ route('admin.posts.unpublish', $post) }}" method="POST" style="display:inline;">
-
-                      @csrf
-                      @method('PATCH')
-
-                      <button type="submit" class="btn btn-sm btn-secondary"
-                        onclick="return confirm('Move this post back to draft?')">
-                        <i class="bi bi-arrow-counterclockwise"></i>
-                        Unpublish
-
-                      </button>
-
-                    </form>
-
+                  @if($post->user)
+                    <span class="badge text-bg-primary">
+                      <i class="bi bi-person"></i>
+                      {{ $post->user->name }}
+                    </span>
+                  @else
+                    <span class="badge text-bg-secondary">
+                      Unknown Author
+                    </span>
                   @endif
 
-                  <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success"><i class="bi bi-eye"></i>
-                    View</a>
+                </td>
+                <td title="{{ $post->created_at->format('M d, Y g:i A') }}">
+                  {{ $post->created_at->diffForHumans() }}
 
-                  @can('delete', $post)
+
+                </td>
+                <td class="text-center">
+                  <div class=" d-flex flex-wrap gap-1">
+
+                    @can('update', $post)
+                      <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning"><i
+                          class="bi bi-pencil-square"></i>
+                        Edit</a>
+                    @endcan
+
+
+                    @if($post->status === 'draft')
+
+                      <form action="{{ route('admin.posts.publish', $post) }}" method="POST" style="display:inline;">
+
+                        @csrf
+                        @method('PATCH')
+
+                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Publish this post?')">
+                          {{-- <i class="bi bi-check-circle"></i> --}}
+                          <i class="bi bi-cloud-arrow-up"></i>
+                          Publish
+
+                        </button>
+
+                      </form>
+
+                    @elseif($post->status === 'published')
+
+                      <form action="{{ route('admin.posts.unpublish', $post) }}" method="POST" style="display:inline;">
+
+                        @csrf
+                        @method('PATCH')
+
+                        <button type="submit" class="btn btn-sm btn-secondary"
+                          onclick="return confirm('Move this post back to draft?')">
+                          {{-- <i class="bi bi-arrow-counterclockwise"></i> --}}
+                          <i class="bi bi-cloud-arrow-down"></i>
+                          Unpublish
+
+                        </button>
+
+                      </form>
+
+                    @endif
+
+
+
+                    <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success"><i class="bi bi-eye"></i>
+                      View</a>
+
+                    {{-- @can('delete', $post)
                     <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
                       @csrf
                       @method('DELETE')
+
                       <button class="btn btn-sm btn-danger"
                         onclick="return confirm('Are You Sure you want to delete this post? ')">
                         <i class="bi bi-trash"></i>
 
                       </button>
                     </form>
-                  @endcan
+                    @endcan --}}
 
+                    @can('delete', $post)
+
+                      <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        data-url="{{ route('posts.destroy', $post) }}">
+
+                        <i class="bi bi-trash"></i>
+                        Delete
+
+                      </button>
+
+                    @endcan
+                  </div>
                 </td>
               </tr>
             @endforeach
@@ -232,11 +309,29 @@
         </table>
       </div>
     @else
-      <p>No Post found.</p>
+      <div class="alert alert-info text-center">
+
+        <i class="bi bi-info-circle"></i>
+
+        <strong>No posts found.</strong>
+
+        <p class="mb-2 mt-2">
+          No posts match your current search or filter.
+        </p>
+
+        <a href="{{ route('posts.index') }}" class="btn btn-sm btn-primary">
+
+          <i class="bi bi-arrow-clockwise"></i>
+          Clear Search & Filters
+
+        </a>
+
+      </div>
     @endif
     <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-secondary">Back</a>
     <div class="mt-3">
       {{ $posts->links() }}
     </div>
-  </div>
+    {{--
+  </div> --}}
 <br>@endsection

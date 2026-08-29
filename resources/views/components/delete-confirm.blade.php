@@ -10,10 +10,7 @@
                     ⚠️ Confirm Delete
                 </h5>
 
-                <button 
-                    type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
                 </button>
 
             </div>
@@ -22,7 +19,7 @@
             <div class="modal-body">
 
                 <p>
-                    Are you sure you want to delete this item?
+                    Are you sure you want to delete this item or post?
                 </p>
 
                 <small class="text-muted">
@@ -34,10 +31,7 @@
 
             <div class="modal-footer">
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
 
@@ -48,9 +42,7 @@
                     @method('DELETE')
 
 
-                    <button
-                        type="submit"
-                        class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger">
                         Delete
                     </button>
 
@@ -68,22 +60,22 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function(){
+    document.addEventListener('DOMContentLoaded', function () {
 
-    const deleteModal = document.getElementById('deleteModal');
+        const deleteModal = document.getElementById('deleteModal');
 
-    deleteModal.addEventListener('show.bs.modal', function(event){
+        deleteModal.addEventListener('show.bs.modal', function (event) {
 
-        let button = event.relatedTarget;
+            let button = event.relatedTarget;
 
-        let url = button.getAttribute('data-url');
+            let url = button.getAttribute('data-url');
 
-        document
-            .getElementById('deleteForm')
-            .setAttribute('action', url);
+            document
+                .getElementById('deleteForm')
+                .setAttribute('action', url);
+
+        });
 
     });
-
-});
 
 </script>
