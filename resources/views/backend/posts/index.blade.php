@@ -69,7 +69,18 @@
 
       </div>
 
+      @if(
+          request()->filled('search') ||
+          request()->filled('category') ||
+          request()->filled('status') ||
+          request()->filled('sort')
 
+        )
+        <a href="{{ route('posts.index') }}" class="btn btn-secondary mt-2">
+          <i class="bi bi-arrow-counterclockwise"></i>
+          Resert Filters
+        </a>
+      @endif
     </form>
     @if($posts->count() > 0)
       <table class="table table-striped bordered">
@@ -155,8 +166,10 @@
 
               <td>{{ $post->user->name }}</td>
               <td>
+
                 @can('update', $post)
-                  <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i>
+                    Edit</a>
                 @endcan
 
                 @if($post->status === 'draft')
@@ -167,7 +180,7 @@
                     @method('PATCH')
 
                     <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Publish this post?')">
-
+                      <i class="bi bi-check-circle"></i>
                       Publish
 
                     </button>
@@ -183,7 +196,7 @@
 
                     <button type="submit" class="btn btn-sm btn-secondary"
                       onclick="return confirm('Move this post back to draft?')">
-
+                      <i class="bi bi-arrow-counterclockwise"></i>
                       Unpublish
 
                     </button>
@@ -192,7 +205,8 @@
 
                 @endif
 
-                <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success">View</a>
+                <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success"><i class="bi bi-eye"></i>
+                  View</a>
 
                 @can('delete', $post)
                   <form action="{{ route('posts.destroy', $post) }}" method="Post" style="display:inline;">
@@ -200,7 +214,8 @@
                     @method('DELETE')
                     <button class="btn btn-sm btn-danger"
                       onclick="return confirm('Are You Sure you want to delete this post? ')">
-                      Delete
+                      <i class="bi bi-trash"></i>
+
                     </button>
                   </form>
                 @endcan
