@@ -43,6 +43,9 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
+        $recentContactMessages = ContactMessage::latest()
+            ->take(5)
+            ->get();
 
         return view('admin.dashboard', compact(
             'totalUsers',
@@ -54,6 +57,7 @@ class DashboardController extends Controller
             'totalTags',
             'recentPosts',
             'latestUsers',
+            'recentContactMessages',
             'recentComments',
             'publishPosts',
             'draftPosts'

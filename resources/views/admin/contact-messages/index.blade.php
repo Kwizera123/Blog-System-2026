@@ -44,9 +44,15 @@
             {{ $message->email }}
           </p>
 
+          <p class="mb-1">
+            <strong>Received:
+            </strong>
+            {{ $message->created_at->format('M d, Y g:i A') }}
+          </p>
+
           <p class="mb-0">
             <strong>Message:</strong>
-            {{ $message->message }}
+            {{ Str::limit($message->message, 150) }}
           </p>
           <a href="{{ route('admin.contact-messages.show', $message) }}" class="btn btn-primary btn-sm mt-3">
             <i class="bi bi-eye-fill"></i> View Message
@@ -63,6 +69,12 @@
 
     @endforelse
 
+
+    @if ($messages->hasPages())
+      <div class="mt-4">
+        {{ $messages->links() }}
+      </div>
+    @endif
   </div>
 
 @endsection

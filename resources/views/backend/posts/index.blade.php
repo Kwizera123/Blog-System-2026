@@ -90,7 +90,7 @@
         <tbody>
           @foreach ($posts as $post)
             <tr>
-               {{-- {{ dd($post->slug) }} --}}
+              {{-- {{ dd($post->slug) }} --}}
               <td>{{ $posts->firstItem() + $loop->index }}</td>
               <td>{{ $post->title }}</td>
               <td>{{ $post->category->name }}</td>
@@ -137,13 +137,60 @@
 
                   @endif --}}
               </td>
-              <td>{{ $post->status }}</td>
+              <td>
+                @if($post->status === 'published')
+                  <span class="badge text-bg-success">
+                    Published
+                  </span>
+                @elseif($post->status === 'draft')
+                  <span class="badge text-bg-warning">
+                    Draft
+                  </span>
+                @else
+                  <span class="badge text-bg-secondary">
+                    {{ ucfirst($post->status) }}
+                  </span>
+                @endif
+              </td>
 
               <td>{{ $post->user->name }}</td>
               <td>
                 @can('update', $post)
                   <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">Edit</a>
                 @endcan
+
+                @if($post->status === 'draft')
+
+                  <form action="{{ route('admin.posts.publish', $post) }}" method="POST" style="display:inline;">
+
+                    @csrf
+                    @method('PATCH')
+
+                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Publish this post?')">
+
+                      Publish
+
+                    </button>
+
+                  </form>
+
+                @elseif($post->status === 'published')
+
+                  <form action="{{ route('admin.posts.unpublish', $post) }}" method="POST" style="display:inline;">
+
+                    @csrf
+                    @method('PATCH')
+
+                    <button type="submit" class="btn btn-sm btn-secondary"
+                      onclick="return confirm('Move this post back to draft?')">
+
+                      Unpublish
+
+                    </button>
+
+                  </form>
+
+                @endif
 
                 <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-success">View</a>
 

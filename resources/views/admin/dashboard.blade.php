@@ -7,7 +7,7 @@
       <h1>
         Welcome Back, {{ auth()->user()->name }}
       </h1>
-      <p class="text-muted">Here is what is happening in youe application today.</p>
+      <p class="text-muted">Here is what is happening in your application today.</p>
     </div>
 
     <div class="card shadow-sm mb-4">
@@ -180,7 +180,9 @@
 
 
     <hr class="my-5">
-    <h3><span class="badge text-bg-primary mb-2">Recent Post</span></h3>
+    <h3>
+      <span class="badge text-bg-primary mb-2">Recent Posts</span>
+    </h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -219,7 +221,7 @@
           </tr>
         @empty
           <tr>
-            <td colspan="3" class="text-center text-muted py-4">
+            <td colspan="5" class="text-center text-muted py-4">
               No Posts found.
             </td>
           </tr>
@@ -264,6 +266,7 @@
       </tbody>
     </table>
     <hr class="my-5">
+
     <h3><span class="badge text-bg-danger mb-2">Recent comments</span></h3>
     <table class="table table-hover">
       <thead>
@@ -291,5 +294,85 @@
         @endforelse
       </tbody>
     </table>
+
+
+    <div class="card shadow-sm mb-4">
+
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">
+          📩 Recent Contact Messages
+        </h5>
+
+        <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-sm btn-primary">
+          View All
+        </a>
+      </div>
+
+      <div class="card-body">
+
+        @forelse ($recentContactMessages as $message)
+
+          <div class="border-bottom pb-3 mb-3">
+
+            <div class="d-flex justify-content-between align-items-start">
+
+              <div>
+
+                <h6 class="mb-1">
+                  {{ $message->subject }}
+                </h6>
+
+                <small class="text-muted">
+                  From: {{ $message->name }}
+                  ({{ $message->email }})
+                </small>
+
+              </div>
+
+              @if (!$message->is_read)
+
+                <span class="badge bg-danger">
+                  Unread
+                </span>
+
+              @else
+
+                <span class="badge bg-secondary">
+                  Read
+                </span>
+
+              @endif
+
+            </div>
+
+            <p class="mt-2 mb-2">
+              {{ Str::limit($message->message, 120) }}
+            </p>
+
+            <div class="d-flex justify-content-between align-items-center">
+
+              <small class="text-muted">
+                {{ $message->created_at->format('M d, Y g:i A') }}
+              </small>
+
+              <a href="{{ route('admin.contact-messages.show', $message) }}" class="btn btn-sm btn-outline-primary">
+                View Message
+              </a>
+
+            </div>
+
+          </div>
+
+        @empty
+
+          <p class="text-muted mb-0">
+            No contact messages yet.
+          </p>
+
+        @endforelse
+
+      </div>
+
+    </div>
   </div>
 @endsection
