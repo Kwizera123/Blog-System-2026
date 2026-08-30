@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Tag;
 use App\Models\ContactMessage;
+use App\Models\Tutorial;
 
 
 
@@ -39,6 +40,10 @@ class DashboardController extends Controller
             ->orderByDesc('views')
             ->take(5)
             ->get();
+        
+        $mostViewedTutorials = Tutorial::orderByDesc('views')
+            ->take(5)
+            ->get();
 
         $latestUsers = User::latest()
             ->take(5)
@@ -51,6 +56,12 @@ class DashboardController extends Controller
         $recentContactMessages = ContactMessage::latest()
             ->take(5)
             ->get();
+
+        $totalPostViews = Post::sum('views');
+
+        $totalTutorialViews = Tutorial::sum('views');
+
+        $totalContentViews = $totalPostViews + $totalTutorialViews;
 
         return view('admin.dashboard', compact(
             'totalUsers',
@@ -66,7 +77,9 @@ class DashboardController extends Controller
             'recentContactMessages',
             'recentComments',
             'publishPosts',
-            'draftPosts'
+            'draftPosts',
+            'mostViewedTutorials',
+            'totalContentViews'
         ));
        
 

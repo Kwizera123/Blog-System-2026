@@ -10,7 +10,7 @@
       <p class="text-muted">Here is what is happening in your application today.</p>
     </div>
 
-    <div class="card shadow-sm mb-4">
+    <div class="card shadow bg-body-tertiary rounded mb-4">
       <div class="card-body">
         <h4 class="mb-3">
           ⚡ Quick Actions
@@ -162,11 +162,33 @@
               </h2>
             @endif
 
-
-
             <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-sm btn-primary">
               📩 View Messages
             </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+
+        <div class="card text-center shadow-sm text-bg-secondary h-55">
+
+          <div class="card-body">
+
+            <h5>
+              👁️ <strong>Total Content Views:</strong>
+            </h5>
+
+            <h2>
+              {{ $totalContentViews }}
+            </h2>
+
+            <small>
+              Posts + Tutorials
+            </small>
 
           </div>
 
@@ -183,7 +205,7 @@
     <h3>
       <span class="badge text-bg-primary mb-2">Recent Posts</span>
     </h3>
-    <table class="table table-striped">
+    <table class="table table-striped shadow bg-body-tertiary rounded">
       <thead>
         <tr>
           <th>Title</th>
@@ -230,8 +252,124 @@
     </table>
 
     <hr class="my-5">
+
+    <div class="card shadow p-3 bg-body-tertiary rounded mb-4">
+
+      <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+          🔥 Most Viewed Posts
+        </h5>
+
+        <a href="{{ route('posts.index') }}" class="btn btn-sm btn-primary">
+          View All
+        </a>
+
+      </div>
+
+      <div class="card-body">
+
+        @forelse ($mostViewedPosts as $post)
+
+          <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+            <div>
+
+              <h6 class="mb-1">
+                {{ $post->title }}
+              </h6>
+
+              <small class="text-muted">
+                By {{ $post->user->name }}
+              </small>
+
+            </div>
+
+            <span class="badge text-bg-info">
+
+              <i class="bi bi-eye"></i>
+
+              {{ $post->views }}
+
+              {{ Str::plural('view', $post->views) }}
+
+            </span>
+
+          </div>
+
+        @empty
+
+          <p class="text-muted mb-0">
+            No posts available yet.
+          </p>
+
+        @endforelse
+
+      </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <div class="card shadow bg-body-tertiary rounded mb-4">
+
+      <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+          ⭐ Most Viewed Tutorials
+        </h5>
+
+        <a href="{{ route('admin.tutorials.index') }}" class="btn btn-sm btn-primary">
+          View All
+        </a>
+
+      </div>
+
+      <div class="card-body">
+
+        @forelse ($mostViewedTutorials as $tutorial)
+
+          <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+            <div>
+
+              <h6 class="mb-1">
+                {{ $tutorial->title }}
+              </h6>
+
+              <small class="text-muted">
+                Tutorial
+              </small>
+
+            </div>
+
+            <span class="badge text-bg-info">
+
+              <i class="bi bi-eye"></i>
+
+              {{ $tutorial->views }}
+
+              {{ Str::plural('view', $tutorial->views) }}
+
+            </span>
+
+          </div>
+
+        @empty
+
+          <p class="text-muted mb-0">
+            No tutorials available yet.
+          </p>
+
+        @endforelse
+
+      </div>
+
+    </div>
+
+    <hr class="my-5">
     <h3><span class="badge text-bg-success mb-4">Latest Users</span></h3>
-    <table class="table table-bordered">
+    <table class="table table-bordered shadow bg-body-tertiary rounded">
       <thead>
         <tr>
           <td>Name</td>
@@ -268,7 +406,7 @@
     <hr class="my-5">
 
     <h3><span class="badge text-bg-danger mb-2">Recent comments</span></h3>
-    <table class="table table-hover">
+    <table class="table table-hover shadow bg-body-tertiary rounded">
       <thead>
         <tr>
           <th>User</th>
@@ -295,8 +433,9 @@
       </tbody>
     </table>
 
+    <hr class="my-5">
 
-    <div class="card shadow-sm mb-4">
+    <div class="card shadow bg-body-tertiary rounded mb-4">
 
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">
