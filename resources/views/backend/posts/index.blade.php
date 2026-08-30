@@ -110,6 +110,7 @@
               <th class="text-center">Image</th>
               <th class="text-center">Video</th>
               <th class="text-center">Status</th>
+              <th>Views</th>
               <th>Author</th>
               <th>Created</th>
               <th class="text-center">Actions</th>
@@ -206,6 +207,13 @@
                       {{ ucfirst($post->status) }}
                     </span>
                   @endif
+                </td>
+
+                <td>
+                  <span class="badge text-bg-warning">
+                    <i class="bi bi-eye"></i>
+                    {{ $post->views }}
+                  </span>
                 </td>
 
                 <td>

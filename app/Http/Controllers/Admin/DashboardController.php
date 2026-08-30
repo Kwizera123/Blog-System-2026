@@ -35,6 +35,11 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $mostViewedPosts = Post::with('user', 'category')
+            ->orderByDesc('views')
+            ->take(5)
+            ->get();
+
         $latestUsers = User::latest()
             ->take(5)
             ->get();
@@ -56,6 +61,7 @@ class DashboardController extends Controller
             'totalCategories',
             'totalTags',
             'recentPosts',
+            'mostViewedPosts',
             'latestUsers',
             'recentContactMessages',
             'recentComments',

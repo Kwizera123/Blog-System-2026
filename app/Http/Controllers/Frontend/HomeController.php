@@ -88,8 +88,17 @@ class HomeController extends Controller
 
     public function show(Post $post)
     {
-        $post->increment('views');
+        if(!session()->has('viewed_post_' . $post->id)) {
+
+            $post->increment('views'); 
+
+            session()->put(
+                'viewed_post_' . $post->id,
+                true
+            );
+        }
         
+
         $categories = Category::orderBy('name')->get();
         $tags = Tag::orderBy('name')->get();
 

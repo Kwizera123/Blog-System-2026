@@ -84,8 +84,16 @@ class TutorialController extends Controller
 
     public function show(Tutorial $tutorial) 
     {
-        $tutorial->increment('views');
-        
+        if (!session()->has('viewed_tutorial_' . $tutorial->id)) {
+
+            $tutorial->increment('views');
+
+            session()->put(
+                'viewed_tutorial_' . $tutorial->id,
+                true
+            );
+        }
+
         abort_if($tutorial->status !== 'published', 404);
         $tutorial->load([
             'user',

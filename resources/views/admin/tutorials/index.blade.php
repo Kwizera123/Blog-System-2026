@@ -28,6 +28,7 @@
               <th>Author</th>
               <th>Category</th>
               <th>Status</th>
+              <th>Views</th>
               <th>Created</th>
               <th>Actions</th>
             </tr>
@@ -40,6 +41,12 @@
                 <td>{{ $tutorial->user->name }}</td>
                 <td>{{ $tutorial->category->name }}</td>
                 <td>{{ $tutorial->status }}</td>
+                <td>
+                  <span class="badge text-bg-info">
+                    <i class="bi bi-eye"></i>
+                    {{ $tutorial->views }}
+                  </span>
+                </td>
                 <td>{{ $tutorial->created_at->diffForHumans() }}</td>
                 <td>
                   <a href="{{ route('admin.tutorials.edit', $tutorial) }}" class="btn btn-sm btn-success">
