@@ -45,6 +45,37 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+
+
+        $mostViewedContent = collect()
+            ->merge(
+                $mostViewedPosts->map(function ($post) {
+                    return [
+                        'title' => $post->title,
+                        'type' => 'Post',
+                        'views' => $post->views,
+                        'url' => route('posts.show', $post),
+                    ];
+                })
+            )
+            ->merge(
+                $mostViewedTutorials->map(function ($tutorial) {
+                    return [
+                        'title' => $tutorial->title,
+                        'type' => 'Tutorial',
+                        'views' => $tutorial->views,
+                        'url' => route('tutorials.show', $tutorial->slug),
+                    ];
+                })
+            )
+            ->sortByDesc('views')
+            ->take(5)
+            ->values();
+
+
+
+
+
         $latestUsers = User::latest()
             ->take(5)
             ->get();
@@ -72,14 +103,16 @@ class DashboardController extends Controller
             'totalCategories',
             'totalTags',
             'recentPosts',
-            'mostViewedPosts',
             'latestUsers',
             'recentContactMessages',
             'recentComments',
             'publishPosts',
             'draftPosts',
+            'mostViewedPosts',
             'mostViewedTutorials',
-            'totalContentViews'
+            'totalContentViews',
+            'mostViewedContent'
+
         ));
        
 

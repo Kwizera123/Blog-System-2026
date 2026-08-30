@@ -368,6 +368,107 @@
     </div>
 
     <hr class="my-5">
+
+    <div class="card shadow-sm mb-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            🔥 Most Viewed Content
+        </h5>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        @if ($mostViewedContent->count() > 0)
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover mb-0">
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Content</th>
+                            <th>Type</th>
+                            <th>Views</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach ($mostViewedContent as $content)
+
+                            <tr>
+
+                                <td>
+                                    {{ $loop->iteration }}
+                                </td>
+
+                                <td>
+                                    <a href="{{ $content['url'] }}">
+                                        {{ $content['title'] }}
+                                    </a>
+                                </td>
+
+                                <td>
+
+                                    @if ($content['type'] === 'Post')
+
+                                        <span class="badge text-bg-primary">
+                                            📝 Post
+                                        </span>
+
+                                    @else
+
+                                        <span class="badge text-bg-success">
+                                            📚 Tutorial
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+                                <td>
+
+                                    <span class="badge text-bg-info">
+
+                                        <i class="bi bi-eye"></i>
+
+                                        {{ $content['views'] }}
+
+                                        {{ Str::plural('view', $content['views']) }}
+
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @else
+
+            <p class="text-muted p-3 mb-0">
+                No content views available yet.
+            </p>
+
+        @endif
+
+    </div>
+
+</div>
+
+    <hr class="my-5">
     <h3><span class="badge text-bg-success mb-4">Latest Users</span></h3>
     <table class="table table-bordered shadow bg-body-tertiary rounded">
       <thead>
