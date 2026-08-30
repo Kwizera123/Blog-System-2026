@@ -88,6 +88,8 @@ class HomeController extends Controller
 
     public function show(Post $post)
     {
+        $post->increment('views');
+        
         $categories = Category::orderBy('name')->get();
         $tags = Tag::orderBy('name')->get();
 

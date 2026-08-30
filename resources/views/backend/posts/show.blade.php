@@ -12,6 +12,10 @@
 
       <div class="card-body">
         <h2>{{ $post->title }}</h2>
+        <div class="text-muted mb-3">
+          <i class="bi bi-eye"></i>
+          {{ $post->views }} views
+        </div>
         <p class="text-muted">
           By: {{ $post->user->name }} | Category: {{ $post->category->name }}
         </p>

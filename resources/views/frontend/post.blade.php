@@ -21,6 +21,8 @@
       <div class="card-body">
         <h1 class="card-title">{{ $post->title }}</h1>
 
+
+
         <p class="text-muted">
           Written By: <strong> {{ $post->user->name }}</strong>
           |
@@ -28,21 +30,25 @@
           |
           {{ $post->created_at->format('M d, Y') }}
           |
-          @if($post->tags->count())
+        <div class="text-muted mb-2">
+          <i class="bi bi-eye"></i>&#128065;
+          {{ $post->views }} views
+        </div>
+        @if($post->tags->count())
 
-            <div class="mt-2">
+          <div class="mt-1">
 
-              <strong>Tags:</strong>
+            <strong>Tags:</strong>
 
-              @foreach ($post->tags as $tag)
+            @foreach ($post->tags as $tag)
 
-                <span class="badge bg-info">{{ $tag->name }}</span>
+              <span class="badge bg-info">{{ $tag->name }}</span>
 
-              @endforeach
+            @endforeach
 
-            </div>
+          </div>
 
-          @endif
+        @endif
 
 
         </p>
@@ -177,8 +183,8 @@
               <label for="comment" class="form-label">Your Comment</label>
               <textarea name="comment" id="comment" cols="30" rows="4" class="form-control"
                 placeholder="Write your comment here...">
-                                                                                                                                                                                                                                                                                                                                                                                                             {{ old('comment') }}
-                                                                                                                                                                                                                                                                                                                                                                                                  </textarea>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             {{ old('comment') }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </textarea>
             </div>
             <button type="submit" class="btn btn-sm btn-primary">
               Send Comment
