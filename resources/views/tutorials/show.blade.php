@@ -12,6 +12,11 @@
         {{ $tutorial->title }}
       </h1>
 
+      <div class="text-muted mb-1">
+        <i class="bi bi-eye"></i>&#x1F441;
+        {{ $tutorial->views }} {{ Str::plural('view', $tutorial->views) }}
+      </div>
+
       <p class="text-muted tutorial-card-meta">
         By {{ $tutorial->user->name }}.
         <small><strong>{{ $tutorial->created_at->diffForHumans() }}</strong>

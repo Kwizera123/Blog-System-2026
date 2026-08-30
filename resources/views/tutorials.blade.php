@@ -59,7 +59,9 @@
         <div class="card-body p-4">
 
           <h1 class="h4 mb-2 tutorial-card-title">
-            {{ $tutorial->title }}
+            <a href="{{ route('tutorials.show', $tutorial) }}">
+              {{ $tutorial->title }}
+            </a>
           </h1>
 
           <p class="text-muted mb-4 tutorial-card-meta">
