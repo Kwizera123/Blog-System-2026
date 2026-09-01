@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Tutorial;
 
 #[Fillable(['name','role', 'email', 'password', 'profile_photo'])]
 #[Hidden(['password', 'remember_token'])]
@@ -66,10 +67,16 @@ class User extends Authenticatable
         return $this->role === 'user';
      }
 
+   //   public function tutorials()
+   //   {
+   //      return $this->hasMany(Tutorial::class);
+   //   }
+
      public function tutorials()
      {
-        return $this->hasMany(Tutorial::class);
+      return $this->belongsToMany(Tutorial::class)
+            ->withPivot('completed_at')
+            ->withTimestamps();
      }
-
 
 }

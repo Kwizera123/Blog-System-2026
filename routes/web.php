@@ -223,6 +223,23 @@ Route::middleware(['auth','role:admin'])
 
        });
 
+       Route::middleware('auth')->group(function(){
+
+    // ...
+
+    Route::get('/dashboard', [FrontendDashboardController::class, 'index'])
+        ->middleware('verified')
+        ->name('dashboard');
+
+    Route::patch('/tutorials/{tutorial}/complete', [FrontendTutorialController::class, 'complete'])
+        ->name('tutorials.complete');
+
+    // ...
+
+});
+
+
+
 
 //   Route::get('/read-post', [HomeController::class, 'index'])->name('post');
 

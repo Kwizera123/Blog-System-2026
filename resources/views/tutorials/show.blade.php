@@ -110,6 +110,42 @@
         </div>
       </div>
 
+      {{-- Mark as Completed--}}
+      @auth
+        @php
+          $progress = auth()->user()
+            ->tutorials()
+            ->where('tutorial_id', $tutorial->id)
+            ->first();
+        @endphp
+
+        <div class="mt-4 mb-4">
+
+          @if($progress && $progress->pivot->completed_at)
+
+            <div class="alert alert-success">
+              ✅ Tutorial Completed
+            </div>
+
+          @else
+
+            <form action="{{ route('tutorials.complete', $tutorial) }}" method="POST">
+              @csrf
+              @method('PATCH')
+
+              <button type="submit" class="btn btn-success">
+                ✅ Mark as Completed
+              </button>
+            </form>
+
+          @endif
+
+        </div>
+
+      @endauth
+
+      {{-- End Mark as Completed--}}
+
       {{-- Related Tutorials --}}
       @if ($relatedTutorials->isNotEmpty())
         <div class="mt-5 pt-4 border-top">

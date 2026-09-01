@@ -101,6 +101,19 @@ class TutorialController extends Controller
             'tags',
         ]);
 
+        if (auth()->check()) {
+
+                auth()->user()->tutorials()->syncWithoutDetaching([
+
+                $tutorial->id => [
+                    'completed_at' => null,
+                ]
+
+             ]);
+
+             $tagIds = $tutorial->tags->pluck('id');
+
+            }   
         $tagIds = $tutorial->tags->pluck('id');
 
         $categories = Category::orderBy('name')->get();
@@ -148,4 +161,22 @@ class TutorialController extends Controller
             'relatedTutorials'
             ));
     }//End Method
+
+    public function complete(Tutorial $tutorial)
+    {
+        // Implementation for completing a tutorial
+        abort_if($tutorial->status !== 'published', 404);
+
+        auth()->user()->tutorials()->updateExistingPivot(
+            $tutorial->id,
+            [
+                'completed_at' => now()
+            ]
+        );
+
+        return back()->with(
+            'success',
+            'Tutorial marked as completed!'
+        );
+    }
 }
