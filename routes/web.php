@@ -16,7 +16,7 @@ use App\Http\Controllers\Frontend\TutorialController as FrontendTutorialControll
 use App\Http\Controllers\Admin\TutorialController as AdminTutorialController;
 use App\Http\Controllers\Admin\AdminAboutController;
 use App\Http\Controllers\Admin\ContactMessageController;
-
+use App\Http\Controllers\DashboardController as FrontendDashboardController;
 
 
 

@@ -110,8 +110,8 @@
               <th class="text-center">Image</th>
               <th class="text-center">Video</th>
               <th class="text-center">Status</th>
-              <th>Views</th>
               <th>Author</th>
+              <th>Views</th>
               <th>Created</th>
               <th class="text-center">Actions</th>
             </tr>
@@ -209,12 +209,7 @@
                   @endif
                 </td>
 
-                <td>
-                  <span class="badge text-bg-warning">
-                    <i class="bi bi-eye"></i>
-                    {{ $post->views }}
-                  </span>
-                </td>
+
 
                 <td>
                   @if($post->user)
@@ -229,6 +224,14 @@
                   @endif
 
                 </td>
+
+                                <td>
+                  <span class="badge text-bg-warning">
+                    <i class="bi bi-eye"></i>
+                    {{ $post->views }}
+                  </span>
+                </td>
+
                 <td title="{{ $post->created_at->format('M d, Y g:i A') }}">
                   {{ $post->created_at->diffForHumans() }}
 
