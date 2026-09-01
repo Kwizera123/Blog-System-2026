@@ -72,10 +72,6 @@ class DashboardController extends Controller
             ->take(5)
             ->values();
 
-
-
-
-
         $latestUsers = User::latest()
             ->take(5)
             ->get();
@@ -111,7 +107,9 @@ class DashboardController extends Controller
             'mostViewedPosts',
             'mostViewedTutorials',
             'totalContentViews',
-            'mostViewedContent'
+            'mostViewedContent',
+            'totalPostViews',
+            'totalTutorialViews'
 
         ));
        

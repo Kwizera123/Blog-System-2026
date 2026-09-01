@@ -196,6 +196,81 @@
 
       </div>
 
+      <div class="col-12 col-sm-6 col-lg-3">
+
+        <div class="card text-center shadow-sm text-bg-primary h-100">
+
+          <div class="card-body">
+
+            <h5>
+              📝 <strong>Post Views</strong>
+            </h5>
+
+            <h2>
+              {{ $totalPostViews }}
+            </h2>
+
+            <small>
+              Total views of all posts
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-12 col-sm-6 col-lg-3">
+
+        <div class="card text-center shadow-sm text-bg-success h-100">
+
+          <div class="card-body">
+
+            <h5>
+              📚 <strong>Tutorial Views</strong>
+            </h5>
+
+            <h2>
+              {{ $totalTutorialViews }}
+            </h2>
+
+            <small>
+              Total views of all tutorials
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+
+        <div class="card text-center shadow-sm text-bg-dark h-100">
+
+          <div class="card-body">
+
+            <h5>
+              👁️ <strong>Total Views</strong>
+            </h5>
+
+            <h2>
+              {{ $totalContentViews }}
+            </h2>
+
+            <small>
+              Posts + Tutorials
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
     </div>
 
 
@@ -359,260 +434,255 @@
 
           <p class="text-muted mb-0">
             No tutorials available yet.
-          </p>
-
-        @endforelse
+        </p> @endforelse </div>
 
       </div>
 
-    </div>
+      <hr class="my-5">
 
-    <hr class="my-5">
+      <div class="card shadow-sm mb-4">
 
-    <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
 
-    <div class="card-header d-flex justify-content-between align-items-center">
-
-        <h5 class="mb-0">
+          <h5 class="mb-0">
             🔥 Most Viewed Content
-        </h5>
+          </h5>
 
-    </div>
+        </div>
 
-    <div class="card-body p-0">
+        <div class="card-body p-0">
 
-        @if ($mostViewedContent->count() > 0)
+          @if ($mostViewedContent->count() > 0)
 
             <div class="table-responsive">
 
-                <table class="table table-striped table-hover mb-0">
+                <table class=" table table-striped table-hover mb-0">
 
-                    <thead>
+              <thead>
 
-                        <tr>
-                            <th>#</th>
-                            <th>Content</th>
-                            <th>Type</th>
-                            <th>Views</th>
-                        </tr>
+                <tr>
+                  <th>#</th>
+                  <th>Content</th>
+                  <th>Type</th>
+                  <th>Views</th>
+                </tr>
 
-                    </thead>
+              </thead>
 
-                    <tbody>
+              <tbody>
 
-                        @foreach ($mostViewedContent as $content)
+                @foreach ($mostViewedContent as $content)
 
-                            <tr>
+                  <tr>
 
-                                <td>
-                                    {{ $loop->iteration }}
-                                </td>
+                    <td>
+                      {{ $loop->iteration }}
+                    </td>
 
-                                <td>
-                                    <a href="{{ $content['url'] }}">
-                                        {{ $content['title'] }}
-                                    </a>
-                                </td>
+                    <td>
+                      <a href="{{ $content['url'] }}">
+                        {{ $content['title'] }}
+                      </a>
+                    </td>
 
-                                <td>
+                    <td>
 
-                                    @if ($content['type'] === 'Post')
+                      @if ($content['type'] === 'Post')
 
-                                        <span class="badge text-bg-primary">
-                                            📝 Post
-                                        </span>
+                        <span class="badge text-bg-primary">
+                        📝 Post
+                        </span>
 
-                                    @else
+                      @else
 
-                                        <span class="badge text-bg-success">
-                                            📚 Tutorial
-                                        </span>
+                        <span class="badge text-bg-success">
+                          📚 Tutorial
+                        </span>
 
-                                    @endif
+                      @endif
 
-                                </td>
+                    </td>
 
-                                <td>
+                    <td>
 
-                                    <span class="badge text-bg-info">
+                      <span class="badge text-bg-info">
 
-                                        <i class="bi bi-eye"></i>
+                        <i class="bi bi-eye"></i>
 
-                                        {{ $content['views'] }}
+                        {{ $content['views'] }}
 
-                                        {{ Str::plural('view', $content['views']) }}
+                        {{ Str::plural('view', $content['views']) }}
 
-                                    </span>
+                      </span>
 
-                                </td>
+                    </td>
 
-                            </tr>
+                  </tr>
 
-                        @endforeach
+                @endforeach
 
-                    </tbody>
+              </tbody>
 
-                </table>
+              </table>
 
             </div>
 
-        @else
+          @else
 
-            <p class="text-muted p-3 mb-0">
-                No content views available yet.
+              <p class="text-muted p-3 mb-0">
+            No content views available yet.
             </p>
 
-        @endif
+          @endif
 
-    </div>
+        </div>
 
-</div>
-
-    <hr class="my-5">
-    <h3><span class="badge text-bg-success mb-4">Latest Users</span></h3>
-    <table class="table table-bordered shadow bg-body-tertiary rounded">
-      <thead>
-        <tr>
-          <td>Name</td>
-          <td>Email</td>
-          <td>Role</td>
-          <td>Joined</td>
-        </tr>
-      </thead>
-      <tbody>
-        @forelse ($latestUsers as $user)
-          <tr>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>
-              @if($user->role === 'admin')
-                <span class="badge text-bg-success">Admin</span>
-              @elseif($user->role === 'editor')
-                <span class="badge text-bg-primary">Editor</span>
-              @elseif($user->role === 'author')
-                <span class="badge text-bg-primary">Author</span>
-              @else
-                <span class="badge text-bg-danger">User</span>
-              @endif
-            </td>
-            <td>{{ $user->created_at->diffForHumans() }}</td>
-          </tr>
-        @empty
-          <tr>
-            <td colspan="4" class="text-center text-muted py-4">No Users found</td>
-          </tr>
-        @endforelse
-      </tbody>
-    </table>
-    <hr class="my-5">
-
-    <h3><span class="badge text-bg-danger mb-2">Recent comments</span></h3>
-    <table class="table table-hover shadow bg-body-tertiary rounded">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th>Post</th>
-          <th>Comment</th>
-          <th>Created</th>
-        </tr>
-      </thead>
-      <tbody>
-        @forelse ($recentComments as $comment)
-          <tr>
-            <td>{{ $comment->user->name }}</td>
-            <td>{{ $comment->post->title }}</td>
-            <td>{{ Str::limit($comment->comment, 50) }}</td>
-            <td>{{ $comment->created_at->diffForHumans() }}</td>
-          </tr>
-        @empty
-          <tr>
-            <td colspan="4" class="text-center text-muted py-4">
-              No Comments Found
-            </td>
-          </tr>
-        @endforelse
-      </tbody>
-    </table>
-
-    <hr class="my-5">
-
-    <div class="card shadow bg-body-tertiary rounded mb-4">
-
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">
-          📩 Recent Contact Messages
-        </h5>
-
-        <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-sm btn-primary">
-          View All
-        </a>
       </div>
 
-      <div class="card-body">
+      <hr class="my-5">
+      <h3><span class="badge text-bg-success mb-4">Latest Users</span></h3>
+      <table class="table table-bordered shadow bg-body-tertiary rounded">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Role</td>
+            <td>Joined</td>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse ($latestUsers as $user)
+            <tr>
+              <td>{{ $user->name }}</td>
+              <td>{{ $user->email }}</td>
+              <td>
+                @if($user->role === 'admin')
+                  <span class="badge text-bg-success">Admin</span>
+                @elseif($user->role === 'editor')
+                  <span class="badge text-bg-primary">Editor</span>
+                @elseif($user->role === 'author')
+                  <span class="badge text-bg-primary">Author</span>
+                @else
+                  <span class="badge text-bg-danger">User</span>
+                @endif
+              </td>
+                  <td>{{ $user->created_at->diffForHumans() }}</td>
+            </tr>
+          @empty
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">No Users found</td>
+            </tr>
+          @endforelse
+        </tbody>
+      </table>
+      <hr class="my-5">
 
-        @forelse ($recentContactMessages as $message)
+      <h3><span class="badge text-bg-danger mb-2">Recent comments</span></h3>
+      <table class="table table-hover shadow bg-body-tertiary rounded">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Post</th>
+            <th>Comment</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          @forelse ($recentComments as $comment)
+            <tr>
+              <td>{{ $comment->user->name }}</td>
+              <td>{{ $comment->post->title }}</td>
+              <td>{{ Str::limit($comment->comment, 50) }}</td>
+              <td>{{ $comment->created_at->diffForHumans() }}</td>
+            </tr>
+          @empty
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">
+                No Comments Found
+                </td> </tr>
+          @endforelse
+        </tbody>
+      </table>
 
-          <div class="border-bottom pb-3 mb-3">
+      <hr class="my-5">
 
-            <div class="d-flex justify-content-between align-items-start">
+      <div class="card shadow bg-body-tertiary rounded mb-4">
 
-              <div>
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            📩 Recent Contact Messages
+          </h5>
 
-                <h6 class="mb-1">
-                  {{ $message->subject }}
-                </h6>
+          <a href="{{ route('admin.contact-messages.index') }}" class="btn btn-sm btn-primary">
+            View All
+          </a>
+        </div>
 
-                <small class="text-muted">
-                  From: {{ $message->name }}
-                  ({{ $message->email }})
-                </small>
+        <div class="card-body">
+
+          @forelse ($recentContactMessages as $message)
+
+            <div class="border-bottom pb-3 mb-3">
+
+              <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                  <h6 class="mb-1">
+                    {{ $message->subject }}
+                  </h6>
+
+                  <small class="text-muted">
+                    From: {{ $message->name }}
+                        ({{ $message->email }})
+                  </small>
+
+                </div>
+
+                @if (!$message->is_read)
+
+                  <span class="badge bg-danger">
+                    Unread
+                  </span>
+
+                @else
+
+                  <span class="badge bg-secondary">
+                    Read
+                  </span>
+
+                @endif
 
               </div>
 
-              @if (!$message->is_read)
+              <p class="mt-2 mb-2">
+                {{ Str::limit($message->message, 120) }}
+              </p>
 
-                <span class="badge bg-danger">
-                  Unread
-                </span>
+              <div class="d-flex justify-content-between align-items-center">
 
-              @else
+                <small class="text-muted">
+                  {{ $message->created_at->format('M d, Y g:i A') }}
+                </small>
 
-                <span class="badge bg-secondary">
-                  Read
-                </span>
+                <a href="{{ route('admin.contact-messages.show', $message) }}" class="btn btn-sm btn-outline-primary">
+                  View Message
+                </a>
 
-              @endif
+              </div>
 
             </div>
 
-            <p class="mt-2 mb-2">
-              {{ Str::limit($message->message, 120) }}
+          @empty
+
+            <p class="text-muted mb-0">
+              No contact messages yet.
             </p>
 
-            <div class="d-flex justify-content-between align-items-center">
+          @endforelse
 
-              <small class="text-muted">
-                {{ $message->created_at->format('M d, Y g:i A') }}
-              </small>
-
-              <a href="{{ route('admin.contact-messages.show', $message) }}" class="btn btn-sm btn-outline-primary">
-                View Message
-              </a>
-
-            </div>
-
-          </div>
-
-        @empty
-
-          <p class="text-muted mb-0">
-            No contact messages yet.
-          </p>
-
-        @endforelse
+        </div>
 
       </div>
-
     </div>
-  </div>
 @endsection
