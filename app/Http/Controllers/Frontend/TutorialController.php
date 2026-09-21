@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Tutorial;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class TutorialController extends Controller
 {
@@ -162,21 +163,57 @@ class TutorialController extends Controller
             ));
     }//End Method
 
-    public function complete(Tutorial $tutorial)
-    {
-        // Implementation for completing a tutorial
-        abort_if($tutorial->status !== 'published', 404);
+//  public function complete(Tutorial $tutorial)
+// {
+//     abort_if($tutorial->status !== 'published', 404);
 
-        auth()->user()->tutorials()->updateExistingPivot(
-            $tutorial->id,
-            [
-                'completed_at' => now()
-            ]
-        );
+//     auth()->user()->tutorials()->updateExistingPivot(
+//         $tutorial->id,
+//         [
+//             'completed_at' => now(),
+//         ]
+//     );
 
-        return back()->with(
-            'success',
-            'Tutorial marked as completed!'
-        );
-    }
+//     return back()->with(
+//         'success',
+//         'Tutorial marked as completed!'
+//     );
+// }
+
+// public function complete(Tutorial $tutorial)
+// {
+//     abort_if($tutorial->status !== 'published', 404);
+
+//     auth()->user()->tutorials()->updateExistingPivot(
+//         $tutorial->id,
+//         [
+//             'completed_at' => now(),
+//         ]
+//     );
+
+//     return back()->with(
+//         'success',
+//         'Tutorial marked as completed!'
+//     );
+// }
+
+public function complete(Tutorial $tutorial)
+{
+    abort_if($tutorial->status !== 'published', 404);
+
+    DB::listen(function ($query) {
+        dump($query->sql);
+        dump($query->bindings);
+    });
+
+    auth()->user()->tutorials()->updateExistingPivot(
+        $tutorial->id,
+        [
+            'completed_at' => now(),
+        ]
+    );
+
+    dd('UPDATE FINISHED');
+}
+
 }
