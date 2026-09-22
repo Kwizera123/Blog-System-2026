@@ -103,18 +103,12 @@ class TutorialController extends Controller
         ]);
 
         if (auth()->check()) {
-
                 auth()->user()->tutorials()->syncWithoutDetaching([
-
-                $tutorial->id => [
-                    'completed_at' => null,
-                ]
-
+                $tutorial->id,
              ]);
-
              $tagIds = $tutorial->tags->pluck('id');
-
-            }   
+            }  
+             
         $tagIds = $tutorial->tags->pluck('id');
 
         $categories = Category::orderBy('name')->get();
@@ -163,48 +157,10 @@ class TutorialController extends Controller
             ));
     }//End Method
 
-//  public function complete(Tutorial $tutorial)
-// {
-//     abort_if($tutorial->status !== 'published', 404);
-
-//     auth()->user()->tutorials()->updateExistingPivot(
-//         $tutorial->id,
-//         [
-//             'completed_at' => now(),
-//         ]
-//     );
-
-//     return back()->with(
-//         'success',
-//         'Tutorial marked as completed!'
-//     );
-// }
-
-// public function complete(Tutorial $tutorial)
-// {
-//     abort_if($tutorial->status !== 'published', 404);
-
-//     auth()->user()->tutorials()->updateExistingPivot(
-//         $tutorial->id,
-//         [
-//             'completed_at' => now(),
-//         ]
-//     );
-
-//     return back()->with(
-//         'success',
-//         'Tutorial marked as completed!'
-//     );
-// }
 
 public function complete(Tutorial $tutorial)
 {
     abort_if($tutorial->status !== 'published', 404);
-
-    DB::listen(function ($query) {
-        dump($query->sql);
-        dump($query->bindings);
-    });
 
     auth()->user()->tutorials()->updateExistingPivot(
         $tutorial->id,
@@ -213,7 +169,11 @@ public function complete(Tutorial $tutorial)
         ]
     );
 
-    dd('UPDATE FINISHED');
+    return back()->with(
+        'success',
+        'Tutorial marked as completed!'
+    );
 }
+
 
 }
