@@ -22,12 +22,22 @@ class DashboardController extends Controller
             ? round(($tutorialsCompleted / $tutorialsStarted) * 100)
             : 0;
 
+    
+        $tutorialsInProgressList = $user->tutorials()
+            ->wherePivotNull('completed_at')
+            ->where('status', 'published')
+            ->latest('tutorial_user.created_at')
+
+            ->take(5) // Limit to 5 tutorials
+            ->get();
+
             return view('dashboard', compact(
 
                 'tutorialsStarted',
                 'tutorialsCompleted',
                 'tutorialsInProgress',
-                'progressPercentage'
+                'progressPercentage',
+                'tutorialsInProgressList'
 
             ) );
     }
