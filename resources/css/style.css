@@ -706,6 +706,90 @@ img {
 .dashboard {
     width: 150px;
 }
+
+
+/* =========================================
+   Learner Dashboard Statistics
+========================================= */
+
+.dashboard-stats {
+    margin-top: 10px;
+}
+
+.dashboard-stat-card {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 22px 20px;
+    min-height: 130px;
+
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.dashboard-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+}
+
+.stat-icon {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.stat-content {
+    min-width: 0;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 7px;
+}
+
+.stat-number {
+    color: #212529;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+/* =========================================
+   Learner Dashboard Progress
+========================================= */
+
+.dashboard-progress-card {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.progress-percentage {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.dashboard-progress {
+    height: 14px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.dashboard-progress .progress-bar {
+    border-radius: 20px;
+    transition: width 0.6s ease;
+}
+
+
+
+
 /* --- Media Queries for Responsive Design --- */
 
 /* Tablet & Smaller Desktops (Collapses layout but retains elements) */
