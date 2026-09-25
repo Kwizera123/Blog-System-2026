@@ -36,6 +36,12 @@ class DashboardController extends Controller
             ->latest('tutorial_user.updated_at')
             ->get();
 
+        $continueTutorial = $user->tutorials()
+            ->whereNull('tutorial_user.completed_at')
+            ->with('category')
+            ->latest('tutorial_user.updated_at')
+            ->first();
+
             return view('dashboard', compact(
 
                 'tutorialsStarted',
@@ -43,7 +49,8 @@ class DashboardController extends Controller
                 'tutorialsInProgress',
                 'progressPercentage',
                 'tutorialsInProgressList',
-                'tutorials'
+                'tutorials',
+                'continueTutorial'
 
             ) );
     }

@@ -153,6 +153,43 @@
             </div>
         </div>
 
+        {{-- Continue Learning --}}
+
+        {{-- Continue Learning --}}
+        @if($continueTutorial)
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        🚀 Continue Learning
+                    </h4>
+
+                    <div class="border rounded p-3">
+
+                        <h5 class="mb-1">
+                            {{ $continueTutorial->title }}
+                        </h5>
+
+                        @if($continueTutorial->category)
+                            <small class="text-muted">
+                                Category: {{ $continueTutorial->category->name }}
+                            </small>
+                        @endif
+
+                        <p class="text-muted mt-3 mb-3">
+                            You started this tutorial but haven't completed it yet.
+                        </p>
+
+                        <a href="{{ route('tutorials.show', $continueTutorial) }}" class="btn btn-primary">
+                            📖 Continue Learning
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        @endif
+
 
         {{-- My Learning --}}
         <div class="card shadow-sm mb-4">
