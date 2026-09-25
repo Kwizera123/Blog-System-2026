@@ -31,13 +31,19 @@ class DashboardController extends Controller
             ->take(5) // Limit to 5 tutorials
             ->get();
 
+        $tutorials = $user->tutorials()
+            ->with('category')
+            ->latest('tutorial_user.updated_at')
+            ->get();
+
             return view('dashboard', compact(
 
                 'tutorialsStarted',
                 'tutorialsCompleted',
                 'tutorialsInProgress',
                 'progressPercentage',
-                'tutorialsInProgressList'
+                'tutorialsInProgressList',
+                'tutorials'
 
             ) );
     }

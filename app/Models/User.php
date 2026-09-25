@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Tutorial;
+use App\Models\TutorialUser;
 
 #[Fillable(['name','role', 'email', 'password', 'profile_photo'])]
 #[Hidden(['password', 'remember_token'])]
@@ -75,6 +76,7 @@ class User extends Authenticatable
      public function tutorials()
      {
       return $this->belongsToMany(Tutorial::class)
+            ->using(TutorialUser::class)
             ->withPivot('completed_at')
             ->withTimestamps();
      }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\TutorialUser;
 
 
 class Tutorial extends Model
@@ -35,4 +36,12 @@ class Tutorial extends Model
     {
         return $this->belongsToMany(Tag::class, 'tutorial_tag');
     }//
+
+    public function users()
+{
+    return $this->belongsToMany(User::class)
+        ->using(TutorialUser::class)
+        ->withPivot('completed_at')
+        ->withTimestamps();
+}
 }

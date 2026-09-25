@@ -115,6 +115,7 @@
 
         </div>
 
+        {{-- Learning Progress --}}
         <div class="card dashboard-progress-card mb-4">
             <div class="card-body">
 
@@ -151,6 +152,100 @@
 
             </div>
         </div>
+
+
+        {{-- My Learning --}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <h4 class="mb-3">
+                    📚 My Learning
+                </h4>
+
+                @forelse($tutorials as $tutorial)
+
+                    <div class="border rounded p-3 mb-3">
+
+                        <div class="d-flex justify-content-between align-items-start">
+
+                            <div>
+                                <h5 class="mb-1">
+                                    {{ $tutorial->title }}
+                                </h5>
+
+                                @if($tutorial->category)
+                                    <small class="text-muted">
+                                        Category: {{ $tutorial->category->name }}
+                                    </small>
+                                @endif
+                            </div>
+
+                            @if($tutorial->pivot->completed_at)
+                                <span class="badge bg-success">
+                                    ✅ Completed
+                                </span>
+                            @else
+                                <span class="badge bg-warning text-dark">
+                                    ⏳ In Progress
+                                </span>
+                            @endif
+
+                        </div>
+
+                        <div class="mt-3">
+
+                            @if($tutorial->pivot->completed_at)
+
+                                <small class="text-muted">
+                                    Completed:
+                                    {{ $tutorial->pivot->completed_at->format('M d, Y') }}
+                                </small>
+
+                            @else
+
+                                <small class="text-muted">
+                                    Continue learning this tutorial.
+                                </small>
+
+                            @endif
+
+                        </div>
+
+                        <div class="mt-3">
+
+                            <a href="{{ route('tutorials.show', $tutorial) }}" class="btn btn-sm btn-primary">
+                                📖
+                                @if($tutorial->pivot->completed_at)
+                                    Review Tutorial
+                                @else
+                                    Continue Learning
+                                @endif
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                @empty
+
+                    <div class="text-center py-4">
+
+                        <p class="text-muted mb-3">
+                            You haven't started any tutorials yet.
+                        </p>
+
+                        <a href="{{ route('tutorials.index') }}" class="btn btn-primary">
+                            📚 Browse Tutorials
+                        </a>
+
+                    </div>
+
+                @endforelse
+
+            </div>
+        </div>
+
+
 
         <a href="{{ route('home') }}" class="btn btn-sm btn-secondary mt-4">
             Home
